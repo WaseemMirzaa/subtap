@@ -1,0 +1,27 @@
+import 'package:get/get.dart';
+import 'package:subtap/controller/create_account_controller.dart';
+import 'package:subtap/controller/favorites_subcontractor_controller.dart';
+import 'package:subtap/controller/home_page_controller.dart';
+import 'package:subtap/controller/job_history_controller.dart';
+import 'package:subtap/controller/job_post_controller.dart';
+import 'package:subtap/controller/job_request_page_controller.dart';
+import 'package:subtap/controller/login_controller.dart';
+import 'package:subtap/controller/mediation_process_page_controller.dart';
+import 'package:subtap/controller/myaccount_page_controller.dart';
+import 'package:subtap/controller/navigation_controller.dart';
+import 'package:subtap/controller/notification_controller.dart';
+import 'package:subtap/controller/onboarding_controller.dart';
+import 'package:subtap/controller/profile_page_controller.dart';
+import 'package:subtap/controller/profile_setup_controller.dart';
+import 'package:subtap/controller/select_role_controller.dart';
+import 'package:subtap/controller/splash_controller.dart';
+import 'package:subtap/controller/subcontractor_controller.dart';
+import 'package:subtap/controller/subcontractor_feedback_controller.dart';
+import 'package:subtap/controller/subcontractor_job_controller.dart';
+import 'package:subtap/controller/subcontractor_myaccount_controller.dart';
+import 'package:subtap/controller/subcontractor_profile_controller.dart';
+import 'package:subtap/controller/subcontrctor_job_history_controller.dart';
+import 'package:subtap/controller/upload_progress_controller.dart';
+import 'package:subtap/controller/verify_email_controller.dart';
+
+part 'app_binding.dart';

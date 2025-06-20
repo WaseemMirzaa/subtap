@@ -1,0 +1,27 @@
+import 'package:get/get.dart';
+import 'package:subtap/core/bindings.dart/binding.dart';
+import 'package:subtap/features/auth/presentation/pages/create_account_screen.dart';
+import 'package:subtap/features/auth/presentation/pages/login_screen.dart';
+import 'package:subtap/features/auth/presentation/pages/profile_setup_screen.dart';
+import 'package:subtap/features/auth/presentation/pages/select_role_screen.dart';
+import 'package:subtap/features/auth/presentation/pages/verify_email_screen.dart';
+import 'package:subtap/features/fav_subcontractor/presentation/pages/pages.dart';
+import 'package:subtap/features/home/presentation/pages/pages.dart';
+import 'package:subtap/features/invite_subcontractor/presentation/pages/pages.dart';
+import 'package:subtap/features/job_history/presentation/pages/pages.dart';
+import 'package:subtap/features/job_post/presentation/pages/pages.dart';
+import 'package:subtap/features/job_request/presentation/pages/pages.dart';
+import 'package:subtap/features/main_page_with_navbar.dart';
+import 'package:subtap/features/mediation_process/presentation/pages/pages.dart';
+import 'package:subtap/features/notification/presentation/pages/pages.dart';
+import 'package:subtap/features/onboarding/presentation/pages/onboarding_screen.dart';
+import 'package:subtap/features/profile/presentation/pages/pages.dart';
+import 'package:subtap/features/splash/presentation/pages/splash_screen.dart';
+import 'package:subtap/features/subcontractor_feedback/presentation/pages/pages.dart';
+import 'package:subtap/features/subcontractor_home/presentation/pages/pages.dart';
+import 'package:subtap/features/subcontractor_job_history/presentation/pages/pages.dart';
+import 'package:subtap/features/subcontractor_jobs/presentation/pages/pages.dart';
+import 'package:subtap/features/subcontractor_profile/presentation/pages/pages.dart';
+
+part 'app_router.dart';
+part 'app_routes.dart';

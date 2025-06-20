@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+  <g id="Group_23820" data-name="Group 23820" transform="translate(-29.466 -578)">
+    <g id="Icons_00000044865260963778552980000006188091097045302409_" transform="translate(29.466 578)">
+      <g id="Page-1" transform="translate(0 0)">
+        <g id="_007---Pipe" data-name="007---Pipe">
+          <path id="Shape" d="M7.357,13.107a1.071,1.071,0,0,1-2.143,0V4H2v9.107a4.286,4.286,0,0,0,8.571,0v-.536H7.357ZM3.071,10.161a.268.268,0,0,1-.536,0V6.411a.268.268,0,1,1,.536,0Zm0-4.821a.268.268,0,1,1-.536,0V4.8a.268.268,0,1,1,.536,0Z" transform="translate(-1.464 -2.929)" fill="#12161f"/>
+          <path id="Shape-2" data-name="Shape" d="M4.286.268A.268.268,0,0,0,4.018,0H.268a.268.268,0,0,0,0,.536h3.75A.268.268,0,0,0,4.286.268Z" fill="#c2a466"/>
+          <rect id="Rectangle-path" width="3.077" height="3.077" rx="1" transform="translate(5.961 5.961)" fill="#c2a466"/>
+          <path id="Shape-3" data-name="Shape" d="M44.018,54h-3.75a.268.268,0,0,0,0,.536h3.75a.268.268,0,1,0,0-.536Z" transform="translate(-29.286 -39.536)" fill="#c2a466"/>
+          <path id="Shape-4" data-name="Shape" d="M27.357,6.286v9.107h3.214V6.286a4.286,4.286,0,1,0-8.571,0v.536h3.214V6.286a1.071,1.071,0,1,1,2.143,0Z" transform="translate(-16.107 -1.464)" fill="#12161f"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

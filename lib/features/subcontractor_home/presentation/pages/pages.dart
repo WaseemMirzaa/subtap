@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:subtap/core/config/config.dart';
+import 'package:subtap/core/shared_widgets/custom_button.dart';
+import 'package:subtap/core/shared_widgets/custom_text.dart';
+import 'package:subtap/core/shared_widgets/custom_textfield.dart';
+import 'package:subtap/core/shared_widgets/subtap_scaffold.dart';
+import 'package:subtap/core/theme/app_color.dart';
+import 'package:subtap/core/theme/assets.dart';
+import 'package:subtap/core/theme/constane.dart';
+import 'package:subtap/features/home/presentation/widgets/widget.dart';
+import 'package:subtap/features/job_verification/presentation/pages/pages.dart';
+import 'package:subtap/features/subcontractor_home/presentation/widgets/widgets.dart';
+import 'package:subtap/models/models.dart';
+
+part 'subcontractor_home_page.dart';
+part 'upload_progress.dart';
