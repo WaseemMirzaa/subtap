@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:subtap/core/extension/media_query_extension.dart';
@@ -10,6 +11,8 @@ import 'package:subtap/core/shared_widgets/custom_textfield.dart';
 import 'package:subtap/core/theme/app_color.dart';
 import 'package:subtap/core/theme/assets.dart';
 
+import '../../../../controller/login_controller.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -18,6 +21,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final loginController = Get.put(LoginController());
   bool _rememberMe = false;
 
   @override
@@ -52,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: context
                       .responsiveHeight(15)), // Pushes content down further
               CustomTextField(
+                controller: loginController.emailController,
                 hintText: 'Email/phone',
                 fillColor: AppColor.mutedBlueShade,
                 borderColor: AppColor.mutedBlueShade,
@@ -62,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: context.responsiveHeight(2)),
               CustomTextField(
+                controller: loginController.passwordController,
                 hintText: 'password',
                 fillColor: AppColor.mutedBlueShade,
                 borderColor: AppColor.mutedBlueShade,
@@ -120,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: context.responsiveHeight(3)),
               CustomButton(
-                onTap: () => {},
+                onTap: () => loginController.signInWithEmail(),
                 text: 'Sign in',
                 radius: 20,
                 height: 55,

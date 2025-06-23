@@ -71,23 +71,30 @@ class CustomButton extends StatelessWidget {
                   ),
                 )
               : enableIcon
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (icon != null) ...[icon!, const SizedBox(width: 8)],
-                        Flexible(
-                          child: CustomText(
-                            text: text,
-                            color: textColor,
-                            fontSize: fontSize,
-                            fontWeight: fontWeight,
-                            overflow: TextOverflow.ellipsis,
-                            fontFamily: fontFamily, // Pass to CustomText
+                  ? Builder(builder: (context) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (icon != null) ...[
+                            icon!,
+                            const SizedBox(width: 8)
+                          ],
+                          Flexible(
+                            child: Expanded(
+                              child: CustomText(
+                                text: text,
+                                color: textColor,
+                                fontSize: fontSize,
+                                fontWeight: fontWeight,
+                                overflow: TextOverflow.ellipsis,
+                                fontFamily: fontFamily, // Pass to CustomText
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
-                    )
+                        ],
+                      );
+                    })
                   : CustomText(
                       text: text,
                       color: textColor,

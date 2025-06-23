@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:subtap/core/config/config.dart';
 import 'package:subtap/core/shared_widgets/custom_text.dart';
 import 'package:subtap/core/theme/app_color.dart';
 import 'package:subtap/core/theme/assets.dart';
+
+import '../../../../controller/select_role_controller.dart';
 
 class SelectRoleScreen extends StatelessWidget {
   const SelectRoleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SelectRoleController());
+
     return Scaffold(
       backgroundColor: AppColor.lightGray,
       appBar: AppBar(
@@ -33,10 +37,8 @@ class SelectRoleScreen extends StatelessWidget {
               width: 255,
               child: _RoleCard(
                 title: 'Property Manager (PM)',
-                onTap: () => Get.toNamed(
-                  AppRoutes.profileSetup,
-                  arguments: {'role': 'PropertyManager'},
-                ),
+                onTap: () =>
+                    controller.selectRoleAndNavigate('PropertyManager'),
                 icon: Assets.imagesPropertyManager,
               ),
             ),
@@ -45,10 +47,7 @@ class SelectRoleScreen extends StatelessWidget {
               width: 255,
               child: _RoleCard(
                 title: 'Subcontractor (Sub)',
-                onTap: () => Get.toNamed(
-                  AppRoutes.profileSetup,
-                  arguments: {'role': 'Subcontractor'},
-                ),
+                onTap: () => controller.selectRoleAndNavigate('Subcontractor'),
                 icon: Assets.imagesSubcontractor,
               ),
             ),
