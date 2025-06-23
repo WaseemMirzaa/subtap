@@ -10,10 +10,14 @@ import 'package:subtap/core/shared_widgets/custom_text.dart';
 import 'package:subtap/core/shared_widgets/custom_textfield.dart';
 import 'package:subtap/core/theme/app_color.dart';
 
+import '../../../../controller/profile_setup_controller.dart';
+
 class ProfileSetupScreen extends StatelessWidget {
   final String? role;
 
-  const ProfileSetupScreen({super.key, this.role});
+  final profileController = Get.put(ProfileSetupController());
+
+  ProfileSetupScreen({super.key, this.role});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,7 @@ class ProfileSetupScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextField(
+                  controller: profileController.fullNameController,
                   hintText: 'Full Name',
                   hintTextColor: AppColor.mediumGray,
                   fillColor: AppColor.white,
@@ -51,6 +56,7 @@ class ProfileSetupScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
+                  controller: profileController.companyNameController,
                   hintText: 'Company Name',
                   hintTextColor: AppColor.mediumGray,
                   fillColor: AppColor.white,
@@ -62,6 +68,7 @@ class ProfileSetupScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
+                  controller: profileController.phoneController,
                   hintText: 'Phone Number',
                   hintTextColor: AppColor.mediumGray,
                   fillColor: AppColor.white,
@@ -75,6 +82,7 @@ class ProfileSetupScreen extends StatelessWidget {
                 if (isSubcontractor) ...[
                   const SizedBox(height: 16),
                   CustomTextField(
+                    controller: profileController.referralCodeController,
                     hintText: 'Referral Code',
                     hintTextColor: AppColor.mediumGray,
                     fillColor: AppColor.white,
@@ -107,7 +115,10 @@ class ProfileSetupScreen extends StatelessWidget {
                 ],
                 const SizedBox(height: 32),
                 CustomButton(
-                  onTap: () {
+                  onTap: () async {
+                    // Save to Firestore
+                    await profileController.saveProfileData(role ?? '');
+
                     // Set user type based on role
                     final navigationController =
                         Get.find<NavigationController>();
