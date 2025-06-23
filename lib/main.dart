@@ -4,9 +4,16 @@ import 'package:subtap/controller/navigation_controller.dart';
 import 'package:subtap/core/bindings.dart/binding.dart';
 import 'package:subtap/core/config/config.dart';
 import 'package:subtap/core/theme/app_color.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Get.put(NavigationController());
+
   runApp(const MyApp());
 }
 

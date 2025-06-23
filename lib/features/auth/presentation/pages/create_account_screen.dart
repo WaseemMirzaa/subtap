@@ -11,11 +11,20 @@ import 'package:subtap/core/shared_widgets/custom_textfield.dart';
 import 'package:subtap/core/theme/app_color.dart';
 import 'package:subtap/core/theme/assets.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:subtap/models/create_account_model.dart';
+
+import '../../../../controller/create_account_controller.dart';
+
 class CreateAccountScreen extends StatelessWidget {
   const CreateAccountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CreateAccountController());
+
     return Scaffold(
       backgroundColor: AppColor.lightGray,
       appBar: AppBar(
@@ -41,7 +50,10 @@ class CreateAccountScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: context.responsiveHeight(10)),
+
+              /// Email
               CustomTextField(
+                controller: controller.emailController,
                 hintText: 'Email address',
                 fillColor: AppColor.white,
                 borderColor: AppColor.white,
@@ -52,7 +64,10 @@ class CreateAccountScreen extends StatelessWidget {
                     context.responsivePadding(horizontal: 4, vertical: 2),
               ),
               const SizedBox(height: 16),
+
+              /// Password
               CustomTextField(
+                controller: controller.passwordController,
                 hintText: 'Password',
                 hintTextColor: AppColor.mediumGray,
                 fillColor: AppColor.white,
@@ -66,7 +81,10 @@ class CreateAccountScreen extends StatelessWidget {
                 showPasswordToggle: true,
               ),
               const SizedBox(height: 16),
+
+              /// Confirm Password
               CustomTextField(
+                controller: controller.confirmPasswordController,
                 hintText: 'Confirm Password',
                 hintTextColor: AppColor.mediumGray,
                 fillColor: AppColor.white,
@@ -80,46 +98,31 @@ class CreateAccountScreen extends StatelessWidget {
                 showPasswordToggle: true,
               ),
               const SizedBox(height: 24),
+
+              /// Sign Up
               CustomButton(
-                onTap: () {
-                  Get.toNamed(AppRoutes.verifyEmail);
-                },
+                onTap: controller.proceedToNextStep,
                 text: 'Sign Up',
                 radius: 20,
                 height: 55,
               ),
               const SizedBox(height: 24),
+
+              // Divider and Social Buttons
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 50, // length of left divider
-                    child: Divider(
-                      color: AppColor.mutedGray,
-                      thickness: 1,
-                    ),
+                      width: 50, child: Divider(color: AppColor.mutedGray)),
+                  SizedBox(width: 10),
+                  CustomText(
+                    text: 'Sign in with Apple or Google',
+                    color: AppColor.grayShade,
+                    fontSize: 12,
                   ),
+                  SizedBox(width: 10),
                   SizedBox(
-                    width: 10,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: CustomText(
-                      text: 'Sign in with Apple or Google',
-                      color: AppColor.grayShade,
-                      fontSize: 12,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  SizedBox(
-                    width: 50, // length of right divider
-                    child: Divider(
-                      color: AppColor.mutedGray,
-                      thickness: 1,
-                    ),
-                  ),
+                      width: 50, child: Divider(color: AppColor.mutedGray)),
                 ],
               ),
               const SizedBox(height: 16),
@@ -127,13 +130,10 @@ class CreateAccountScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 155, // adjust width as needed
+                    width: 155,
                     child: CustomButton(
                       text: 'Apple',
-                      icon: SvgPicture.asset(
-                        Assets.svgsApple,
-                        height: 20,
-                      ),
+                      icon: SvgPicture.asset(Assets.svgsApple, height: 20),
                       enableIcon: true,
                       color: Colors.white,
                       textColor: AppColor.grayShade,
@@ -142,17 +142,12 @@ class CreateAccountScreen extends StatelessWidget {
                       height: 50,
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
+                  const SizedBox(width: 20),
                   SizedBox(
-                    width: 155, // adjust width as needed
+                    width: 155,
                     child: CustomButton(
                       text: 'Google',
-                      icon: SvgPicture.asset(
-                        Assets.svgsGoogle,
-                        height: 20,
-                      ),
+                      icon: SvgPicture.asset(Assets.svgsGoogle, height: 20),
                       enableIcon: true,
                       color: Colors.white,
                       textColor: AppColor.grayShade,

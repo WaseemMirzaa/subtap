@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "247063329592",
+    "project_id": "subtap-codetivelab",
+    "storage_bucket": "subtap-codetivelab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247063329592:android:8b9050df28092620b01fcd",
+        "android_client_info": {
+          "package_name": "com.example.subtap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "247063329592-tor687pe46qis2undflbcjijtab16b9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhIyHs6GkL63tJkDWISi99Mjm5G5YXjvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "247063329592-tor687pe46qis2undflbcjijtab16b9p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "247063329592-sb9qq3kk45nrcirm2i9honp8m747rhhs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.subtap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
