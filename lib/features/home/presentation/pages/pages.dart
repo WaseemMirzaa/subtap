@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:subtap/core/config/config.dart';
 import 'package:subtap/core/shared_widgets/custom_text.dart';
 import 'package:subtap/core/shared_widgets/subtap_scaffold.dart';
 import 'package:subtap/core/theme/app_color.dart';

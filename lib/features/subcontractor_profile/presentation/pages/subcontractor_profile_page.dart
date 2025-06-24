@@ -137,7 +137,7 @@ class _SubcontractorProfilePageState extends State<SubcontractorProfilePage> {
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: CustomButton(
         radius: 14,
-        text: 'Upload Portfolio',
+        text: 'Tap to Upload Portfolio',
         onTap: _uploadPortfolio,
         width: double.infinity,
         color: AppColor.mutedGold,

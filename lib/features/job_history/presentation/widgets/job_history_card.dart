@@ -119,7 +119,7 @@ class JobHistoryCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           color: AppColor.black,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'HelveticaNeueMedium',
                         ),
                       ),
@@ -129,7 +129,7 @@ class JobHistoryCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 14,
                           color: AppColor.midGray,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w500,
                           fontFamily: 'HelveticaNeueMedium',
                         ),
                       ),
@@ -152,7 +152,7 @@ class JobHistoryCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           color: AppColor.black,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'HelveticaNeueMedium',
                         ),
                       ),
@@ -185,7 +185,7 @@ class JobHistoryCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           color: AppColor.black,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'HelveticaNeueMedium',
                         ),
                       ),

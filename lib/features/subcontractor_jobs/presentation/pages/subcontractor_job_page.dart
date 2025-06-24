@@ -110,8 +110,8 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                     children: [
                       CustomText(
                         text: _makeCounterOffer
-                            ? 'Make a Cuunter Offer'
-                            : 'Accept Job As-Is',
+                            ? 'Accept Job As-Is'
+                            : 'Make a Counter Offer',
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
@@ -198,7 +198,7 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                       ),
                       borderRadius: 10,
                       height: 45,
-                      hintText: '1000',
+                      hintText: '\$1000',
                       fontStyle: FontStyle.normal,
                       hintTextColor: AppColor.darkGrayShade,
                       keyboardType: TextInputType.text,
@@ -215,7 +215,7 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            text: 'Line item Description',
+                            text: 'Line Item Description',
                             fontSize: screenWidth > 600 ? 18 : 16,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
@@ -275,7 +275,7 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                                     ),
                                     borderRadius: 10,
                                     height: 45,
-                                    hintText: 'Price field',
+                                    hintText: '\$Price field',
                                     fontStyle: FontStyle.normal,
                                     hintTextColor: AppColor.darkGrayShade,
                                     keyboardType: TextInputType.number,
@@ -419,7 +419,7 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                     child: CustomButton(
                       text: _makeCounterOffer
                           ? 'Accept Job As-Is'
-                          : 'Submit Progress for Mark as Complete',
+                          : 'Submit a Counter Offer',
                       onTap: () {
                         Get.toNamed(
                           AppRoutes

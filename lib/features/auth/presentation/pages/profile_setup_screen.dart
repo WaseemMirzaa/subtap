@@ -75,7 +75,7 @@ class ProfileSetupScreen extends StatelessWidget {
                 if (isSubcontractor) ...[
                   const SizedBox(height: 16),
                   CustomTextField(
-                    hintText: 'Referral Code',
+                    hintText: 'Referral Code(Optional)',
                     hintTextColor: AppColor.mediumGray,
                     fillColor: AppColor.white,
                     borderColor: AppColor.white,

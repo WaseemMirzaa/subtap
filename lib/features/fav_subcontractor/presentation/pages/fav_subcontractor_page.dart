@@ -75,7 +75,7 @@ class _FavSubcontractorPageState extends State<FavSubcontractorPage> {
                     child: SearchBarTile(
                       controller: _searchController,
                       onSearch: () {},
-                      hintText: 'Search by Name',
+                      hintText: 'Search by name',
                     ),
                   ),
                   const SizedBox(width: 10),

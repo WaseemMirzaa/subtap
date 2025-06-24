@@ -67,4 +67,7 @@ class AppRoutes {
   /// The subcontractor myaccount  route.
   static const String subcontractorMyAccountPage =
       '/subcontractor-myaccount-page';
+
+  /// The subcontractor  route.
+  static const String subcontractorPage = '/subcontractor-page';
 }

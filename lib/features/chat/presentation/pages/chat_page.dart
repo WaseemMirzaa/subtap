@@ -49,7 +49,7 @@ class ChatPage extends StatelessWidget {
               child: SearchBarTile(
                 controller: _searchController,
                 onSearch: () {},
-                hintText: 'Search by Name',
+                hintText: 'Search by name',
               ),
             ),
             ListView.builder(

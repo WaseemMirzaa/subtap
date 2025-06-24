@@ -355,7 +355,7 @@ class _SubcontractorJobHistoryDetailPageState
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: CustomButton(
-                  text: 'Accept Jobs',
+                  text: 'Accept Job',
                   onTap: () {
                     Get.toNamed(AppRoutes.subcontractorJob);
                   },

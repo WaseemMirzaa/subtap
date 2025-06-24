@@ -229,7 +229,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     ),
                     borderRadius: 10,
                     height: 45,
-                    hintText: 'Search by categories',
+                    hintText: 'Search by Category',
                     fontStyle: FontStyle.normal,
                     hintTextColor: AppColor.darkGrayShade,
                     keyboardType: TextInputType.text,

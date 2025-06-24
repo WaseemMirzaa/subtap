@@ -183,3 +183,11 @@ class SubcontractorMyAccountPageBinding extends Bindings {
         () => SubcontractorMyaccountController());
   }
 }
+
+class SubcontractorFavPageBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<SubcontractorFavPageController>(
+        () => SubcontractorFavPageController());
+  }
+}

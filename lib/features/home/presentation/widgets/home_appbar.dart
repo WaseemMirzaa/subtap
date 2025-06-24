@@ -87,7 +87,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                             ),
                             kGap10,
                             CustomText(
-                              text: 'Property Manager(PM)',
+                              text: 'Property Manager (PM)',
                               decorationColor: AppColor.white,
                               fontSize: 15,
                               fontWeight: FontWeight.w400,

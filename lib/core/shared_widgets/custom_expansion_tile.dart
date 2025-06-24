@@ -128,7 +128,7 @@ List<JobCategoriesModel> listCate = [
     },
     {
       "svg": Assets.svgsHvac,
-      "text": "HVAC (Heating, Ventilation,AC)",
+      "text": "HVAC (Heating, Ventilation, AC)",
     },
     {
       "svg": Assets.svgsGasLine,

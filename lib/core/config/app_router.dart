@@ -118,13 +118,18 @@ class AppRouter {
         ),
         GetPage(
           name: AppRoutes.subcontractorProfilePage,
-          page: () => SubcontractorProfilePage(),
+          page: () => const SubcontractorProfilePage(),
           binding: SubcontractorProfilePageBinding(),
         ),
         GetPage(
           name: AppRoutes.subcontractorMyAccountPage,
           page: () => const SubcontractorMyaccountPage(),
           binding: SubcontractorMyAccountPageBinding(),
+        ),
+        GetPage(
+          name: AppRoutes.subcontractorPage,
+          page: () => const FavSubcontractorPage(),
+          binding: SubcontractorFavPageBinding(),
         ),
       ];
 }

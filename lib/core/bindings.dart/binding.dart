@@ -16,6 +16,7 @@ import 'package:subtap/controller/profile_setup_controller.dart';
 import 'package:subtap/controller/select_role_controller.dart';
 import 'package:subtap/controller/splash_controller.dart';
 import 'package:subtap/controller/subcontractor_controller.dart';
+import 'package:subtap/controller/subcontractor_fav_page_controller.dart';
 import 'package:subtap/controller/subcontractor_feedback_controller.dart';
 import 'package:subtap/controller/subcontractor_job_controller.dart';
 import 'package:subtap/controller/subcontractor_myaccount_controller.dart';

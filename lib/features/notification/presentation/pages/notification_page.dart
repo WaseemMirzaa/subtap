@@ -56,7 +56,7 @@ class NotificationPage extends StatelessWidget {
                     children: [
                       Flexible(
                         child: CustomText(
-                          text: 'Progress  Update Submitted',
+                          text: 'Progress Update Submitted',
                           fontWeight: FontWeight.w500,
                           fontSize: context.responsiveFontSize(16),
                         ),

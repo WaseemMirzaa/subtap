@@ -56,7 +56,9 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.w500,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.subcontractorPage);
+                      },
                       child: const CustomText(
                         text: 'View All',
                         color: AppColor.mutedGold,

@@ -52,7 +52,7 @@ class _FavoritesSubcontractorPageState
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: SearchBarTile(
-                hintText: 'Search by Name',
+                hintText: 'Search by name',
               ),
             ),
             Padding(

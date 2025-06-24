@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: context.responsiveHeight(2)),
               CustomTextField(
-                hintText: 'password',
+                hintText: 'Password',
                 fillColor: AppColor.mutedBlueShade,
                 borderColor: AppColor.mutedBlueShade,
                 textColor: AppColor.white,
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Add forgot password functionality
                     },
                     child: const CustomText(
-                      text: 'Forgot password?',
+                      text: 'Forgot Password?',
                       color: AppColor.white,
                       fontSize: 14,
                     ),
