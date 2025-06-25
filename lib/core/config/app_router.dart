@@ -83,7 +83,7 @@ class AppRouter {
         ),
         GetPage(
           name: AppRoutes.notificationPage,
-          page: () => const NotificationPage(),
+          page: () => NotificationPage(),
           binding: NotificationPageBinding(),
         ),
         GetPage(
@@ -130,6 +130,16 @@ class AppRouter {
           name: AppRoutes.subcontractorPage,
           page: () => const FavSubcontractorPage(),
           binding: SubcontractorFavPageBinding(),
+        ),
+        GetPage(
+          name: AppRoutes.supportRequests,
+          page: () => SupportRequestsPage(),
+          binding: SupportRequestPageBinding(),
+        ),
+        GetPage(
+          name: AppRoutes.changePassword,
+          page: () => const ChangePasswordPage(),
+          binding: ChangePasswordPageBinding(),
         ),
       ];
 }

@@ -191,3 +191,17 @@ class SubcontractorFavPageBinding extends Bindings {
         () => SubcontractorFavPageController());
   }
 }
+
+class SupportRequestPageBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<SupportRequestsController>(() => SupportRequestsController());
+  }
+}
+
+class ChangePasswordPageBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<ChangePasswordController>(() => ChangePasswordController());
+  }
+}

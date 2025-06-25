@@ -16,6 +16,11 @@ class _SubcontractorProfilePageState extends State<SubcontractorProfilePage> {
       'route': AppRoutes.subcontractorMyAccountPage,
     },
     {
+      'title': 'My Support Requests',
+      'icon': Assets.svgsToDoList,
+      'route': AppRoutes.supportRequests,
+    },
+    {
       'title': 'Notifications',
       'icon': Assets.svgsMyaccountNotification,
       'route': AppRoutes.notificationPage,
@@ -23,6 +28,7 @@ class _SubcontractorProfilePageState extends State<SubcontractorProfilePage> {
     {
       'title': 'Change Password',
       'icon': Assets.svgsMyaccountChangepass,
+      'route': AppRoutes.changePassword,
     },
   ];
 

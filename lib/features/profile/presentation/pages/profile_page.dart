@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
     {
       'title': 'Change Password',
       'icon': Assets.svgsMyaccountChangepass,
-      // 'route': AppRoutes.transactionHistory,
+      'route': AppRoutes.changePassword,
     },
   ];
 

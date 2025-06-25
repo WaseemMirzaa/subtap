@@ -108,7 +108,16 @@ class SubcontractorCard extends StatelessWidget {
                           children: [
                             TextButton(
                               onPressed: () {
-                                // Handle invite action
+                                Get.offAllNamed(AppRoutes.mainPageWithNavBar);
+                                Get.snackbar(
+                                  'Success',
+                                  'Invited successfully',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green,
+                                  colorText: AppColor.white,
+                                  margin: const EdgeInsets.all(16),
+                                  duration: const Duration(seconds: 3),
+                                );
                               },
                               style: TextButton.styleFrom(
                                 minimumSize: Size.zero,

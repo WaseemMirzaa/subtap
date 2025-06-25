@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:subtap/controller/navigation_controller.dart';
 import 'package:subtap/core/bindings.dart/binding.dart';
@@ -7,7 +8,12 @@ import 'package:subtap/core/theme/app_color.dart';
 
 void main() {
   Get.put(NavigationController());
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

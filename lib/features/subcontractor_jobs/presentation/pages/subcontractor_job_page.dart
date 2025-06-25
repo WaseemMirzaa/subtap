@@ -421,13 +421,9 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                           ? 'Accept Job As-Is'
                           : 'Submit a Counter Offer',
                       onTap: () {
-                        Get.toNamed(
-                          AppRoutes
-                              .subcontractorJobHistory, // Make sure you have this route defined
-                          arguments: {
-                            'initialTab': 'Active Jobs'
-                          }, // Pass the tab you want to show
-                        );
+                        NavigationController.to
+                            .navigateToMainPage(); // Navigate to MainPageWithNavbar
+                        NavigationController.to.changePage(1);
                       },
                       color: AppColor.mutedGold,
                       textColor: Colors.white,

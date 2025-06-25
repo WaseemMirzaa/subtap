@@ -11,6 +11,8 @@ class _JobRequestPageState extends State<JobRequestPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _targetBudgetController = TextEditingController();
+  final TextEditingController _dueDateController = TextEditingController();
 
   @override
   void dispose() {
@@ -24,6 +26,8 @@ class _JobRequestPageState extends State<JobRequestPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    // Detect if the keyboard is open
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return SubtapScaffold(
       appBar: const JobRequestAppBar(),
@@ -148,10 +152,10 @@ class _JobRequestPageState extends State<JobRequestPage> {
                           horizontal: 14,
                         ),
                         fillColor: AppColor.white,
-                        controller: _locationController,
+                        controller: _targetBudgetController,
                         borderColor: AppColor.white,
                         fontStyle: FontStyle.normal,
-                        hintText: 'Auto-fill from GPS or manual entry',
+                        hintText: 'Enter Budget',
                         hintTextColor: AppColor.darkGrayShade,
                         keyboardType: TextInputType.streetAddress,
                         validator: (value) {
@@ -176,10 +180,10 @@ class _JobRequestPageState extends State<JobRequestPage> {
                           horizontal: 14,
                         ),
                         fillColor: AppColor.white,
-                        controller: _locationController,
+                        controller: _dueDateController,
                         borderColor: AppColor.white,
                         fontStyle: FontStyle.normal,
-                        hintText: 'Auto-fill from GPS or manual entry',
+                        hintText: 'Enter Due Date',
                         hintTextColor: AppColor.darkGrayShade,
                         keyboardType: TextInputType.streetAddress,
                         validator: (value) {
@@ -268,37 +272,38 @@ class _JobRequestPageState extends State<JobRequestPage> {
               ),
             ),
           ),
-
-          // Fixed bottom container
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              height: 95,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              decoration: const BoxDecoration(
-                color: AppColor.backgroundColor,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      text: 'Submit a Request',
-                      onTap: () {},
-                      color: AppColor.mutedGold,
-                      textColor: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      radius: 17,
+          if (!isKeyboardOpen)
+            // Fixed bottom container
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                height: 95,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                decoration: const BoxDecoration(
+                  color: AppColor.backgroundColor,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        text: 'Submit a Request',
+                        onTap: () {},
+                        color: AppColor.mutedGold,
+                        textColor: Colors.white,
+                        fontWeight: FontWeight.w400,
+                        radius: 17,
+                      ),
                     ),
-                  ),
-                  kGap10,
-                ],
+                    kGap10,
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

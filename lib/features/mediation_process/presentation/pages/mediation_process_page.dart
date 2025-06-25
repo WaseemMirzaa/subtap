@@ -24,6 +24,7 @@ class _MediationProcessPageState extends State<MediationProcessPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return SubtapScaffold(
       appBar: const MediationProcessAppbar(),
@@ -156,32 +157,32 @@ class _MediationProcessPageState extends State<MediationProcessPage> {
               ),
             ),
           ),
-
-          // Fixed bottom container with submit button
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            decoration: const BoxDecoration(
-              color: AppColor.backgroundColor,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            ),
-            child: SafeArea(
-              top: false,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      text: 'Submit Now',
-                      onTap: () {},
-                      color: AppColor.mutedGold,
-                      textColor: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      radius: 17,
+          if (!isKeyboardOpen)
+            // Fixed bottom container with submit button
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              decoration: const BoxDecoration(
+                color: AppColor.backgroundColor,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: SafeArea(
+                top: false,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        text: 'Submit Now',
+                        onTap: () {},
+                        color: AppColor.mutedGold,
+                        textColor: Colors.white,
+                        fontWeight: FontWeight.w400,
+                        radius: 17,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

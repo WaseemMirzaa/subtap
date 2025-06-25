@@ -70,4 +70,13 @@ class AppRoutes {
 
   /// The subcontractor  route.
   static const String subcontractorPage = '/subcontractor-page';
+
+  /// The Support Requests  route.
+  static const String supportRequests = '/support-Requests';
+
+  /// The Support Requests Detials route.
+  static const String supportRequestsDetails = '/support-RequestsDetails';
+
+  /// The change password  route.
+  static const String changePassword = '/change-Password';
 }

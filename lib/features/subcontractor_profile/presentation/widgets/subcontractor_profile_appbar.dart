@@ -131,7 +131,7 @@ class _IconRowState extends State<_IconRow> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         InkWell(
           onTap: () {
@@ -148,7 +148,7 @@ class _IconRowState extends State<_IconRow> {
             color: _isChatIconTapped ? AppColor.mutedGold : null,
           ),
         ),
-        const SizedBox(width: 20),
+        const SizedBox(width: 70),
         const SizedBox(
           height: 25,
           child: VerticalDivider(
@@ -156,7 +156,7 @@ class _IconRowState extends State<_IconRow> {
             thickness: 2,
           ),
         ),
-        const SizedBox(width: 20),
+        const SizedBox(width: 70),
         InkWell(
           onTap: () {
             setState(() {

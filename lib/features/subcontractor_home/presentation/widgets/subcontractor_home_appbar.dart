@@ -49,7 +49,7 @@ class SubcontractorHomeAppbar extends StatelessWidget
                         ),
                       ),
                       InkWell(
-                        onTap: () => Get.toNamed(AppRoutes.notificationPage),
+                        // onTap: () => Get.toNamed(AppRoutes.notificationPage),
                         child: SvgPicture.asset(
                           Assets.svgsNotification,
                           width: 24,
@@ -114,7 +114,7 @@ class SubcontractorHomeAppbar extends StatelessWidget
                       color: Colors.white,
                     ),
                     onTap: () {
-                      Get.toNamed(AppRoutes.subcontractorJob);
+                      NavigationController.to.changePage(1);
                     },
                   ),
                 ),
@@ -155,7 +155,7 @@ class SubcontractorHomeAppbar extends StatelessWidget
                                   text: 'Cash Out',
                                   fontSize: 11,
                                   height: 38,
-                                  width: 80,
+                                  width: 90,
                                   radius: 12,
                                   onTap: () {
                                     // Cash out logic

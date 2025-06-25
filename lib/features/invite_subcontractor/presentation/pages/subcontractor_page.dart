@@ -8,21 +8,21 @@ class SubcontractorsPage extends StatelessWidget {
       'expertise': 'General Handyman',
       'isOnline': true,
       'avatarImage': Assets.imagesSubcontractorMichael,
-      'isFavorite': true, // First person is favorite
+      'isFavorite': true,
     },
     {
       'name': 'Sarah Jhonson',
       'expertise': 'General Handyman',
       'isOnline': true,
       'avatarImage': Assets.imagesSubcontractorSarah,
-      'isFavorite': true, // Second person is favorite
+      'isFavorite': true,
     },
     {
       'name': 'David Wilson',
       'expertise': 'General Handyman',
       'isOnline': true,
       'avatarImage': Assets.imagesSubcontractorDavid,
-      'isFavorite': false, // Rest are unfavorite
+      'isFavorite': false,
     },
     {
       'name': 'Laura Martinez',

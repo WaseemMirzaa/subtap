@@ -52,7 +52,7 @@ class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
                             Assets.svgsUploadProgress, // Example SVG asset
                         actionText: 'Upload Progress',
                         onTap: () {
-                          Get.toNamed(AppRoutes.uploadProgress);
+                          // Get.toNamed(AppRoutes.uploadProgress);
                         },
                       ),
                       ActionCard(
@@ -60,25 +60,14 @@ class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
                             Assets.svgsSubmitProposal, // Example SVG asset
                         actionText: 'Submit Proposal',
                         onTap: () {
-                          Get.toNamed(
-                            AppRoutes
-                                .subcontractorJobHistory, // Make sure you have this route defined
-                            arguments: {
-                              'initialTab': 'Active Jobs'
-                            }, // Pass the tab you want to show
-                          );
+                          NavigationController.to.changePage(1);
                         },
                       ),
                       ActionCard(
                         svgAssetPath: Assets.svgsOpenJobs, // Example SVG asset
                         actionText: 'Open Jobs',
                         onTap: () {
-                          Get.toNamed(
-                            AppRoutes.subcontractorJobHistory,
-                            arguments: {
-                              'initialTab': 'Open Jobs'
-                            }, // Pass the tab you want to show
-                          );
+                          NavigationController.to.changePage(1);
                         },
                       ),
                     ],

@@ -114,7 +114,7 @@ class ProfileSetupScreen extends StatelessWidget {
                     navigationController.setUserType(isSubcontractor);
 
                     // Navigate to main page
-                    Get.toNamed(AppRoutes.mainPageWithNavBar);
+                    Get.offAllNamed(AppRoutes.mainPageWithNavBar);
                   },
                   text: 'Setup',
                   radius: 20,

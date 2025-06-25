@@ -5,6 +5,7 @@ import 'package:subtap/features/auth/presentation/pages/login_screen.dart';
 import 'package:subtap/features/auth/presentation/pages/profile_setup_screen.dart';
 import 'package:subtap/features/auth/presentation/pages/select_role_screen.dart';
 import 'package:subtap/features/auth/presentation/pages/verify_email_screen.dart';
+import 'package:subtap/features/change_password/presentation/pages/pages.dart';
 import 'package:subtap/features/fav_subcontractor/presentation/pages/pages.dart';
 import 'package:subtap/features/home/presentation/pages/pages.dart';
 import 'package:subtap/features/invite_subcontractor/presentation/pages/pages.dart';
@@ -22,6 +23,7 @@ import 'package:subtap/features/subcontractor_home/presentation/pages/pages.dart
 import 'package:subtap/features/subcontractor_job_history/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_jobs/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_profile/presentation/pages/pages.dart';
+import 'package:subtap/features/support_request/presentation/pages/pages.dart';
 
 part 'app_router.dart';
 part 'app_routes.dart';

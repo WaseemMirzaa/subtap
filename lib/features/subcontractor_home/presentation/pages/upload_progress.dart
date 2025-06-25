@@ -24,6 +24,7 @@ class _UploadProgressPageState extends State<UploadProgressPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return SubtapScaffold(
       appBar: const UploadProgressAppbar(),
@@ -46,7 +47,7 @@ class _UploadProgressPageState extends State<UploadProgressPage> {
                   CustomTextField(
                     fontStyle: FontStyle.normal,
                     fillColor: AppColor.white,
-                    controller: _descriptionController,
+                    controller: _titleController,
                     borderColor: AppColor.white,
                     hintText: 'Enter',
                     hintTextColor: AppColor.darkGrayShade,
@@ -66,7 +67,7 @@ class _UploadProgressPageState extends State<UploadProgressPage> {
                   ),
                   kGap20,
                   CustomText(
-                    text: 'updates',
+                    text: 'Updates',
                     fontSize: screenWidth > 600 ? 18 : 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.black,
@@ -144,60 +145,60 @@ class _UploadProgressPageState extends State<UploadProgressPage> {
               ),
             ),
           ),
-
-          // Fixed bottom container with submit button
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            decoration: const BoxDecoration(
-              color: AppColor.backgroundColor,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            ),
-            child: SafeArea(
-              top: false,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      text: 'Submit Progress for Mark as Complete',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const JobVerificationPage(
-                              job: JobHistory(
-                                title: 'Electrical & Tech',
-                                svgIcon: Assets.svgsTech,
-                                price: 65.0,
-                                targetBudget: '\$50.00',
-                                dueDate: 'Friday, May 23, 2025',
-                                address: '456 Oak Ave, Springfield',
-                                status: 'Active Jobs',
-                                description:
-                                    "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-                                subcontractorModel: SubcontractorModel(
-                                  expertise: 'Electrician',
+          if (!isKeyboardOpen)
+            // Fixed bottom container with submit button
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              decoration: const BoxDecoration(
+                color: AppColor.backgroundColor,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: SafeArea(
+                top: false,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        text: 'Submit Progress for Mark as Complete',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const JobVerificationPage(
+                                job: JobHistory(
+                                  title: 'Electrical & Tech',
+                                  svgIcon: Assets.svgsTech,
+                                  price: 65.0,
+                                  targetBudget: '\$50.00',
+                                  dueDate: 'Friday, May 23, 2025',
+                                  address: '456 Oak Ave, Springfield',
+                                  status: 'Active Jobs',
                                   description:
-                                      'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after turning on garbage disposal.',
-                                  name: 'James Michael',
-                                  imageUrl: 'path_to_image',
-                                  price: '50.00',
-                                  rating: 4.0,
+                                      "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
+                                  subcontractorModel: SubcontractorModel(
+                                    expertise: 'Electrician',
+                                    description:
+                                        'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after turning on garbage disposal.',
+                                    name: 'James Michael',
+                                    imageUrl: 'path_to_image',
+                                    price: '50.00',
+                                    rating: 4.0,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                      color: AppColor.mutedGold,
-                      textColor: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      radius: 17,
+                          );
+                        },
+                        color: AppColor.mutedGold,
+                        textColor: Colors.white,
+                        fontWeight: FontWeight.w400,
+                        radius: 17,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

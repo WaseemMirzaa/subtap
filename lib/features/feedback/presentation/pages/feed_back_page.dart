@@ -1,17 +1,28 @@
 part of 'pages.dart';
 
-class FeedbackScreen extends StatelessWidget {
+class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({super.key});
 
+  @override
+  _FeedbackScreenState createState() => _FeedbackScreenState();
+}
+
+class _FeedbackScreenState extends State<FeedbackScreen> {
+  String? _selectedTip = 'Others'; // Default selected tip
+
   Widget _buildTipButton(String amount, double width) {
+    final isSelected = _selectedTip == amount;
+
     return SizedBox(
       width: width,
       height: 48,
       child: Container(
         decoration: BoxDecoration(
-          color: AppColor.white,
+          color: isSelected ? AppColor.mutedGold : AppColor.white,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.white),
+          border: Border.all(
+            color: isSelected ? AppColor.mutedGold : Colors.white,
+          ),
         ),
         child: TextButton(
           style: TextButton.styleFrom(
@@ -20,12 +31,16 @@ class FeedbackScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              _selectedTip = amount;
+            });
+          },
           child: Text(
             amount,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
-              color: AppColor.darkGrayShade,
+              color: isSelected ? Colors.white : AppColor.darkGrayShade,
               fontFamily: 'HelveticaNeueMedium',
             ),
             textAlign: TextAlign.center,
@@ -39,6 +54,7 @@ class FeedbackScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return SubtapScaffold(
       appBar: const FeedBackAppbar(),
@@ -83,11 +99,14 @@ class FeedbackScreen extends StatelessWidget {
                   direction: Axis.horizontal,
                   allowHalfRating: true,
                   itemCount: 5,
-                  itemSize: 21,
-                  ignoreGestures: true,
+                  itemSize: 26,
+                  ignoreGestures: false, // Enable interaction
                   itemBuilder: (context, _) =>
                       const Icon(Icons.star, color: AppColor.vibrantYellow),
-                  onRatingUpdate: (rating) {},
+                  onRatingUpdate: (rating) {
+                    // Handle rating changes here
+                    print('New rating: $rating');
+                  },
                 ),
                 SizedBox(height: context.responsiveHeight(2)),
                 CustomTextField(
@@ -143,29 +162,31 @@ class FeedbackScreen extends StatelessWidget {
             ),
           ),
           // Bottom submit button container
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              decoration: const BoxDecoration(
-                color: AppColor.backgroundColor,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-              child: CustomButton(
-                text: 'Submit Review & Tip',
-                fontSize: 16,
-                onTap: () {
-                  // Handle submit action
-                },
-                color: AppColor.mutedGold,
-                textColor: Colors.white,
-                fontWeight: FontWeight.w400,
-                radius: 17,
+          if (!isKeyboardOpen)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                decoration: const BoxDecoration(
+                  color: AppColor.backgroundColor,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                child: CustomButton(
+                  text: 'Submit Review & Tip',
+                  fontSize: 16,
+                  onTap: () {
+                    // Handle submit action
+                  },
+                  color: AppColor.mutedGold,
+                  textColor: Colors.white,
+                  fontWeight: FontWeight.w400,
+                  radius: 17,
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

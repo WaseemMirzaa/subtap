@@ -8,7 +8,8 @@ class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({super.key});
 
   @override
-  _FilterBottomSheetState createState() => _FilterBottomSheetState();
+  _FilterBottomSheetState createState() =>
+      _FilterBottomSheetState(); // Fixed here
 }
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
@@ -24,9 +25,23 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
     super.dispose();
   }
 
+  double _getBottomInset(BuildContext context) {
+    // Get the bottom inset (keyboard height)
+    return MediaQuery.of(context).viewInsets.bottom;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    // Calculate the height based on keyboard visibility
+    final double keyboardHeight = _getBottomInset(context);
+    final double baseHeight =
+        MediaQuery.of(context).size.height * 0.7; // Base height of bottom sheet
+    final double totalHeight = baseHeight + keyboardHeight;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300), // Animation duration
+      curve: Curves.easeInOut, // Animation curve
+      height: totalHeight, // Adjust height dynamically
       decoration: const BoxDecoration(
         color: AppColor.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -87,8 +102,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
 
                   const SizedBox(height: 6),
                   Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.start, // Center the row content
                     children: [
                       // Decrease Button
                       InkWell(
@@ -100,7 +113,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                           });
                         },
                         child: Container(
-                          width: 40, // Increased size for better tap area
+                          width: 40,
                           height: 40,
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
@@ -142,7 +155,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                           });
                         },
                         child: Container(
-                          width: 40, // Increased size for better tap area
+                          width: 40,
                           height: 40,
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
@@ -170,7 +183,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   ),
                   const SizedBox(height: 8),
 
-                  // Star Rating Selector (unchanged)
+                  // Star Rating Selector
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: List.generate(5, (index) {
@@ -218,7 +231,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   ),
                   const SizedBox(height: 8),
 
-                  // Categories TextField (unchanged)
+                  // Categories TextField
                   CustomTextField(
                     fillColor: AppColor.lightGray,
                     controller: _categoryController,

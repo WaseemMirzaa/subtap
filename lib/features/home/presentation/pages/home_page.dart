@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Get.toNamed(AppRoutes.subcontractorPage);
+                        Get.toNamed(AppRoutes.favoritesSubcontractor);
                       },
                       child: const CustomText(
                         text: 'View All',

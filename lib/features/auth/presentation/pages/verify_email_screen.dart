@@ -12,6 +12,12 @@ class VerifyEmailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Create a list of TextEditingControllers for each TextField
+    final List<TextEditingController> controllers =
+        List.generate(5, (_) => TextEditingController());
+    // Create a list of FocusNodes for each TextField
+    final List<FocusNode> focusNodes = List.generate(5, (_) => FocusNode());
+
     return Scaffold(
       backgroundColor: AppColor.lightGray,
       appBar: AppBar(
@@ -49,31 +55,59 @@ class VerifyEmailScreen extends StatelessWidget {
                   (index) => SizedBox(
                     width: 57,
                     height: 50,
-                    child: TextField(
+                    child: TextFormField(
+                      controller: controllers[index],
+                      focusNode: focusNodes[index],
                       textAlign: TextAlign.center,
+                      textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.number,
                       maxLength: 1,
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         color: Color(0xFF1A1A1A),
                       ),
+                      textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         counterText: "",
                         filled: true,
                         fillColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 1, horizontal: 4), // Adjusted padding
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide.none,
                         ),
                       ),
+                      onChanged: (value) {
+                        if (value.length == 1 && index < 4) {
+                          FocusScope.of(context)
+                              .requestFocus(focusNodes[index + 1]);
+                        }
+                        if (value.isEmpty && index > 0) {
+                          FocusScope.of(context)
+                              .requestFocus(focusNodes[index - 1]);
+                        }
+                      },
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 32),
               CustomButton(
-                onTap: () => {Get.toNamed(AppRoutes.selectRole)},
-                text: 'Verified Email',
+                onTap: () {
+                  // Combine the input from all controllers to form the code
+                  // String code = controllers.map((c) => c.text).join();
+                  // if (code.length == 5) {
+                  Get.toNamed(AppRoutes.selectRole);
+                  //  else {
+                  //   // Optionally show a snackbar or error message
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     const SnackBar(
+                  //         content: Text('Please enter a complete code')),
+                  //   );
+                  // }
+                },
+                text: 'Verify Email',
                 radius: 20,
                 height: 55,
               ),

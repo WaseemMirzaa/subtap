@@ -119,8 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               SizedBox(height: context.responsiveHeight(3)),
-              CustomButton(
-                onTap: () => {},
+              const CustomButton(
+                // onTap: () => {Get.toNamed(AppRoutes.mainPageWithNavBar)},
                 text: 'Sign in',
                 radius: 20,
                 height: 55,

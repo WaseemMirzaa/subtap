@@ -1,12 +1,12 @@
-part of 'widget.dart';
+part of 'widgets.dart';
 
-class MessageBubble extends StatelessWidget {
+class MessageBubbleCard extends StatelessWidget {
   final String text;
   final bool isMe;
   final String time;
   final String? avatar;
 
-  const MessageBubble({
+  const MessageBubbleCard({
     super.key,
     required this.text,
     required this.isMe,
@@ -55,7 +55,7 @@ class MessageBubble extends StatelessWidget {
                 child: Text(
                   text,
                   style: TextStyle(
-                    color: isMe ? AppColor.white : AppColor.black,
+                    color: isMe ? AppColor.white : AppColor.midGray,
                     fontFamily: 'HelveticaNeueMedium',
                   ),
                   softWrap: true, // Ensure text wraps to the next line
