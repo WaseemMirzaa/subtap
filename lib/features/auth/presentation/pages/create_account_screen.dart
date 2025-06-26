@@ -41,18 +41,18 @@ class CreateAccountScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: context.responsiveHeight(10)),
-              CustomTextField(
+              const CustomTextField(
                 hintText: 'Email address',
                 fillColor: AppColor.white,
                 borderColor: AppColor.white,
                 borderRadius: 18,
                 textColor: AppColor.mediumGray,
                 hintTextColor: AppColor.mediumGray,
-                contentPadding:
-                    context.responsivePadding(horizontal: 4, vertical: 2),
+                // contentPadding:
+                //     context.responsivePadding(horizontal: 4, vertical: 2),
               ),
               const SizedBox(height: 16),
-              CustomTextField(
+              const CustomTextField(
                 hintText: 'Password',
                 hintTextColor: AppColor.mediumGray,
                 fillColor: AppColor.white,
@@ -60,13 +60,13 @@ class CreateAccountScreen extends StatelessWidget {
                 textColor: AppColor.mediumGray,
                 passwordToggleIconColor: AppColor.mediumGray,
                 borderRadius: 18,
-                contentPadding:
-                    context.responsivePadding(horizontal: 4, vertical: 2),
+                // contentPadding:
+                //     context.responsivePadding(horizontal: 4, vertical: 2),
                 obscureText: true,
                 showPasswordToggle: true,
               ),
               const SizedBox(height: 16),
-              CustomTextField(
+              const CustomTextField(
                 hintText: 'Confirm Password',
                 hintTextColor: AppColor.mediumGray,
                 fillColor: AppColor.white,
@@ -74,8 +74,8 @@ class CreateAccountScreen extends StatelessWidget {
                 textColor: AppColor.mediumGray,
                 passwordToggleIconColor: AppColor.mediumGray,
                 borderRadius: 18,
-                contentPadding:
-                    context.responsivePadding(horizontal: 4, vertical: 2),
+                // contentPadding:
+                //     context.responsivePadding(horizontal: 4, vertical: 2),
                 obscureText: true,
                 showPasswordToggle: true,
               ),

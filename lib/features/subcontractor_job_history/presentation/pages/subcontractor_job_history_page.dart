@@ -11,7 +11,8 @@ class SubcontractorJobHistoryPage extends StatefulWidget {
 class _SubcontractorJobHistoryPageState
     extends State<SubcontractorJobHistoryPage> {
   final TextEditingController _searchController = TextEditingController();
-  String _selectedTab = 'Open Jobs';
+  // String _selectedTab = 'Open Jobs';
+  var controller = Get.put(SubcontrctorJobHistoryController());
   final List<JobHistory> _allJobs = [
     const JobHistory(
       title: 'General Trades',
@@ -99,10 +100,11 @@ class _SubcontractorJobHistoryPageState
   @override
   void initState() {
     super.initState();
-    _selectedTab =
-        (Get.arguments as Map<String, dynamic>?)?['initialTab'] ?? 'Open Jobs';
+    print('callingfssss');
+    // controller.selectedTab =
+    //     (Get.arguments as Map<String, dynamic>?)?['initialTab'] ?? 'Open Jobs';
     _filteredJobs =
-        _allJobs.where((job) => job.status == _selectedTab).toList();
+        _allJobs.where((job) => job.status == controller.selectedTab).toList();
   }
 
   @override
@@ -121,6 +123,7 @@ class _SubcontractorJobHistoryPageState
 
   @override
   Widget build(BuildContext context) {
+    print('selected${controller.selectedTab}');
     final screenSize = MediaQuery.of(context).size;
 
     return SubtapScaffold(
@@ -155,10 +158,10 @@ class _SubcontractorJobHistoryPageState
                         Expanded(
                           child: CustomToggleButton(
                             text: 'Open Jobs',
-                            isActive: _selectedTab == 'Open Jobs',
+                            isActive: controller.selectedTab == 'Open Jobs',
                             onTap: () {
                               setState(() {
-                                _selectedTab = 'Open Jobs';
+                                controller.selectedTab = 'Open Jobs';
                                 _filteredJobs = _allJobs
                                     .where((job) => job.status == 'Open Jobs')
                                     .toList();
@@ -169,10 +172,10 @@ class _SubcontractorJobHistoryPageState
                         Expanded(
                           child: CustomToggleButton(
                             text: 'Active Jobs',
-                            isActive: _selectedTab == 'Active Jobs',
+                            isActive: controller.selectedTab == 'Active Jobs',
                             onTap: () {
                               setState(() {
-                                _selectedTab = 'Active Jobs';
+                                controller.selectedTab = 'Active Jobs';
                                 _filteredJobs = _allJobs
                                     .where((job) => job.status == 'Active Jobs')
                                     .toList();
@@ -189,7 +192,7 @@ class _SubcontractorJobHistoryPageState
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Text(
-                              'No ${_selectedTab.toLowerCase()} found',
+                              'No ${controller.selectedTab.toLowerCase()} found',
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: AppColor.darkGray,
@@ -210,7 +213,9 @@ class _SubcontractorJobHistoryPageState
                               crossAxisSpacing: 15,
                               mainAxisSpacing: 15,
                               childAspectRatio:
-                                  _selectedTab == 'Open Jobs' ? 1.57 : 2,
+                                  controller.selectedTab == 'Open Jobs'
+                                      ? 1.57
+                                      : 2,
                             ),
                             itemBuilder: (context, index) {
                               return SubcontractorJobHistoryCard(
@@ -222,7 +227,8 @@ class _SubcontractorJobHistoryPageState
                                       builder: (context) =>
                                           SubcontractorJobHistoryDetailPage(
                                         job: _filteredJobs[index],
-                                        isOpenJob: _selectedTab == 'Open Jobs',
+                                        isOpenJob: controller.selectedTab ==
+                                            'Open Jobs',
                                       ),
                                     ),
                                   );

@@ -78,7 +78,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           return null;
                         },
                       ),
-                      const Gap(10),
+                      const Gap(20),
 
                       CustomText(
                         text: 'New Password',
@@ -107,7 +107,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           return null;
                         },
                       ),
-                      const Gap(10),
+                      const Gap(20),
                       CustomText(
                         text: 'Confirm Password',
                         fontSize: screenWidth > 600 ? 18 : 16,
@@ -163,7 +163,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     Expanded(
                       child: CustomButton(
                         text: 'Save Changes',
-                        onTap: () {},
+                        onTap: () {
+                          Get.back();
+                        },
                         color: AppColor.mutedGold,
                         textColor: Colors.white,
                         fontWeight: FontWeight.w400,

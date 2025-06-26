@@ -8,7 +8,7 @@ class FeedbackScreen extends StatefulWidget {
 }
 
 class _FeedbackScreenState extends State<FeedbackScreen> {
-  String? _selectedTip = 'Others'; // Default selected tip
+  String _selectedTip = 'Others'; // Default selected tip
 
   Widget _buildTipButton(String amount, double width) {
     final isSelected = _selectedTip == amount;
@@ -16,34 +16,30 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     return SizedBox(
       width: width,
       height: 48,
-      child: Container(
-        decoration: BoxDecoration(
-          color: isSelected ? AppColor.mutedGold : AppColor.white,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: isSelected ? AppColor.mutedGold : Colors.white,
-          ),
-        ),
-        child: TextButton(
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            _selectedTip = amount; // Update the selected tip
+          });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: isSelected ? AppColor.mutedGold : AppColor.white,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: isSelected ? AppColor.mutedGold : Colors.white,
             ),
           ),
-          onPressed: () {
-            setState(() {
-              _selectedTip = amount;
-            });
-          },
-          child: Text(
-            amount,
-            style: TextStyle(
-              fontSize: 14,
-              color: isSelected ? Colors.white : AppColor.darkGrayShade,
-              fontFamily: 'HelveticaNeueMedium',
+          child: Center(
+            child: Text(
+              amount,
+              style: TextStyle(
+                fontSize: 14,
+                color: isSelected ? Colors.white : AppColor.darkGrayShade,
+                fontFamily: 'HelveticaNeueMedium',
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
         ),
       ),
@@ -178,7 +174,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   text: 'Submit Review & Tip',
                   fontSize: 16,
                   onTap: () {
-                    // Handle submit action
+                    NavigationController.to.navigateToMainPage();
+                    NavigationController.to.changePage(1);
                   },
                   color: AppColor.mutedGold,
                   textColor: Colors.white,

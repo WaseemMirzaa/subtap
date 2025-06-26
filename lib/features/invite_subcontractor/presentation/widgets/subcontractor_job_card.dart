@@ -184,7 +184,7 @@ class SubcontractorJobCard extends StatelessWidget {
                     child: IntrinsicWidth(
                       child: CustomButton(
                         text: 'ACCEPT OFFER',
-                        onTap: onReject,
+                        onTap: onAccept,
                         color: AppColor.mutedGold,
                         textColor: AppColor.white,
                         enableBorder: true,
@@ -200,7 +200,7 @@ class SubcontractorJobCard extends StatelessWidget {
                     child: IntrinsicWidth(
                       child: CustomButton(
                         text: 'REJECT',
-                        onTap: onAccept,
+                        onTap: onReject,
                         color: AppColor.darkBlue,
                         textColor: AppColor.white,
                         height: 32,

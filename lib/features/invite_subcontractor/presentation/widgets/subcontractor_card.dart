@@ -108,7 +108,7 @@ class SubcontractorCard extends StatelessWidget {
                           children: [
                             TextButton(
                               onPressed: () {
-                                Get.offAllNamed(AppRoutes.mainPageWithNavBar);
+                                Get.back();
                                 Get.snackbar(
                                   'Success',
                                   'Invited successfully',

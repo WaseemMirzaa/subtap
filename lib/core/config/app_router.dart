@@ -58,8 +58,13 @@ class AppRouter {
         ),
         GetPage(
           name: AppRoutes.jobRequest,
-          page: () => const JobRequestPage(),
-          binding: JobRequestBinding(),
+          page: () {
+            // Retrieve the arguments
+            final args = Get.arguments as Map<String, dynamic>?;
+            return JobRequestPage(
+              initialTitle: args?['initialTitle'] as String?,
+            );
+          },
         ),
         GetPage(
           name: AppRoutes.inviteSubcontractorPage,

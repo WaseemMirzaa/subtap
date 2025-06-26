@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:subtap/controller/navigation_controller.dart';
 import 'package:subtap/core/config/config.dart';
-import 'package:subtap/core/extension/media_query_extension.dart';
 import 'package:subtap/core/presentation/widgets/terms_and_policy_links.dart';
 import 'package:subtap/core/shared_widgets/custom_button.dart';
 import 'package:subtap/core/shared_widgets/custom_text.dart';
@@ -27,7 +25,7 @@ class ProfileSetupScreen extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColor.backColor),
-          onPressed: () => context.pop(),
+          onPressed: () => Get.back(),
         ),
         title: const CustomText(
             text: 'Profile Setup', color: AppColor.backColor, fontSize: 18),
@@ -39,29 +37,29 @@ class ProfileSetupScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomTextField(
+                const CustomTextField(
                   hintText: 'Full Name',
                   hintTextColor: AppColor.mediumGray,
                   fillColor: AppColor.white,
                   borderColor: AppColor.white,
                   borderRadius: 18,
                   textColor: AppColor.mediumGray,
-                  contentPadding:
-                      context.responsivePadding(horizontal: 4, vertical: 2),
+                  // contentPadding:
+                  //     context.responsivePadding(horizontal: 4, vertical: 2),
                 ),
                 const SizedBox(height: 16),
-                CustomTextField(
+                const CustomTextField(
                   hintText: 'Company Name',
                   hintTextColor: AppColor.mediumGray,
                   fillColor: AppColor.white,
                   borderColor: AppColor.white,
                   borderRadius: 18,
                   textColor: AppColor.mediumGray,
-                  contentPadding:
-                      context.responsivePadding(horizontal: 4, vertical: 2),
+                  // contentPadding:
+                  //     context.responsivePadding(horizontal: 4, vertical: 2),
                 ),
                 const SizedBox(height: 16),
-                CustomTextField(
+                const CustomTextField(
                   hintText: 'Phone Number',
                   hintTextColor: AppColor.mediumGray,
                   fillColor: AppColor.white,
@@ -69,20 +67,20 @@ class ProfileSetupScreen extends StatelessWidget {
                   borderRadius: 18,
                   textColor: AppColor.mediumGray,
                   keyboardType: TextInputType.phone,
-                  contentPadding:
-                      context.responsivePadding(horizontal: 4, vertical: 2),
+                  // contentPadding:
+                  //     context.responsivePadding(horizontal: 4, vertical: 2),
                 ),
                 if (isSubcontractor) ...[
                   const SizedBox(height: 16),
-                  CustomTextField(
+                  const CustomTextField(
                     hintText: 'Referral Code(Optional)',
                     hintTextColor: AppColor.mediumGray,
                     fillColor: AppColor.white,
                     borderColor: AppColor.white,
                     borderRadius: 18,
                     textColor: AppColor.mediumGray,
-                    contentPadding:
-                        context.responsivePadding(horizontal: 4, vertical: 2),
+                    // contentPadding:
+                    //     context.responsivePadding(horizontal: 4, vertical: 2),
                   ),
                   const SizedBox(height: 16),
                   const CustomButton(

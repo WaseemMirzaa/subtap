@@ -1,7 +1,8 @@
 part of 'pages.dart';
 
 class JobRequestPage extends StatefulWidget {
-  const JobRequestPage({super.key});
+  final String? initialTitle;
+  const JobRequestPage({super.key, this.initialTitle});
 
   @override
   State<JobRequestPage> createState() => _JobRequestPageState();
@@ -13,6 +14,15 @@ class _JobRequestPageState extends State<JobRequestPage> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _targetBudgetController = TextEditingController();
   final TextEditingController _dueDateController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Set the initial title if provided
+    if (widget.initialTitle != null) {
+      _titleController.text = widget.initialTitle!;
+    }
+  }
 
   @override
   void dispose() {
@@ -157,7 +167,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                         fontStyle: FontStyle.normal,
                         hintText: 'Enter Budget',
                         hintTextColor: AppColor.darkGrayShade,
-                        keyboardType: TextInputType.streetAddress,
+                        keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter a location';
@@ -185,10 +195,36 @@ class _JobRequestPageState extends State<JobRequestPage> {
                         fontStyle: FontStyle.normal,
                         hintText: 'Enter Due Date',
                         hintTextColor: AppColor.darkGrayShade,
-                        keyboardType: TextInputType.streetAddress,
+                        readOnly: true, // Prevent manual input
+                        keyboardType: TextInputType.none, // Disable keyboard
+                        onTap: () async {
+                          // Show date picker with restriction on past dates
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(), // Default to today
+                            firstDate: DateTime
+                                .now(), // Restrict to today or future dates
+                            lastDate: DateTime(
+                                2100), // Set a far future date as the upper limit
+                          );
+
+                          if (pickedDate != null) {
+                            // Format the selected date and update the controller
+                            String formattedDate =
+                                DateFormat('yyyy-MM-dd').format(pickedDate);
+                            _dueDateController.text = formattedDate;
+                          }
+                        },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter a location';
+                            return 'Please select a due date';
+                          }
+                          // Optional: Additional validation to ensure the date is not in the past
+                          DateTime selectedDate =
+                              DateFormat('yyyy-MM-dd').parse(value);
+                          if (selectedDate.isBefore(DateTime.now()
+                              .subtract(const Duration(days: 1)))) {
+                            return 'Due date cannot be in the past';
                           }
                           return null;
                         },
@@ -292,7 +328,19 @@ class _JobRequestPageState extends State<JobRequestPage> {
                     Expanded(
                       child: CustomButton(
                         text: 'Submit a Request',
-                        onTap: () {},
+                        onTap: () {
+                          NavigationController.to.navigateToMainPage();
+                          NavigationController.to.changePage(1);
+                          Get.snackbar(
+                            'Success',
+                            'Submit Request Successfully',
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.green,
+                            colorText: AppColor.white,
+                            margin: const EdgeInsets.all(16),
+                            duration: const Duration(seconds: 3),
+                          );
+                        },
                         color: AppColor.mutedGold,
                         textColor: Colors.white,
                         fontWeight: FontWeight.w400,

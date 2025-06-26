@@ -75,6 +75,17 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
     }
   }
 
+  void _removeLineItem(int index) {
+    if (!_makeCounterOffer && _lineItems.length > 1) {
+      setState(() {
+        // Dispose controllers before removing
+        _lineItems[index]['description']?.dispose();
+        _lineItems[index]['price']?.dispose();
+        _lineItems.removeAt(index);
+      });
+    }
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -214,19 +225,25 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomText(
-                            text: 'Line Item Description',
-                            fontSize: screenWidth > 600 ? 18 : 16,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
+                          SizedBox(
+                            width: screenWidth * 0.47,
+                            child: CustomText(
+                              text: 'Line Item Description',
+                              fontSize: screenWidth > 600 ? 18 : 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                          SizedBox(
+                            width: _lineItems.length > 1
+                                ? screenWidth * 0.39
+                                : screenWidth * 0.29,
                             child: CustomText(
                               text: 'Price (\$)',
                               fontSize: screenWidth > 600 ? 18 : 16,
                               fontWeight: FontWeight.w400,
                               color: Colors.black,
+                              textAlign: TextAlign.left,
                             ),
                           ),
                         ],
@@ -235,7 +252,9 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
 
                       // Dynamic Line Items
                       Column(
-                        children: _lineItems.map((item) {
+                        children: _lineItems.asMap().entries.map((entry) {
+                          int index = entry.key;
+                          var item = entry.value;
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 15),
                             child: Row(
@@ -243,7 +262,7 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                               children: [
                                 // Description field
                                 SizedBox(
-                                  width: screenWidth * 0.5,
+                                  width: screenWidth * 0.46,
                                   child: CustomTextField(
                                     fillColor: AppColor.white,
                                     controller: item['description'],
@@ -264,7 +283,7 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
 
                                 // Price field
                                 SizedBox(
-                                  width: screenWidth * 0.3,
+                                  width: screenWidth * 0.29,
                                   child: CustomTextField(
                                     fillColor: AppColor.white,
                                     controller: item['price'],
@@ -274,14 +293,34 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                                       horizontal: 14,
                                     ),
                                     borderRadius: 10,
-                                    height: 45,
-                                    hintText: '\$Price field',
+                                    height: 46,
+                                    hintText: 'Price field',
+                                    hintStyle: const TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'HelveticaNeueLight',
+                                        color: AppColor.midGray,
+                                        fontWeight: FontWeight.w400),
                                     fontStyle: FontStyle.normal,
                                     hintTextColor: AppColor.darkGrayShade,
                                     keyboardType: TextInputType.number,
                                     readOnly: _makeCounterOffer,
                                   ),
                                 ),
+
+                                // Delete Icon (visible only when toggle is off and more than one item)
+                                if (!_makeCounterOffer && _lineItems.length > 1)
+                                  GestureDetector(
+                                    onTap: () => _removeLineItem(index),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8),
+                                      child: SvgPicture.asset(
+                                        Assets.svgsDelete,
+                                        width: 20,
+                                        height: 20,
+                                        color: AppColor.black,
+                                      ),
+                                    ),
+                                  ),
                               ],
                             ),
                           );
@@ -295,7 +334,7 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                           children: [
                             SvgPicture.asset(
                               Assets.svgsAddIcon,
-                              width: 2,
+                              width: 12,
                               height: 12,
                               color: AppColor.black,
                             ),
@@ -421,8 +460,7 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                           ? 'Accept Job As-Is'
                           : 'Submit a Counter Offer',
                       onTap: () {
-                        NavigationController.to
-                            .navigateToMainPage(); // Navigate to MainPageWithNavbar
+                        NavigationController.to.navigateToMainPage();
                         NavigationController.to.changePage(1);
                       },
                       color: AppColor.mutedGold,

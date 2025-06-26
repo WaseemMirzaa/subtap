@@ -1,7 +1,16 @@
 part of 'pages.dart';
 
-class SubcontractorFeedbackPage extends StatelessWidget {
+class SubcontractorFeedbackPage extends StatefulWidget {
   const SubcontractorFeedbackPage({super.key});
+
+  @override
+  State<SubcontractorFeedbackPage> createState() =>
+      _SubcontractorFeedbackPageState();
+}
+
+class _SubcontractorFeedbackPageState extends State<SubcontractorFeedbackPage> {
+  var subcontrctorJobHistoryController =
+      Get.find<SubcontrctorJobHistoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +52,10 @@ class SubcontractorFeedbackPage extends StatelessWidget {
                     allowHalfRating: true,
                     itemCount: 5,
                     itemSize: 26,
-                    ignoreGestures: false, // Enable interaction
+                    ignoreGestures: false,
                     itemBuilder: (context, _) =>
                         const Icon(Icons.star, color: AppColor.vibrantYellow),
                     onRatingUpdate: (rating) {
-                      // Handle rating changes here
                       print('New rating: $rating');
                     },
                   ),
@@ -71,7 +79,6 @@ class SubcontractorFeedbackPage extends StatelessWidget {
               ),
             ),
           ),
-          // Bottom submit button container
           if (!isKeyboardOpen)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -83,9 +90,13 @@ class SubcontractorFeedbackPage extends StatelessWidget {
                 text: 'Submit Review',
                 fontSize: 16,
                 onTap: () {
-                  NavigationController.to
-                      .navigateToMainPage(); // Navigate to MainPageWithNavbar
+                  NavigationController.to.navigateToMainPage();
                   NavigationController.to.changePage(1);
+                  setState(() {
+                    subcontrctorJobHistoryController.selectedTab =
+                        'Active Jobs';
+                  });
+                  print(subcontrctorJobHistoryController.selectedTab);
                 },
                 color: AppColor.mutedGold,
                 textColor: Colors.white,

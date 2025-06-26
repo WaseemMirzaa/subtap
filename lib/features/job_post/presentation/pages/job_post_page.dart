@@ -15,6 +15,7 @@ class JobPostPage extends StatelessWidget {
             var e = listCate[index];
             return ExpansionTile(
               collapsedIconColor: AppColor.midGray,
+              initiallyExpanded: true,
               iconColor: AppColor.midGray,
               tilePadding: const EdgeInsets.only(left: 16),
               collapsedShape:
@@ -31,7 +32,11 @@ class JobPostPage extends StatelessWidget {
               children: e.subCat.map((sub) {
                 return InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.jobRequest);
+                    // Pass the selected subcategory text to JobRequestPage
+                    Get.toNamed(
+                      AppRoutes.jobRequest,
+                      arguments: {'initialTitle': sub['text']!},
+                    );
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

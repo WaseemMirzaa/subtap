@@ -172,6 +172,9 @@ class _IconRowState extends State<_IconRow> {
             color: _isPortfolioIconTapped ? AppColor.mutedGold : null,
           ),
         ),
+        const SizedBox(
+          height: 20,
+        )
       ],
     );
   }

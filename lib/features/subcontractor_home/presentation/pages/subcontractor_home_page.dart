@@ -8,6 +8,9 @@ class SubcontractorHomePage extends StatefulWidget {
 }
 
 class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
+  var subcontrctorJobHistoryController =
+      Get.put(SubcontrctorJobHistoryController());
+
   @override
   Widget build(BuildContext context) {
     return SubtapScaffold(
@@ -52,7 +55,15 @@ class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
                             Assets.svgsUploadProgress, // Example SVG asset
                         actionText: 'Upload Progress',
                         onTap: () {
-                          // Get.toNamed(AppRoutes.uploadProgress);
+                          NavigationController.to.changePage(1);
+                          print('calling');
+                          print(subcontrctorJobHistoryController.selectedTab);
+
+                          setState(() {
+                            subcontrctorJobHistoryController.selectedTab =
+                                'Active Jobs';
+                          });
+                          print(subcontrctorJobHistoryController.selectedTab);
                         },
                       ),
                       ActionCard(
@@ -61,6 +72,10 @@ class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
                         actionText: 'Submit Proposal',
                         onTap: () {
                           NavigationController.to.changePage(1);
+                          setState(() {
+                            subcontrctorJobHistoryController.selectedTab =
+                                'Open Jobs';
+                          });
                         },
                       ),
                       ActionCard(
@@ -68,6 +83,10 @@ class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
                         actionText: 'Open Jobs',
                         onTap: () {
                           NavigationController.to.changePage(1);
+                          setState(() {
+                            subcontrctorJobHistoryController.selectedTab =
+                                'Open Jobs';
+                          });
                         },
                       ),
                     ],

@@ -153,7 +153,7 @@ class SubcontractorHomeAppbar extends StatelessWidget
                                 child: CustomButton(
                                   color: AppColor.darkBlueShade,
                                   text: 'Cash Out',
-                                  fontSize: 11,
+                                  fontSize: 10,
                                   height: 38,
                                   width: 90,
                                   radius: 12,

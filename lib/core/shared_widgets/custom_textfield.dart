@@ -47,6 +47,7 @@ class CustomTextField extends StatefulWidget {
   final Color? rightDotColor;
   final double? rightDotSize;
   final double? rightDotBorderWidth;
+  final Color? cursorColor;
 
   const CustomTextField({
     super.key,
@@ -94,6 +95,7 @@ class CustomTextField extends StatefulWidget {
     this.rightDotColor = Colors.black,
     this.rightDotSize = 12,
     this.rightDotBorderWidth = 1.5,
+    this.cursorColor = AppColor.black,
   });
 
   @override
@@ -123,25 +125,24 @@ class _CustomTextFieldState extends State<CustomTextField> {
     Widget? rightDotWidget;
     if (widget.showRightDot) {
       rightDotWidget = Container(
-        margin: const EdgeInsets.only(left: 8), // Space between elements
+        margin: const EdgeInsets.only(left: 8),
         width: widget.rightDotSize,
         height: widget.rightDotSize,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: AppColor.lightGray, // Background color for the outer circle
+          color: AppColor.lightGray,
           border: Border.all(
-            color: widget.rightDotColor ?? Colors.black, // Black outline
+            color: widget.rightDotColor ?? Colors.black,
             width: widget.rightDotBorderWidth ?? 2.0,
           ),
         ),
         child: Center(
           child: Container(
-            width:
-                (widget.rightDotSize ?? 14) * 0.5, // Inner dot is half the size
+            width: (widget.rightDotSize ?? 14) * 0.5,
             height: (widget.rightDotSize ?? 14) * 0.5,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: widget.rightDotColor ?? Colors.black, // Inner dot color
+              color: widget.rightDotColor ?? Colors.black,
             ),
           ),
         ),
@@ -163,7 +164,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
       );
     }
-
     // Add custom suffix icon if provided
     else if (widget.suffixIcon != null) {
       rightWidgets.add(widget.suffixIcon!);
@@ -197,90 +197,92 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
             ),
           ),
-        SizedBox(
-          height: effectiveHeight,
-          width: effectiveWidth,
-          child: TextFormField(
-            onTap: widget.onTap,
-            enabled: widget.enabled,
-            maxLines: widget.maxLines,
-            readOnly: widget.readOnly,
-            obscureText: _obscureText,
-            cursorColor: AppColor.black,
-            textAlign: widget.textAlign,
-            maxLength: widget.maxLength,
-            focusNode: widget.focusNode,
-            validator: widget.validator,
-            onChanged: widget.onChanged,
-            controller: widget.controller,
-            initialValue: widget.initialValue,
-            keyboardType: widget.keyboardType,
-            inputFormatters: widget.inputFormatters,
-            textInputAction: widget.textInputAction,
-            onFieldSubmitted: widget.onFieldSubmitted,
-            onEditingComplete: widget.onEditingComplete ??
-                () {
-                  if (widget.textInputAction?.name == 'go' ||
-                      widget.textInputAction?.name == 'next') {
-                    FocusManager.instance.primaryFocus?.nextFocus();
-                  } else {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  }
-                },
-            autofocus: widget.autofocus,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w200,
-              fontStyle: widget.fontStyle ?? FontStyle.italic,
-              color: widget.textColor,
+        TextFormField(
+          onTap: widget.onTap,
+          enabled: widget.enabled,
+          maxLines: widget.maxLines,
+          readOnly: widget.readOnly,
+          obscureText: _obscureText,
+          cursorColor: widget.cursorColor,
+          textAlign: widget.textAlign,
+          maxLength: widget.maxLength,
+          focusNode: widget.focusNode,
+          validator: widget.validator,
+          onChanged: widget.onChanged,
+          controller: widget.controller,
+          initialValue: widget.initialValue,
+          keyboardType: widget.keyboardType,
+          inputFormatters: widget.inputFormatters,
+          textInputAction: widget.textInputAction,
+          onFieldSubmitted: widget.onFieldSubmitted,
+          onEditingComplete: widget.onEditingComplete ??
+              () {
+                if (widget.textInputAction?.name == 'go' ||
+                    widget.textInputAction?.name == 'next') {
+                  FocusManager.instance.primaryFocus?.nextFocus();
+                } else {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                }
+              },
+          autofocus: widget.autofocus,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w200,
+            fontStyle: widget.fontStyle ?? FontStyle.italic,
+            color: widget.textColor,
+          ),
+          decoration: InputDecoration(
+            prefix: widget.prefix,
+            suffix: widget.suffix,
+            counterText: '',
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: suffixIcon,
+            hintText: widget.hintText ?? widget.leftLabel,
+            errorMaxLines: widget.errorMaxLines,
+
+            // Fixed content padding for proper vertical centering
+            contentPadding: widget.contentPadding ??
+                const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 16, // Let Flutter handle vertical centering
+                ),
+
+            // Add this for better hint text alignment
+            alignLabelWithHint: true,
+
+            errorStyle: const TextStyle(color: Colors.red),
+            hintStyle: widget.hintStyle ??
+                TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w400,
+                  color: widget.hintTextColor ?? AppColor.whiteSmoke,
+                  fontFamily: widget.fontStyle == FontStyle.normal
+                      ? 'HelveticaNeueLight'
+                      : 'HelveticaNeueLightItalic',
+                ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: widget.borderColor),
+              borderRadius: BorderRadius.circular(effectiveBorderRadius),
             ),
-            decoration: InputDecoration(
-              prefix: widget.prefix,
-              suffix: widget.suffix,
-              counterText: '',
-              prefixIcon: widget.prefixIcon,
-              suffixIcon: suffixIcon,
-              hintText: widget.hintText ?? widget.leftLabel,
-              errorMaxLines: widget.errorMaxLines,
-              contentPadding: widget.contentPadding ??
-                  EdgeInsets.symmetric(
-                    horizontal: widget.isCircular ? effectiveHeight / 3 : 16,
-                    vertical: widget.isCircular ? 0 : 15,
-                  ),
-              errorStyle: const TextStyle(color: Colors.red),
-              hintStyle: widget.hintStyle ??
-                  TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: widget.hintTextColor ?? AppColor.whiteSmoke,
-                    fontFamily: widget.fontStyle == FontStyle.normal
-                        ? 'HelveticaNeueLight'
-                        : 'HelveticaNeueLightItalic',
-                  ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: widget.borderColor),
-                borderRadius: BorderRadius.circular(effectiveBorderRadius),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: widget.borderColor),
-                borderRadius: BorderRadius.circular(effectiveBorderRadius),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
-                borderRadius: BorderRadius.circular(effectiveBorderRadius),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: widget.borderColor),
-                borderRadius: BorderRadius.circular(effectiveBorderRadius),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
-                borderRadius: BorderRadius.circular(effectiveBorderRadius),
-              ),
-              fillColor: widget.fillColor,
-              filled: true,
-              isDense: true,
+            disabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: widget.borderColor),
+              borderRadius: BorderRadius.circular(effectiveBorderRadius),
             ),
+            errorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.circular(effectiveBorderRadius),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: widget.borderColor),
+              borderRadius: BorderRadius.circular(effectiveBorderRadius),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.circular(effectiveBorderRadius),
+            ),
+            fillColor: widget.fillColor,
+            filled: true,
+            isDense: true,
           ),
         ),
       ],

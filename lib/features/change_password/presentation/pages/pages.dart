@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:subtap/core/shared_widgets/custom_button.dart';
 import 'package:subtap/core/shared_widgets/custom_text.dart';
 import 'package:subtap/core/shared_widgets/custom_textfield.dart';

@@ -51,24 +51,26 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                   height: context
                       .responsiveHeight(15)), // Pushes content down further
-              CustomTextField(
+              const CustomTextField(
                 hintText: 'Email/phone',
                 fillColor: AppColor.mutedBlueShade,
+                cursorColor: AppColor.white,
                 borderColor: AppColor.mutedBlueShade,
                 borderRadius: 18,
                 textColor: AppColor.white,
-                contentPadding:
-                    context.responsivePadding(horizontal: 4, vertical: 2),
+                // contentPadding:
+                //     context.responsivePadding(horizontal: 4, vertical: 2),
               ),
               SizedBox(height: context.responsiveHeight(2)),
-              CustomTextField(
+              const CustomTextField(
                 hintText: 'Password',
                 fillColor: AppColor.mutedBlueShade,
                 borderColor: AppColor.mutedBlueShade,
                 textColor: AppColor.white,
+                cursorColor: AppColor.white,
                 borderRadius: 18,
-                contentPadding:
-                    context.responsivePadding(horizontal: 4, vertical: 2),
+                // contentPadding:
+                //     context.responsivePadding(horizontal: 4, vertical: 2),
                 obscureText: true,
                 showPasswordToggle: true,
               ),

@@ -299,7 +299,9 @@ class _JobHistoryDetailPageState extends State<JobHistoryDetailPage> {
                         subcontractor: widget.job.subcontractorModel,
                         showActionButtons: widget.isRequestedJob,
                         onAccept: () {
-                          // Handle accept action
+                          // widget.job.status = 'Active Jobs';
+                          NavigationController.to.navigateToMainPage();
+                          NavigationController.to.changePage(1);
                         },
                         onReject: () {
                           // Handle reject action

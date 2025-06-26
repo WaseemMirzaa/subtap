@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:go_router/go_router.dart';
 import 'package:subtap/core/config/config.dart';
 import 'package:subtap/core/shared_widgets/custom_text.dart';
 import 'package:subtap/core/theme/app_color.dart';
@@ -20,7 +19,7 @@ class SelectRoleScreen extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColor.backColor),
-          onPressed: () => context.pop(),
+          onPressed: () => Get.back(),
         ),
         title: const CustomText(
             text: 'Select Your Role', color: AppColor.backColor, fontSize: 18),
