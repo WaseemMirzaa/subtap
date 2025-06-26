@@ -23,7 +23,7 @@ class _SubcontractorProfilePageState extends State<SubcontractorProfilePage> {
     {
       'title': 'Notifications',
       'icon': Assets.svgsMyaccountNotification,
-      'route': AppRoutes.notificationPage,
+      'route': AppRoutes.subcontractornotificationPage,
     },
     {
       'title': 'Change Password',

@@ -39,24 +39,24 @@ class _FavSubcontractorPageState extends State<FavSubcontractorPage> {
       'avatarImage': Assets.imagesFavSubconstractorDavid,
       'description': 'Security System Install'
     },
-    {
-      'name': 'Laura Martinez',
-      'isOnline': true,
-      'avatarImage': Assets.imagesFavSubcontractorLaura,
-      'description': 'Plumbing'
-    },
-    {
-      'name': 'James Brown',
-      'isOnline': true,
-      'avatarImage': Assets.imagesFavSubcontractorJames,
-      'description': 'Drywall, Finishing'
-    },
-    {
-      'name': 'James Brown',
-      'isOnline': true,
-      'avatarImage': Assets.imagesFavContractorBrown,
-      'description': 'Drywall, Finishing'
-    },
+    // {
+    //   'name': 'Laura Martinez',
+    //   'isOnline': true,
+    //   'avatarImage': Assets.imagesFavSubcontractorLaura,
+    //   'description': 'Plumbing'
+    // },
+    // {
+    //   'name': 'James Brown',
+    //   'isOnline': true,
+    //   'avatarImage': Assets.imagesFavSubcontractorJames,
+    //   'description': 'Drywall, Finishing'
+    // },
+    // {
+    //   'name': 'James Brown',
+    //   'isOnline': true,
+    //   'avatarImage': Assets.imagesFavContractorBrown,
+    //   'description': 'Drywall, Finishing'
+    // },
   ];
 
   @override
@@ -111,19 +111,18 @@ class _FavSubcontractorPageState extends State<FavSubcontractorPage> {
                 itemBuilder: (context, index) {
                   final subcontractor = subcontractorData[index];
                   return InkWell(
-                    // onTap: () {
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (context) => ChatDetailPage(
-                    //         userName: subcontractor['name'],
-                    //         avatarImage: subcontractor['avatarImage'],
-                    //       ),
-                    //     ),
-                    //   );
-                    // },
+                    onTap: () {
+                      Get.toNamed(
+                        AppRoutes.jobRequest,
+                        arguments: {
+                          'initialTitle': subcontractor['description'],
+                          'subcontractor':
+                              subcontractor, // Pass the subcontractor data
+                        },
+                      );
+                    },
                     child: FavSubcontractorCard(
-                      isFav: false, // No favorite icon
+                      isFav: false,
                       favIcon: Assets.svgsFavNoti,
                       name: subcontractor['name'],
                       isOnline: subcontractor['isOnline'],

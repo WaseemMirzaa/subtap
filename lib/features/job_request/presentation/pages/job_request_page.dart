@@ -2,7 +2,8 @@ part of 'pages.dart';
 
 class JobRequestPage extends StatefulWidget {
   final String? initialTitle;
-  const JobRequestPage({super.key, this.initialTitle});
+  final Map<String, dynamic>? subcontractor; // Add subcontractor argument
+  const JobRequestPage({super.key, this.initialTitle, this.subcontractor});
 
   @override
   State<JobRequestPage> createState() => _JobRequestPageState();
@@ -29,6 +30,8 @@ class _JobRequestPageState extends State<JobRequestPage> {
     _titleController.dispose();
     _locationController.dispose();
     _descriptionController.dispose();
+    _targetBudgetController.dispose();
+    _dueDateController.dispose();
     super.dispose();
   }
 
@@ -36,21 +39,19 @@ class _JobRequestPageState extends State<JobRequestPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    // Detect if the keyboard is open
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return SubtapScaffold(
       appBar: const JobRequestAppBar(),
       body: Stack(
         children: [
-          // Scrollable content
           SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.only(
                 left: screenWidth * 0.04,
                 right: screenWidth * 0.04,
                 top: screenHeight * 0.02,
-                bottom: 80, // Space for the fixed bottom container
+                bottom: 80,
               ),
               child: Center(
                 child: ConstrainedBox(
@@ -67,7 +68,6 @@ class _JobRequestPageState extends State<JobRequestPage> {
                         color: AppColor.black,
                       ),
                       const Gap(10),
-                      // Title Field
                       CustomTextField(
                         fillColor: AppColor.white,
                         controller: _titleController,
@@ -119,7 +119,6 @@ class _JobRequestPageState extends State<JobRequestPage> {
                         },
                       ),
                       const Gap(10),
-                      // Location
                       CustomText(
                         text: 'Location',
                         fontSize: screenWidth > 600 ? 18 : 16,
@@ -170,12 +169,12 @@ class _JobRequestPageState extends State<JobRequestPage> {
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter a location';
+                            return 'Please enter a budget';
                           }
                           return null;
                         },
                       ),
-                      kGap10,
+                      const Gap(10),
                       CustomText(
                         text: 'Due Date',
                         fontSize: screenWidth > 600 ? 18 : 16,
@@ -195,21 +194,16 @@ class _JobRequestPageState extends State<JobRequestPage> {
                         fontStyle: FontStyle.normal,
                         hintText: 'Enter Due Date',
                         hintTextColor: AppColor.darkGrayShade,
-                        readOnly: true, // Prevent manual input
-                        keyboardType: TextInputType.none, // Disable keyboard
+                        readOnly: true,
+                        keyboardType: TextInputType.none,
                         onTap: () async {
-                          // Show date picker with restriction on past dates
                           DateTime? pickedDate = await showDatePicker(
                             context: context,
-                            initialDate: DateTime.now(), // Default to today
-                            firstDate: DateTime
-                                .now(), // Restrict to today or future dates
-                            lastDate: DateTime(
-                                2100), // Set a far future date as the upper limit
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(2100),
                           );
-
                           if (pickedDate != null) {
-                            // Format the selected date and update the controller
                             String formattedDate =
                                 DateFormat('yyyy-MM-dd').format(pickedDate);
                             _dueDateController.text = formattedDate;
@@ -219,7 +213,6 @@ class _JobRequestPageState extends State<JobRequestPage> {
                           if (value == null || value.isEmpty) {
                             return 'Please select a due date';
                           }
-                          // Optional: Additional validation to ensure the date is not in the past
                           DateTime selectedDate =
                               DateFormat('yyyy-MM-dd').parse(value);
                           if (selectedDate.isBefore(DateTime.now()
@@ -229,7 +222,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                           return null;
                         },
                       ),
-                      kGap10,
+                      const Gap(10),
                       CustomText(
                         text: 'Images of Job',
                         fontSize: screenWidth > 600 ? 18 : 16,
@@ -237,12 +230,9 @@ class _JobRequestPageState extends State<JobRequestPage> {
                         color: Colors.black,
                       ),
                       const Gap(10),
-                      // Optimized image upload section
                       LayoutBuilder(
                         builder: (context, constraints) {
-                          // Calculate item width based on available space
-                          final itemWidth = (constraints.maxWidth - 40) /
-                              3; // 40 accounts for gaps and padding
+                          final itemWidth = (constraints.maxWidth - 40) / 3;
                           return Row(
                             children: List.generate(
                               3,
@@ -250,8 +240,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Container(
                                   width: itemWidth,
-                                  height:
-                                      itemWidth * 0.75, // Maintain aspect ratio
+                                  height: itemWidth * 0.75,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.rectangle,
                                     borderRadius: BorderRadius.circular(12),
@@ -262,8 +251,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                                     children: [
                                       SvgPicture.asset(
                                         Assets.svgsImageUpload,
-                                        width: itemWidth *
-                                            0.25, // Make icon size proportional
+                                        width: itemWidth * 0.25,
                                         height: itemWidth * 0.2,
                                       ),
                                       const Gap(5),
@@ -281,27 +269,30 @@ class _JobRequestPageState extends State<JobRequestPage> {
                         },
                       ),
                       const Gap(20),
-                      CustomText(
-                        text: 'Invite Subcontractor (Sub)',
-                        fontSize: screenWidth > 600 ? 18 : 16,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                      kGap10,
-                      CustomButton(
-                        text: 'Tap to Invite',
-                        height: 40,
-                        onTap: () {
-                          Get.toNamed(AppRoutes.inviteSubcontractorPage);
-                        },
-                        width: double.infinity,
-                        color: AppColor.white,
-                        textColor: AppColor.darkGrayShade,
-                        fontWeight: FontWeight.normal,
-                        radius: 13,
-                        fontSize: screenWidth > 600 ? 18 : 16,
-                      ),
-                      const Gap(80), // Extra space at the bottom
+                      // Conditionally show the "Invite Subcontractor" section
+                      if (widget.subcontractor == null) ...[
+                        CustomText(
+                          text: 'Invite Subcontractor (Sub)',
+                          fontSize: screenWidth > 600 ? 18 : 16,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                        const Gap(10),
+                        CustomButton(
+                          text: 'Tap to Invite',
+                          height: 40,
+                          onTap: () {
+                            Get.toNamed(AppRoutes.inviteSubcontractorPage);
+                          },
+                          width: double.infinity,
+                          color: AppColor.white,
+                          textColor: AppColor.darkGrayShade,
+                          fontWeight: FontWeight.normal,
+                          radius: 13,
+                          fontSize: screenWidth > 600 ? 18 : 16,
+                        ),
+                      ],
+                      const Gap(80),
                     ],
                   ),
                 ),
@@ -309,7 +300,6 @@ class _JobRequestPageState extends State<JobRequestPage> {
             ),
           ),
           if (!isKeyboardOpen)
-            // Fixed bottom container
             Positioned(
               left: 0,
               right: 0,
@@ -347,7 +337,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                         radius: 17,
                       ),
                     ),
-                    kGap10,
+                    const Gap(10),
                   ],
                 ),
               ),

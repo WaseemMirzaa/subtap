@@ -172,7 +172,19 @@ class _MediationProcessPageState extends State<MediationProcessPage> {
                     Expanded(
                       child: CustomButton(
                         text: 'Submit Now',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SupportDetailPage(
+                                userName:
+                                    "Support Agent", // Replace with actual username
+                                avatarImage: Assets
+                                    .imagesChatDavid, // Replace with actual image path
+                              ),
+                            ),
+                          );
+                        },
                         color: AppColor.mutedGold,
                         textColor: Colors.white,
                         fontWeight: FontWeight.w400,

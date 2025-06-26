@@ -63,6 +63,8 @@ class AppRouter {
             final args = Get.arguments as Map<String, dynamic>?;
             return JobRequestPage(
               initialTitle: args?['initialTitle'] as String?,
+              subcontractor: args?[
+                  'subcontractor'], // Fixed: use args instead of Get.arguments
             );
           },
         ),
@@ -89,6 +91,11 @@ class AppRouter {
         GetPage(
           name: AppRoutes.notificationPage,
           page: () => NotificationPage(),
+          binding: NotificationPageBinding(),
+        ),
+        GetPage(
+          name: AppRoutes.subcontractornotificationPage,
+          page: () => SubcontractorNotificationPage(),
           binding: NotificationPageBinding(),
         ),
         GetPage(

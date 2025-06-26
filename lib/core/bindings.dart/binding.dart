@@ -21,6 +21,7 @@ import 'package:subtap/controller/subcontractor_fav_page_controller.dart';
 import 'package:subtap/controller/subcontractor_feedback_controller.dart';
 import 'package:subtap/controller/subcontractor_job_controller.dart';
 import 'package:subtap/controller/subcontractor_myaccount_controller.dart';
+import 'package:subtap/controller/subcontractor_notification_controller.dart';
 import 'package:subtap/controller/subcontractor_profile_controller.dart';
 import 'package:subtap/controller/subcontrctor_job_history_controller.dart';
 import 'package:subtap/controller/support_requests_controller.dart';

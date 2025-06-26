@@ -8,6 +8,11 @@ class ProfileScreen extends StatelessWidget {
       'route': AppRoutes.myAccountPage,
     },
     {
+      'title': 'My Support Requests',
+      'icon': Assets.svgsToDoList,
+      'route': AppRoutes.supportRequests,
+    },
+    {
       'title': 'Notifications',
       'icon': Assets.svgsMyaccountNotification,
       'route': AppRoutes.notificationPage,

@@ -15,12 +15,9 @@ class _NotificationAppbarState extends State<NotificationAppbar> {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.transparent,
+      automaticallyImplyLeading: false,
       elevation: 0,
-      toolbarHeight: 105, // Decreased height
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: AppColor.white),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
+      toolbarHeight: 105,
       flexibleSpace: Container(
         margin: EdgeInsets.zero,
         decoration: const BoxDecoration(
@@ -37,15 +34,22 @@ class _NotificationAppbarState extends State<NotificationAppbar> {
             child: Column(
               children: [
                 SizedBox(height: 16),
-                // This is the row with centered JobPost and right-aligned notification
                 Expanded(
-                  child: Center(
-                    child: CustomText(
-                      text: 'Notifications',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.white,
-                    ),
+                  child: Stack(
+                    children: [
+                      // Centered title - takes full width but text is centered
+                      Align(
+                        alignment: Alignment.center,
+                        child: CustomText(
+                          text: "Notification",
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+
+                      // Right-aligned icon
+                    ],
                   ),
                 ),
               ],

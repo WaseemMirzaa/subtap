@@ -23,6 +23,7 @@ import 'package:subtap/features/subcontractor_home/presentation/pages/pages.dart
 import 'package:subtap/features/subcontractor_job_history/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_jobs/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_profile/presentation/pages/pages.dart';
+import 'package:subtap/features/subcontructor_notification/presentation/pages/pages.dart';
 import 'package:subtap/features/support_request/presentation/pages/pages.dart';
 
 part 'app_router.dart';

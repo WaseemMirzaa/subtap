@@ -39,6 +39,10 @@ class AppRoutes {
   /// The notification screen route.
   static const String notificationPage = '/notificationpage';
 
+  /// The subcontractor notification screen route.
+  static const String subcontractornotificationPage =
+      '/subcontractornotificationpage';
+
   /// The mediation screen route.
   static const String mediationProcess = '/mediationProcess';
 

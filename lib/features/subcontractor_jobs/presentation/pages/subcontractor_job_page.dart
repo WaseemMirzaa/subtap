@@ -212,7 +212,7 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                       hintText: '\$1000',
                       fontStyle: FontStyle.normal,
                       hintTextColor: AppColor.darkGrayShade,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.number,
                     ),
                     const Gap(20),
                   ],

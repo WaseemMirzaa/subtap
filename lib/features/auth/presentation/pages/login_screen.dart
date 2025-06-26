@@ -165,8 +165,9 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Apple Button
                   SizedBox(
-                    width: 155, // adjust width as needed
+                    width: context.screenWidth * 0.4, // 40% of screen width
                     child: CustomButton(
                       text: 'Apple',
                       icon: SvgPicture.asset(
@@ -181,11 +182,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 50,
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
                   SizedBox(
-                    width: 155, // adjust width as needed
+                      width: context.screenWidth *
+                          0.05), // 5% of screen width as spacing
+                  // Google Button
+                  SizedBox(
+                    width: context.screenWidth * 0.4, // 40% of screen width
                     child: CustomButton(
                       text: 'Google',
                       icon: SvgPicture.asset(

@@ -34,26 +34,26 @@ class _SubcontractorJobHistoryPageState
         rating: 4.0,
       ),
     ),
-    const JobHistory(
-      title: 'Electrical & Tech',
-      svgIcon: Assets.svgsTech,
-      price: 65.0,
-      targetBudget: '\$50.00',
-      dueDate: 'Friday, May 23, 2025',
-      address: '456 Oak Ave, Springfield',
-      status: 'Open Jobs',
-      description:
-          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: SubcontractorModel(
-        expertise: 'Electrician',
-        description:
-            'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
-        name: 'James Michael',
-        imageUrl: 'path_to_image',
-        price: '50',
-        rating: 4.0,
-      ),
-    ),
+    // const JobHistory(
+    //   title: 'Electrical & Tech',
+    //   svgIcon: Assets.svgsTech,
+    //   price: 65.0,
+    //   targetBudget: '\$50.00',
+    //   dueDate: 'Friday, May 23, 2025',
+    //   address: '456 Oak Ave, Springfield',
+    //   status: 'Open Jobs',
+    //   description:
+    //       "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
+    //   subcontractorModel: SubcontractorModel(
+    //     expertise: 'Electrician',
+    //     description:
+    //         'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
+    //     name: 'James Michael',
+    //     imageUrl: 'path_to_image',
+    //     price: '50',
+    //     rating: 4.0,
+    //   ),
+    // ),
     const JobHistory(
       title: 'General Trades',
       svgIcon: Assets.svgsTech,
@@ -74,26 +74,26 @@ class _SubcontractorJobHistoryPageState
         rating: 4.0,
       ),
     ),
-    const JobHistory(
-      title: 'Electrical & Tech',
-      svgIcon: Assets.svgsTech,
-      price: 65.0,
-      targetBudget: '\$50.00',
-      dueDate: 'Friday, May 23, 2025',
-      address: '456 Oak Ave, Springfield',
-      status: 'Active Jobs',
-      description:
-          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: SubcontractorModel(
-        expertise: 'Electrician',
-        description:
-            'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
-        name: 'James Michael',
-        imageUrl: 'path_to_image',
-        price: '50',
-        rating: 4.0,
-      ),
-    ),
+    // const JobHistory(
+    //   title: 'Electrical & Tech',
+    //   svgIcon: Assets.svgsTech,
+    //   price: 65.0,
+    //   targetBudget: '\$50.00',
+    //   dueDate: 'Friday, May 23, 2025',
+    //   address: '456 Oak Ave, Springfield',
+    //   status: 'Active Jobs',
+    //   description:
+    //       "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
+    //   subcontractorModel: SubcontractorModel(
+    //     expertise: 'Electrician',
+    //     description:
+    //         'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
+    //     name: 'James Michael',
+    //     imageUrl: 'path_to_image',
+    //     price: '50',
+    //     rating: 4.0,
+    //   ),
+    // ),
   ];
   List<JobHistory> _filteredJobs = [];
 
@@ -119,6 +119,18 @@ class _SubcontractorJobHistoryPageState
         : MediaQuery.of(context).size.width > 600
             ? 2
             : 1;
+  }
+
+  double _calculateChildAspectRatio(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    if (screenWidth > 800) {
+      return 2.0; // For larger screens
+    } else if (screenWidth > 600) {
+      return 1.8; // For medium screens
+    } else {
+      return 1.6; // For small screens
+    }
   }
 
   @override
@@ -214,8 +226,8 @@ class _SubcontractorJobHistoryPageState
                               mainAxisSpacing: 15,
                               childAspectRatio:
                                   controller.selectedTab == 'Open Jobs'
-                                      ? 1.57
-                                      : 2,
+                                      ? 1.45
+                                      : 1.7,
                             ),
                             itemBuilder: (context, index) {
                               return SubcontractorJobHistoryCard(

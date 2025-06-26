@@ -49,7 +49,8 @@ class SubcontractorHomeAppbar extends StatelessWidget
                         ),
                       ),
                       InkWell(
-                        // onTap: () => Get.toNamed(AppRoutes.notificationPage),
+                        onTap: () => Get.toNamed(
+                            AppRoutes.subcontractornotificationPage),
                         child: SvgPicture.asset(
                           Assets.svgsNotification,
                           width: 24,

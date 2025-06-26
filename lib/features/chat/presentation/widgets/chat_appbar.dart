@@ -49,7 +49,8 @@ class _ChatAppbarState extends State<ChatAppbar> {
                       ),
                       // Right-aligned icon
                       InkWell(
-                        // onTap: () => Get.toNamed(AppRoutes.notificationPage),
+                        onTap: () => Get.toNamed(
+                            AppRoutes.subcontractornotificationPage),
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: SvgPicture.asset(

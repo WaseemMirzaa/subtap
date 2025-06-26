@@ -127,7 +127,7 @@ class CreateAccountScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 155, // adjust width as needed
+                    width: context.screenWidth * 0.4, // adjust width as needed
                     child: CustomButton(
                       text: 'Apple',
                       icon: SvgPicture.asset(
@@ -146,7 +146,7 @@ class CreateAccountScreen extends StatelessWidget {
                     width: 20,
                   ),
                   SizedBox(
-                    width: 155, // adjust width as needed
+                    width: context.screenWidth * 0.4, // adjust width as needed
                     child: CustomButton(
                       text: 'Google',
                       icon: SvgPicture.asset(

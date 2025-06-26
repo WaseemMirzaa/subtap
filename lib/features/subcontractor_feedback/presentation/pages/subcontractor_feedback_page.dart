@@ -33,7 +33,7 @@ class _SubcontractorFeedbackPageState extends State<SubcontractorFeedbackPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: context.responsiveHeight(40)),
+                  SizedBox(height: context.responsiveHeight(25)),
                   Text(
                     'Share Your Experience',
                     textAlign: TextAlign.center,

@@ -122,6 +122,14 @@ class NotificationPageBinding extends Bindings {
   }
 }
 
+class SubcontractorNotificationPageBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<SubcontractorNotificationController>(
+        () => SubcontractorNotificationController());
+  }
+}
+
 class MediationProcessPageBinding extends Bindings {
   @override
   void dependencies() {
