@@ -153,5 +153,10 @@ class AppRouter {
           page: () => const ChangePasswordPage(),
           binding: ChangePasswordPageBinding(),
         ),
+        GetPage(
+          name: AppRoutes.newJobs,
+          page: () => NewJobsPage(),
+          binding: NewJobsPageBinding(),
+        ),
       ];
 }

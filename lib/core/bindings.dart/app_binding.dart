@@ -213,3 +213,10 @@ class ChangePasswordPageBinding extends Bindings {
     Get.lazyPut<ChangePasswordController>(() => ChangePasswordController());
   }
 }
+
+class NewJobsPageBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<NewJobsController>(() => NewJobsController());
+  }
+}

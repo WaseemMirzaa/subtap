@@ -2,7 +2,11 @@ part of 'widgets.dart';
 
 class SubcontractorJobAppbar extends StatelessWidget
     implements PreferredSizeWidget {
-  const SubcontractorJobAppbar({super.key});
+  final String title;
+  const SubcontractorJobAppbar({
+    super.key,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +27,18 @@ class SubcontractorJobAppbar extends StatelessWidget
             bottomRight: Radius.circular(20),
           ),
         ),
-        child: const SafeArea(
+        child: SafeArea(
           bottom: false,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: Column(
               children: [
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 // This is the row with centered JobPost and right-aligned notification
                 Expanded(
                   child: Center(
                     child: CustomText(
-                      text: 'Accept Job',
+                      text: title,
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       color: AppColor.white,

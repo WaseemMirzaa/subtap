@@ -1,7 +1,11 @@
 part of 'pages.dart';
 
 class SubcontractorJobPage extends StatefulWidget {
-  const SubcontractorJobPage({super.key});
+  final bool isFromAcceptJob;
+  const SubcontractorJobPage({
+    super.key,
+    this.isFromAcceptJob = false,
+  });
 
   @override
   State<SubcontractorJobPage> createState() => _SubcontractorJobPageState();
@@ -104,9 +108,11 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final appBarTitle =
+        widget.isFromAcceptJob ? 'Submit Proposal' : 'Accept Job';
 
     return SubtapScaffold(
-      appBar: const SubcontractorJobAppbar(),
+      appBar: SubcontractorJobAppbar(title: appBarTitle),
       body: Column(
         children: [
           Expanded(

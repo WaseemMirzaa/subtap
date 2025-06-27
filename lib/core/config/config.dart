@@ -14,6 +14,7 @@ import 'package:subtap/features/job_post/presentation/pages/pages.dart';
 import 'package:subtap/features/job_request/presentation/pages/pages.dart';
 import 'package:subtap/features/main_page_with_navbar.dart';
 import 'package:subtap/features/mediation_process/presentation/pages/pages.dart';
+import 'package:subtap/features/new_jobs/presentation/pages/pages.dart';
 import 'package:subtap/features/notification/presentation/pages/pages.dart';
 import 'package:subtap/features/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:subtap/features/profile/presentation/pages/pages.dart';

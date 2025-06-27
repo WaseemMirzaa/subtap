@@ -83,4 +83,7 @@ class AppRoutes {
 
   /// The change password  route.
   static const String changePassword = '/change-Password';
+
+  /// The newjobs   route.
+  static const String newJobs = '/new-jobs';
 }

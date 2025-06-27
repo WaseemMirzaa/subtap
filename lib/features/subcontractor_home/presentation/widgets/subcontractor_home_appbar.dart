@@ -115,7 +115,8 @@ class SubcontractorHomeAppbar extends StatelessWidget
                       color: Colors.white,
                     ),
                     onTap: () {
-                      NavigationController.to.changePage(1);
+                      //  NavigationController.to.changePage(1);
+                      Get.toNamed(AppRoutes.newJobs);
                     },
                   ),
                 ),

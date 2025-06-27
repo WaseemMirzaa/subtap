@@ -10,6 +10,7 @@ import 'package:subtap/controller/login_controller.dart';
 import 'package:subtap/controller/mediation_process_page_controller.dart';
 import 'package:subtap/controller/myaccount_page_controller.dart';
 import 'package:subtap/controller/navigation_controller.dart';
+import 'package:subtap/controller/new_jobs_controller.dart';
 import 'package:subtap/controller/notification_controller.dart';
 import 'package:subtap/controller/onboarding_controller.dart';
 import 'package:subtap/controller/profile_page_controller.dart';
