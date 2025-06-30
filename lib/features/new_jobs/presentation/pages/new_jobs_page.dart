@@ -10,7 +10,7 @@ class NewJobsPage extends StatelessWidget {
       targetBudget: '\$50.00',
       dueDate: 'Friday, May 23, 2025',
       address: '123 Main St, Springfield',
-      status: 'Open Jobs',
+      status: 'new Jobs',
       description:
           "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
       subcontractorModel: SubcontractorModel(
@@ -30,7 +30,7 @@ class NewJobsPage extends StatelessWidget {
       targetBudget: '\$50.00',
       dueDate: 'Friday, May 23, 2025',
       address: '456 Oak Ave, Springfield',
-      status: 'Open Jobs',
+      status: 'new Jobs',
       description:
           "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
       subcontractorModel: SubcontractorModel(
@@ -46,6 +46,15 @@ class NewJobsPage extends StatelessWidget {
   ];
 
   NewJobsPage({super.key});
+  // Helper function to show the bottom sheet
+  void showFilterBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const FilterBottomSheet(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +65,37 @@ class NewJobsPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           child: Column(
             children: [
-              SearchBarTile(
-                controller: _searchController,
-                onSearch: () {},
-                hintText: 'Search by name',
+              Row(
+                children: [
+                  Expanded(
+                    child: SearchBarTile(
+                      controller: _searchController,
+                      onSearch: () {},
+                      hintText: 'Search by name',
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  InkWell(
+                    onTap: () {
+                      showFilterBottomSheet(context);
+                    },
+                    child: Container(
+                      width: 49,
+                      height: 49,
+                      decoration: BoxDecoration(
+                        color: AppColor.backgroundColor,
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          Assets.svgsFilter,
+                          width: 19,
+                          height: 19,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 15),
               ListView.separated(
@@ -76,7 +112,7 @@ class NewJobsPage extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => NewJobDetailPage(
                             job: job,
-                            isOpenJob: job.status == 'Open Jobs',
+                            isNewJob: job.status == 'new Jobs',
                           ),
                         ),
                       );

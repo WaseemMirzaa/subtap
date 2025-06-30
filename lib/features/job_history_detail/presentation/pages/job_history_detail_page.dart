@@ -295,18 +295,49 @@ class _JobHistoryDetailPageState extends State<JobHistoryDetailPage> {
                         ),
                       ),
                       const SizedBox(height: 12),
+                      // In JobHistoryDetailPage, inside the SubcontractorJobCard
                       SubcontractorJobCard(
                         subcontractor: widget.job.subcontractorModel,
                         showActionButtons: widget.isRequestedJob,
-                        onAccept: () {
-                          // widget.job.status = 'Active Jobs';
-                          NavigationController.to.navigateToMainPage();
-                          NavigationController.to.changePage(1);
-                        },
-                        onReject: () {
-                          // Handle reject action
-                        },
+                        onTap: widget.isRequestedJob
+                            ? () {
+                                Get.toNamed(
+                                  AppRoutes.favSubcontractorProfile,
+                                  arguments: {
+                                    'subcontractor': {
+                                      'name':
+                                          widget.job.subcontractorModel.name,
+                                      'imageUrl': widget
+                                          .job.subcontractorModel.imageUrl,
+                                      'expertise': widget
+                                          .job.subcontractorModel.expertise,
+                                      'description': widget
+                                          .job.subcontractorModel.description,
+                                      'price':
+                                          widget.job.subcontractorModel.price,
+                                      'rating':
+                                          widget.job.subcontractorModel.rating,
+                                    },
+                                    'fromJobHistory': true,
+                                  },
+                                );
+                              }
+                            : null, // Disable onTap for active jobs
+                        onAccept: widget.isRequestedJob
+                            ? () {
+                                NavigationController.to.navigateToMainPage();
+                                NavigationController.to.changePage(1);
+                                Get.snackbar('Success', 'Offer accepted',
+                                    backgroundColor: Colors.green);
+                              }
+                            : null, // Disable accept action for active jobs
+                        onReject: widget.isRequestedJob
+                            ? () {
+                                // Handle reject action
+                              }
+                            : null, // Disable reject action for active jobs
                       ),
+                      kGap30,
                     ],
                   ),
                 ),

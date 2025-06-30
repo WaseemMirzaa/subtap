@@ -26,51 +26,11 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
         description:
             'Leaking kitchen sink, Pipe may be cracked. Water  dripping into cabinet below. Happened after  turning on  garbage disposal.',
         name: 'James Michael',
-        imageUrl: Assets.imagesSubcontrctorImage,
+        imageUrl: Assets.imagesAvatarImage,
         price: '50',
         rating: 4.0,
       ),
     ),
-    // const JobHistory(
-    //   title: 'Electrical & Tech',
-    //   svgIcon: Assets.svgsTech,
-    //   price: 65.0,
-    //   targetBudget: '\$50.00',
-    //   dueDate: 'Friday, May 23, 2025',
-    //   address: '456 Oak Ave, Springfield',
-    //   status: 'Requested Jobs',
-    //   description:
-    //       "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-    //   subcontractorModel: SubcontractorModel(
-    //     expertise: 'Electrician',
-    //     description:
-    //         'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
-    //     name: 'James Michael',
-    //     imageUrl: 'path_to_image',
-    //     price: '50',
-    //     rating: 4.0,
-    //   ),
-    // ),
-    // const JobHistory(
-    //   title: 'General Trades',
-    //   svgIcon: Assets.svgsTech,
-    //   price: 65.0,
-    //   targetBudget: '\$50.00',
-    //   dueDate: 'Friday, May 23, 2025',
-    //   address: '456 Oak Ave, Springfield',
-    //   status: 'Active Jobs',
-    //   description:
-    //       "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-    //   subcontractorModel: SubcontractorModel(
-    //     expertise: 'Electrician',
-    //     description:
-    //         'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
-    //     name: 'James Michael',
-    //     imageUrl: 'path_to_image',
-    //     price: '50',
-    //     rating: 4.0,
-    //   ),
-    // ),
     const JobHistory(
       title: 'Electrical & Tech',
       svgIcon: Assets.svgsTech,
@@ -86,7 +46,47 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
         description:
             'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
         name: 'James Michael',
-        imageUrl: 'path_to_image',
+        imageUrl: Assets.imagesAvatarImage,
+        price: '50',
+        rating: 4.0,
+      ),
+    ),
+    const JobHistory(
+      title: 'General Trades',
+      svgIcon: Assets.svgsTech,
+      price: 65.0,
+      targetBudget: '\$50.00',
+      dueDate: 'Friday, May 23, 2025',
+      address: '456 Oak Ave, Springfield',
+      status: 'Requested Jobs',
+      description:
+          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
+      subcontractorModel: SubcontractorModel(
+        expertise: 'Electrician',
+        description:
+            'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
+        name: 'James Michael',
+        imageUrl: Assets.imagesAvatarImage,
+        price: '50',
+        rating: 4.0,
+      ),
+    ),
+    const JobHistory(
+      title: 'Electrical & Tech',
+      svgIcon: Assets.svgsTech,
+      price: 65.0,
+      targetBudget: '\$50.00',
+      dueDate: 'Friday, May 23, 2025',
+      address: '456 Oak Ave, Springfield',
+      status: 'Active Jobs',
+      description:
+          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
+      subcontractorModel: SubcontractorModel(
+        expertise: 'Electrician',
+        description:
+            'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
+        name: 'James Michael',
+        imageUrl: Assets.imagesAvatarImage,
         price: '50',
         rating: 4.0,
       ),
@@ -123,7 +123,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
     } else if (screenWidth > 600) {
       return 1.8; // For medium screens
     } else {
-      return 1.7; // For small screens
+      return 1.9; // For small screens
     }
   }
 
@@ -144,16 +144,80 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
                       : screenSize.width * 0.99,
               minHeight: screenSize.height,
             ),
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                horizontal: screenSize.width * 0.03,
-                vertical: 20,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
+            child: Stack(
+              children: [
+                // Scrollable content
+                SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenSize.width * 0.04,
+                    vertical: 20, // Adjust vertical padding as needed
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Add padding to account for toggle buttons height
+                      const SizedBox(
+                          height: 80), // Adjust based on toggle buttons' height
+                      _filteredJobs.isEmpty
+                          ? Center(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  'No ${_selectedTab.toLowerCase()} found',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: AppColor.darkGray,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : MediaQuery.removePadding(
+                              context: context,
+                              removeTop: true,
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: _filteredJobs.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount:
+                                      _calculateCrossAxisCount(context),
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 15,
+                                  childAspectRatio:
+                                      _calculateChildAspectRatio(context),
+                                ),
+                                itemBuilder: (context, index) {
+                                  return JobHistoryCard(
+                                    job: _filteredJobs[index],
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              JobHistoryDetailPage(
+                                            job: _filteredJobs[index],
+                                            isRequestedJob: _selectedTab ==
+                                                'Requested Jobs',
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
+                ),
+                // Toggle buttons fixed at the top
+                Positioned(
+                  top: 20, // Gap between AppBar and toggle buttons
+                  left: 17,
+                  right: 17,
+                  child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
@@ -192,58 +256,8 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 25),
-                  _filteredJobs.isEmpty
-                      ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              'No ${_selectedTab.toLowerCase()} found',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: AppColor.darkGray,
-                              ),
-                            ),
-                          ),
-                        )
-                      : MediaQuery.removePadding(
-                          context: context,
-                          removeTop: true,
-                          child: GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _filteredJobs.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: _calculateCrossAxisCount(context),
-                              crossAxisSpacing: 15,
-                              mainAxisSpacing: 15,
-                              childAspectRatio:
-                                  _calculateChildAspectRatio(context),
-                            ),
-                            itemBuilder: (context, index) {
-                              return JobHistoryCard(
-                                job: _filteredJobs[index],
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          JobHistoryDetailPage(
-                                        job: _filteredJobs[index],
-                                        isRequestedJob:
-                                            _selectedTab == 'Requested Jobs',
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                  const SizedBox(height: 30),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

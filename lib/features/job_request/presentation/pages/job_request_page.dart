@@ -1,42 +1,20 @@
 part of 'pages.dart';
 
-class JobRequestPage extends StatefulWidget {
+class JobRequestPage extends StatelessWidget {
   final String? initialTitle;
-  final Map<String, dynamic>? subcontractor; // Add subcontractor argument
+  final Map<String, dynamic>? subcontractor;
   const JobRequestPage({super.key, this.initialTitle, this.subcontractor});
 
   @override
-  State<JobRequestPage> createState() => _JobRequestPageState();
-}
-
-class _JobRequestPageState extends State<JobRequestPage> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _targetBudgetController = TextEditingController();
-  final TextEditingController _dueDateController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    // Set the initial title if provided
-    if (widget.initialTitle != null) {
-      _titleController.text = widget.initialTitle!;
-    }
-  }
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _locationController.dispose();
-    _descriptionController.dispose();
-    _targetBudgetController.dispose();
-    _dueDateController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // Initialize the controller
+    final JobRequestController controller = Get.put(JobRequestController());
+
+    // Set initial title if provided
+    if (initialTitle != null) {
+      controller.titleController.text = initialTitle!;
+    }
+
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
@@ -70,7 +48,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                       const Gap(10),
                       CustomTextField(
                         fillColor: AppColor.white,
-                        controller: _titleController,
+                        controller: controller.titleController,
                         borderColor: AppColor.white,
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 9,
@@ -89,35 +67,155 @@ class _JobRequestPageState extends State<JobRequestPage> {
                           return null;
                         },
                       ),
-                      const Gap(10),
-                      CustomText(
-                        text: 'Description',
-                        fontSize: screenWidth > 600 ? 18 : 16,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                      const Gap(10),
-                      CustomTextField(
-                        fontStyle: FontStyle.normal,
-                        fillColor: AppColor.white,
-                        controller: _descriptionController,
-                        borderColor: AppColor.white,
-                        hintText: 'Describe what needs fixing...',
-                        hintTextColor: AppColor.darkGrayShade,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: 5,
-                        height: screenHeight * 0.13,
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.01,
-                          horizontal: screenWidth * 0.04,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a description';
-                          }
-                          return null;
-                        },
-                      ),
+                      const Gap(15),
+                      // Line Items Section (from SubcontractorJobPage)
+                      Obx(() => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Header
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: screenWidth * 0.47,
+                                    child: CustomText(
+                                      text: 'Line Item Description',
+                                      fontSize: screenWidth > 600 ? 18 : 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: controller.lineItems.length > 1
+                                        ? screenWidth * 0.39
+                                        : screenWidth * 0.29,
+                                    child: CustomText(
+                                      text: 'Price (\$)',
+                                      fontSize: screenWidth > 600 ? 18 : 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Gap(10),
+                              // Dynamic Line Items
+                              Column(
+                                children:
+                                    controller.lineItems.asMap().entries.map(
+                                  (entry) {
+                                    int index = entry.key;
+                                    var item = entry.value;
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 15),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          // Description field
+                                          SizedBox(
+                                            width: screenWidth * 0.46,
+                                            child: CustomTextField(
+                                              fillColor: AppColor.white,
+                                              controller: item['description'],
+                                              borderColor: AppColor.white,
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 9,
+                                                horizontal: 14,
+                                              ),
+                                              borderRadius: 10,
+                                              height: 45,
+                                              hintText: 'Description field',
+                                              fontStyle: FontStyle.normal,
+                                              hintTextColor:
+                                                  AppColor.darkGrayShade,
+                                              keyboardType: TextInputType.text,
+                                              readOnly: controller
+                                                  .makeCounterOffer.value,
+                                            ),
+                                          ),
+                                          // Price field
+                                          SizedBox(
+                                            width: screenWidth * 0.29,
+                                            child: CustomTextField(
+                                              fillColor: AppColor.white,
+                                              controller: item['price'],
+                                              borderColor: AppColor.white,
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 9,
+                                                horizontal: 14,
+                                              ),
+                                              borderRadius: 10,
+                                              height: 46,
+                                              hintText: 'Price field',
+                                              hintStyle: const TextStyle(
+                                                fontSize: 15,
+                                                fontFamily:
+                                                    'HelveticaNeueLight',
+                                                color: AppColor.midGray,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                              fontStyle: FontStyle.normal,
+                                              hintTextColor:
+                                                  AppColor.darkGrayShade,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              readOnly: controller
+                                                  .makeCounterOffer.value,
+                                            ),
+                                          ),
+                                          // Delete Icon
+                                          if (!controller
+                                                  .makeCounterOffer.value &&
+                                              controller.lineItems.length > 1)
+                                            GestureDetector(
+                                              onTap: () => controller
+                                                  .removeLineItem(index),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 8),
+                                                child: SvgPicture.asset(
+                                                  Assets.svgsDelete,
+                                                  width: 20,
+                                                  height: 20,
+                                                  color: AppColor.black,
+                                                ),
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                              ),
+                              GestureDetector(
+                                onTap: controller.addNewLineItem,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SvgPicture.asset(
+                                      Assets.svgsAddIcon,
+                                      width: 12,
+                                      height: 12,
+                                      color: AppColor.black,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    const CustomText(
+                                      text: 'Add Item',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.black,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )),
                       const Gap(10),
                       CustomText(
                         text: 'Location',
@@ -133,7 +231,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                           horizontal: 14,
                         ),
                         fillColor: AppColor.white,
-                        controller: _locationController,
+                        controller: controller.locationController,
                         borderColor: AppColor.white,
                         fontStyle: FontStyle.normal,
                         hintText: 'Auto-fill from GPS or manual entry',
@@ -161,7 +259,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                           horizontal: 14,
                         ),
                         fillColor: AppColor.white,
-                        controller: _targetBudgetController,
+                        controller: controller.targetBudgetController,
                         borderColor: AppColor.white,
                         fontStyle: FontStyle.normal,
                         hintText: 'Enter Budget',
@@ -189,7 +287,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                           horizontal: 14,
                         ),
                         fillColor: AppColor.white,
-                        controller: _dueDateController,
+                        controller: controller.dueDateController,
                         borderColor: AppColor.white,
                         fontStyle: FontStyle.normal,
                         hintText: 'Enter Due Date',
@@ -206,7 +304,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                           if (pickedDate != null) {
                             String formattedDate =
                                 DateFormat('yyyy-MM-dd').format(pickedDate);
-                            _dueDateController.text = formattedDate;
+                            controller.dueDateController.text = formattedDate;
                           }
                         },
                         validator: (value) {
@@ -269,8 +367,7 @@ class _JobRequestPageState extends State<JobRequestPage> {
                         },
                       ),
                       const Gap(20),
-                      // Conditionally show the "Invite Subcontractor" section
-                      if (widget.subcontractor == null) ...[
+                      if (subcontractor == null) ...[
                         CustomText(
                           text: 'Invite Subcontractor (Sub)',
                           fontSize: screenWidth > 600 ? 18 : 16,

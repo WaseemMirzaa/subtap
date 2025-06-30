@@ -2,12 +2,12 @@ part of 'pages.dart';
 
 class NewJobDetailPage extends StatefulWidget {
   final JobHistory job;
-  final bool isOpenJob;
+  final bool isNewJob;
 
   const NewJobDetailPage({
     super.key,
     required this.job,
-    required this.isOpenJob,
+    required this.isNewJob,
   });
 
   @override
@@ -108,9 +108,7 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
-                                  widget.job.status == 'Active Jobs'
-                                      ? Assets.svgsActive
-                                      : Assets.svgsTime,
+                                  Assets.svgsTime,
                                   width: 14,
                                   height: 14,
                                   fit: BoxFit.contain,
@@ -281,44 +279,44 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                         ],
                       ),
                       kGap20,
-                      if (widget.job.status == 'Active Jobs') ...[
-                        const Text(
-                          'Status:',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.black,
-                            fontFamily: 'HelveticaNeueMedium',
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        const StatusTimeline(
-                          statuses: [
-                            {
-                              'status': 'Assigned',
-                              'isCompleted': true,
-                              'date': '2:00pm - May 21, 2025'
-                            },
-                            {
-                              'status': 'In Progress',
-                              'isCompleted': true,
-                              'date': '2:00pm - May 22, 2025'
-                            },
-                            {
-                              'status': 'Completed',
-                              'isCompleted': true,
-                              'date': '2:00pm - May 22, 2025'
-                            },
-                          ],
-                        ),
-                        kGap20,
-                      ],
+                      // if (widget.job.status == 'new Jobs') ...[
+                      //   const Text(
+                      //     'Status:',
+                      //     style: TextStyle(
+                      //       fontSize: 16,
+                      //       fontWeight: FontWeight.w500,
+                      //       color: AppColor.black,
+                      //       fontFamily: 'HelveticaNeueMedium',
+                      //     ),
+                      //   ),
+                      //   const SizedBox(height: 8),
+                      //   const StatusTimeline(
+                      //     statuses: [
+                      //       {
+                      //         'status': 'Assigned',
+                      //         'isCompleted': true,
+                      //         'date': '2:00pm - May 21, 2025'
+                      //       },
+                      //       {
+                      //         'status': 'In Progress',
+                      //         'isCompleted': true,
+                      //         'date': '2:00pm - May 22, 2025'
+                      //       },
+                      //       {
+                      //         'status': 'Completed',
+                      //         'isCompleted': true,
+                      //         'date': '2:00pm - May 22, 2025'
+                      //       },
+                      //     ],
+                      //   ),
+                      //   kGap20,
+                      // ],
                     ],
                   ),
                 ),
               ),
               // Add empty container to prevent bottom overflow when action bar is visible
-              if (widget.isOpenJob || widget.job.status == 'Active Jobs')
+              if (widget.isNewJob || widget.job.status == 'new Jobs')
                 const SizedBox(
                     height:
                         120), // Increased height to ensure action bar visibility
@@ -338,8 +336,8 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
 
   Widget _buildBottomActionBar() {
     print(
-        'Job Status: ${widget.job.status}, isOpenJob: ${widget.isOpenJob}'); // Debug print
-    if (widget.isOpenJob) {
+        'Job Status: ${widget.job.status}, isNewJob: ${widget.isNewJob}'); // Debug print
+    if (widget.isNewJob) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         decoration: const BoxDecoration(

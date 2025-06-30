@@ -11,12 +11,51 @@ class MainPageWithNavbar extends StatelessWidget {
   Widget build(BuildContext context) {
     final navController = NavigationController.to;
 
-    return Obx(
-      () => SubtapScaffold(
-        body: navController.currentPages.elementAt(
-          navController.currentIndex.value,
+    return WillPopScope(
+      onWillPop: () async {
+        // Check if the current page is not the HomePage (index 0)
+        if (navController.currentIndex.value != 0) {
+          // Navigate to HomePage by setting index to 0
+          navController.changePage(0);
+          return false; // Prevent default back navigation
+        } else {
+          // Show confirmation dialog when on HomePage
+          bool? shouldExit = await _showExitConfirmationDialog(context);
+          if (shouldExit == true) {
+            // Exit the app
+            return true;
+          }
+          return false; // Prevent default back navigation
+        }
+      },
+      child: Obx(
+        () => SubtapScaffold(
+          body: navController.currentPages.elementAt(
+            navController.currentIndex.value,
+          ),
+          bottomNavigationBar: const CustomNavBar(),
         ),
-        bottomNavigationBar: const CustomNavBar(),
+      ),
+    );
+  }
+
+  // Function to show exit confirmation dialog
+  Future<bool?> _showExitConfirmationDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Exit App'),
+        content: const Text('Are you sure you want to exit?'),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(result: false), // No, stay in app
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () => Get.back(result: true), // Yes, exit app
+            child: const Text('Yes'),
+          ),
+        ],
       ),
     );
   }

@@ -14,3 +14,4 @@ part 'favorites_card.dart';
 part 'home_appbar.dart';
 part 'job_status_card.dart';
 part 'summary_card.dart';
+part 'summary_detail_appbar.dart';

@@ -86,4 +86,10 @@ class AppRoutes {
 
   /// The newjobs   route.
   static const String newJobs = '/new-jobs';
+
+  /// The favSubcontractorProfile   route.
+  static const String favSubcontractorProfile = '/fav-subcontractor-profile';
+
+  /// The summaryDetailPage    route.
+  static const String summaryDetailPage = '/summary-detailpage';
 }

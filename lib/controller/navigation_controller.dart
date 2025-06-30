@@ -32,7 +32,7 @@ class NavigationController extends GetxController {
     const SubcontractorHomePage(),
     const SubcontractorJobHistoryPage(),
     ChatPage(),
-    SubcontractorProfilePage()
+    const SubcontractorProfilePage()
   ];
 
   void changePage(int index) {

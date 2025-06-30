@@ -15,7 +15,8 @@ class FilterBottomSheet extends StatefulWidget {
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
   final TextEditingController _zipCodeController = TextEditingController();
   final TextEditingController _searchController = TextEditingController();
-  int? _selectedRating;
+  final Set<int> _selectedRatings =
+      {}; // Changed to Set<int> for multiple selections
   double _radius = 5.0; // Default radius in miles/kilometers
   String? _selectedCategory; // Track selected category
 
@@ -242,8 +243,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                       return GestureDetector(
                         onTap: () {
                           setState(() {
-                            _selectedRating =
-                                rating == _selectedRating ? null : rating;
+                            if (_selectedRatings.contains(rating)) {
+                              _selectedRatings.remove(
+                                  rating); // Deselect if already selected
+                            } else {
+                              _selectedRatings
+                                  .add(rating); // Add to selected ratings
+                            }
                           });
                         },
                         child: Container(
@@ -251,7 +257,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 10),
                           decoration: BoxDecoration(
-                            color: _selectedRating == rating
+                            color: _selectedRatings.contains(rating)
                                 ? AppColor.mutedGold
                                 : AppColor.lightGray,
                             border: Border.all(color: AppColor.lightGray),
@@ -262,7 +268,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: _selectedRating == rating
+                              color: _selectedRatings.contains(rating)
                                   ? AppColor.black
                                   : AppColor.darkGrayShade,
                             ),
@@ -451,7 +457,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         print('Selected Category: $_selectedCategory');
                         print('Location: ${_zipCodeController.text}');
                         print('Radius: $_radius km');
-                        print('Rating: $_selectedRating');
+                        print('Ratings: $_selectedRatings');
                       },
                       color: AppColor.mutedGold,
                       textColor: Colors.white,

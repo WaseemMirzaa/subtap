@@ -8,6 +8,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // Get the HomeController instance
+  final HomePageController homeController = Get.put(HomePageController());
+
+  // Function to pick a date
+  Future<void> _pickDate(BuildContext context, bool isStartDate) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: isStartDate
+          ? homeController.startDate.value
+          : homeController.endDate.value,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      if (isStartDate) {
+        homeController.updateStartDate(picked);
+      } else {
+        homeController.updateEndDate(picked);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SubtapScaffold(
@@ -20,7 +42,6 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Space for app bar
                 const CustomText(
                   text: 'Job Status',
                   fontSize: 18,
@@ -44,7 +65,45 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.w500,
                 ),
                 kGap10,
-                const SummaryCard(),
+                Obx(() => Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            await _pickDate(context, true); // Pick start date
+                            await _pickDate(context, false); // Pick end date
+                          },
+                          child: const Icon(
+                            Icons.calendar_today,
+                            color: AppColor.black,
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Start: ${homeController.formattedStartDate}',
+                          style: const TextStyle(
+                            color: AppColor.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Text(
+                          'End: ${homeController.formattedEndDate}',
+                          style: const TextStyle(
+                            color: AppColor.black,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    )),
+                kGap10,
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.summaryDetailPage);
+                  },
+                  child: const SummaryCard(),
+                ),
                 kGap10,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

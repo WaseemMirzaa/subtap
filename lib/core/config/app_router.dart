@@ -96,7 +96,7 @@ class AppRouter {
         GetPage(
           name: AppRoutes.subcontractornotificationPage,
           page: () => SubcontractorNotificationPage(),
-          binding: NotificationPageBinding(),
+          binding: SubcontractorNotificationPageBinding(),
         ),
         GetPage(
           name: AppRoutes.mediationProcess,
@@ -115,7 +115,13 @@ class AppRouter {
         ),
         GetPage(
           name: AppRoutes.subcontractorJob,
-          page: () => const SubcontractorJobPage(),
+          page: () {
+            // Access the arguments passed via Get.toNamed
+            final args = Get.arguments as Map<String, dynamic>?;
+            // Extract isFromAcceptJob, default to false if not provided
+            final isFromAcceptJob = args?['isFromAcceptJob'] as bool? ?? false;
+            return SubcontractorJobPage(isFromAcceptJob: isFromAcceptJob);
+          },
           binding: SubcontractorJobPageBinding(),
         ),
         GetPage(
@@ -157,6 +163,16 @@ class AppRouter {
           name: AppRoutes.newJobs,
           page: () => NewJobsPage(),
           binding: NewJobsPageBinding(),
+        ),
+        GetPage(
+          name: AppRoutes.favSubcontractorProfile,
+          page: () => const FavSubcontractorProfile(),
+          binding: FavSubcontractorProfileBinding(),
+        ),
+        GetPage(
+          name: AppRoutes.summaryDetailPage,
+          page: () => const SummaryDetailPage(),
+          binding: SummaryDetailPageBinding(),
         ),
       ];
 }

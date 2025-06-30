@@ -7,6 +7,7 @@ import 'package:subtap/features/auth/presentation/pages/select_role_screen.dart'
 import 'package:subtap/features/auth/presentation/pages/verify_email_screen.dart';
 import 'package:subtap/features/change_password/presentation/pages/pages.dart';
 import 'package:subtap/features/fav_subcontractor/presentation/pages/pages.dart';
+import 'package:subtap/features/fav_subcontractor/presentation/widgets/widgets.dart';
 import 'package:subtap/features/home/presentation/pages/pages.dart';
 import 'package:subtap/features/invite_subcontractor/presentation/pages/pages.dart';
 import 'package:subtap/features/job_history/presentation/pages/pages.dart';

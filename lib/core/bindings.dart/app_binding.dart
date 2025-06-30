@@ -83,7 +83,7 @@ class JobPostBinding extends Bindings {
 class JobRequestBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<JobRequestPageController>(() => JobRequestPageController());
+    Get.lazyPut<JobRequestController>(() => JobRequestController());
   }
 }
 
@@ -218,5 +218,21 @@ class NewJobsPageBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<NewJobsController>(() => NewJobsController());
+  }
+}
+
+class FavSubcontractorProfileBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<FavSubcontractorProfileController>(
+        () => FavSubcontractorProfileController());
+  }
+}
+
+class SummaryDetailPageBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<SummaryDetailPageController>(
+        () => SummaryDetailPageController());
   }
 }

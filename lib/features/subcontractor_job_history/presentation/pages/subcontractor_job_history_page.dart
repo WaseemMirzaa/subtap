@@ -34,26 +34,26 @@ class _SubcontractorJobHistoryPageState
         rating: 4.0,
       ),
     ),
-    // const JobHistory(
-    //   title: 'Electrical & Tech',
-    //   svgIcon: Assets.svgsTech,
-    //   price: 65.0,
-    //   targetBudget: '\$50.00',
-    //   dueDate: 'Friday, May 23, 2025',
-    //   address: '456 Oak Ave, Springfield',
-    //   status: 'Open Jobs',
-    //   description:
-    //       "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-    //   subcontractorModel: SubcontractorModel(
-    //     expertise: 'Electrician',
-    //     description:
-    //         'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
-    //     name: 'James Michael',
-    //     imageUrl: 'path_to_image',
-    //     price: '50',
-    //     rating: 4.0,
-    //   ),
-    // ),
+    const JobHistory(
+      title: 'Electrical & Tech',
+      svgIcon: Assets.svgsTech,
+      price: 65.0,
+      targetBudget: '\$50.00',
+      dueDate: 'Friday, May 23, 2025',
+      address: '456 Oak Ave, Springfield',
+      status: 'Open Jobs',
+      description:
+          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
+      subcontractorModel: SubcontractorModel(
+        expertise: 'Electrician',
+        description:
+            'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
+        name: 'James Michael',
+        imageUrl: 'path_to_image',
+        price: '50',
+        rating: 4.0,
+      ),
+    ),
     const JobHistory(
       title: 'General Trades',
       svgIcon: Assets.svgsTech,
@@ -74,26 +74,26 @@ class _SubcontractorJobHistoryPageState
         rating: 4.0,
       ),
     ),
-    // const JobHistory(
-    //   title: 'Electrical & Tech',
-    //   svgIcon: Assets.svgsTech,
-    //   price: 65.0,
-    //   targetBudget: '\$50.00',
-    //   dueDate: 'Friday, May 23, 2025',
-    //   address: '456 Oak Ave, Springfield',
-    //   status: 'Active Jobs',
-    //   description:
-    //       "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-    //   subcontractorModel: SubcontractorModel(
-    //     expertise: 'Electrician',
-    //     description:
-    //         'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
-    //     name: 'James Michael',
-    //     imageUrl: 'path_to_image',
-    //     price: '50',
-    //     rating: 4.0,
-    //   ),
-    // ),
+    const JobHistory(
+      title: 'Electrical & Tech',
+      svgIcon: Assets.svgsTech,
+      price: 65.0,
+      targetBudget: '\$50.00',
+      dueDate: 'Friday, May 23, 2025',
+      address: '456 Oak Ave, Springfield',
+      status: 'Active Jobs',
+      description:
+          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
+      subcontractorModel: SubcontractorModel(
+        expertise: 'Electrician',
+        description:
+            'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
+        name: 'James Michael',
+        imageUrl: 'path_to_image',
+        price: '50',
+        rating: 4.0,
+      ),
+    ),
   ];
   List<JobHistory> _filteredJobs = [];
 
@@ -121,21 +121,20 @@ class _SubcontractorJobHistoryPageState
             : 1;
   }
 
-  double _calculateChildAspectRatio(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+  // double _calculateChildAspectRatio(BuildContext context) {
+  //   final screenWidth = MediaQuery.of(context).size.width;
 
-    if (screenWidth > 800) {
-      return 2.0; // For larger screens
-    } else if (screenWidth > 600) {
-      return 1.8; // For medium screens
-    } else {
-      return 1.6; // For small screens
-    }
-  }
+  //   if (screenWidth > 800) {
+  //     return 2.0; // For larger screens
+  //   } else if (screenWidth > 600) {
+  //     return 1.8; // For medium screens
+  //   } else {
+  //     return 1.6; // For small screens
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    print('selected${controller.selectedTab}');
     final screenSize = MediaQuery.of(context).size;
 
     return SubtapScaffold(
@@ -151,107 +150,124 @@ class _SubcontractorJobHistoryPageState
                       : screenSize.width * 0.99,
               minHeight: screenSize.height,
             ),
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                horizontal: screenSize.width * 0.03,
-                vertical: 20,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: CustomToggleButton(
-                            text: 'Open Jobs',
-                            isActive: controller.selectedTab == 'Open Jobs',
-                            onTap: () {
-                              setState(() {
-                                controller.selectedTab = 'Open Jobs';
-                                _filteredJobs = _allJobs
-                                    .where((job) => job.status == 'Open Jobs')
-                                    .toList();
-                              });
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: CustomToggleButton(
-                            text: 'Active Jobs',
-                            isActive: controller.selectedTab == 'Active Jobs',
-                            onTap: () {
-                              setState(() {
-                                controller.selectedTab = 'Active Jobs';
-                                _filteredJobs = _allJobs
-                                    .where((job) => job.status == 'Active Jobs')
-                                    .toList();
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+            child: Stack(
+              children: [
+                // Scrollable content
+                SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenSize.width * 0.035,
+                    vertical: 20,
                   ),
-                  const SizedBox(height: 25),
-                  _filteredJobs.isEmpty
-                      ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              'No ${controller.selectedTab.toLowerCase()} found',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: AppColor.darkGray,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Add padding to avoid overlap with toggle buttons
+                      const SizedBox(
+                          height: 80), // Adjust based on toggle buttons' height
+                      _filteredJobs.isEmpty
+                          ? Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Text(
+                                  'No ${controller.selectedTab.toLowerCase()} found',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: AppColor.darkGray,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        )
-                      : MediaQuery.removePadding(
-                          context: context,
-                          removeTop: true,
-                          child: GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _filteredJobs.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: _calculateCrossAxisCount(context),
-                              crossAxisSpacing: 15,
-                              mainAxisSpacing: 15,
-                              childAspectRatio:
-                                  controller.selectedTab == 'Open Jobs'
-                                      ? 1.45
-                                      : 1.7,
-                            ),
-                            itemBuilder: (context, index) {
-                              return SubcontractorJobHistoryCard(
-                                job: _filteredJobs[index],
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          SubcontractorJobHistoryDetailPage(
-                                        job: _filteredJobs[index],
-                                        isOpenJob: controller.selectedTab ==
-                                            'Open Jobs',
-                                      ),
-                                    ),
+                            )
+                          : MediaQuery.removePadding(
+                              context: context,
+                              removeTop: true,
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: _filteredJobs.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount:
+                                      _calculateCrossAxisCount(context),
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 15,
+                                  childAspectRatio:
+                                      controller.selectedTab == 'Open Jobs'
+                                          ? 1.55
+                                          : 1.9,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return SubcontractorJobHistoryCard(
+                                    job: _filteredJobs[index],
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SubcontractorJobHistoryDetailPage(
+                                            job: _filteredJobs[index],
+                                            isOpenJob: controller.selectedTab ==
+                                                'Open Jobs',
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
-                              );
-                            },
+                              ),
+                            ),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
+                ),
+                // Toggle buttons fixed at the top
+                Positioned(
+                  top: 20, // Gap between AppBar and toggle buttons
+                  left: 8,
+                  right: 8,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 9),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: CustomToggleButton(
+                              text: 'Open Jobs',
+                              isActive: controller.selectedTab == 'Open Jobs',
+                              onTap: () {
+                                setState(() {
+                                  controller.selectedTab = 'Open Jobs';
+                                  _filteredJobs = _allJobs
+                                      .where((job) => job.status == 'Open Jobs')
+                                      .toList();
+                                });
+                              },
+                            ),
                           ),
-                        ),
-                  const SizedBox(height: 30),
-                ],
-              ),
+                          Expanded(
+                            child: CustomToggleButton(
+                              text: 'Active Jobs',
+                              isActive: controller.selectedTab == 'Active Jobs',
+                              onTap: () {
+                                setState(() {
+                                  controller.selectedTab = 'Active Jobs';
+                                  _filteredJobs = _allJobs
+                                      .where(
+                                          (job) => job.status == 'Active Jobs')
+                                      .toList();
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

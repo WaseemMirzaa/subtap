@@ -70,12 +70,24 @@ class SubcontractorsPage extends StatelessWidget {
               itemCount: subcontractorData.length,
               itemBuilder: (context, index) {
                 final subcontractor = subcontractorData[index];
-                return SubcontractorCard(
-                  name: subcontractor['name'],
-                  expertise: subcontractor['expertise'],
-                  isOnline: subcontractor['isOnline'],
-                  avatarImage: subcontractor['avatarImage'],
-                  isFavorite: subcontractor['isFavorite'],
+                return GestureDetector(
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.favSubcontractorProfile,
+                      arguments: {
+                        'subcontractor': subcontractor,
+                        'fromSubcontractorsPage':
+                            true, // Flag to hide hire button
+                      },
+                    );
+                  },
+                  child: SubcontractorCard(
+                    name: subcontractor['name'],
+                    expertise: subcontractor['expertise'],
+                    isOnline: subcontractor['isOnline'],
+                    avatarImage: subcontractor['avatarImage'],
+                    isFavorite: subcontractor['isFavorite'],
+                  ),
                 );
               },
             ),

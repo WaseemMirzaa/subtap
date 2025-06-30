@@ -24,6 +24,8 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
   @override
   void initState() {
     super.initState();
+    print('isFromAcceptJob: ${widget.isFromAcceptJob}'); // Debug print
+
     _initializeControllers();
   }
 
@@ -464,7 +466,9 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                     child: CustomButton(
                       text: _makeCounterOffer
                           ? 'Accept Job As-Is'
-                          : 'Submit a Counter Offer',
+                          : (widget.isFromAcceptJob
+                              ? 'Submit a Proposal'
+                              : 'Submit a Counter Offer'),
                       onTap: () {
                         NavigationController.to.navigateToMainPage();
                         NavigationController.to.changePage(1);
