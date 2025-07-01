@@ -5,7 +5,7 @@ import 'package:subtap/models/models.dart';
 class NotificationController extends GetxController {
   // Reactive list of notifications
   final RxList<JobHistory> notificationJobs = <JobHistory>[
-    const JobHistory(
+    JobHistory(
       title: 'New Proposal Received',
       svgIcon: Assets.svgsTrade,
       price: 50.0,
@@ -15,7 +15,7 @@ class NotificationController extends GetxController {
       status: 'Requested Jobs',
       description:
           'Jason Rao sent you a new proposal for Carpentry & Farming Services. Please review the details at your earliest convenience.',
-      subcontractorModel: SubcontractorModel(
+      subcontractorModel: const SubcontractorModel(
         expertise: 'Carpentry',
         description: 'Proposal for carpentry and farming services.',
         name: 'Jason Rao',
@@ -24,7 +24,7 @@ class NotificationController extends GetxController {
         rating: 4.0,
       ),
     ),
-    const JobHistory(
+    JobHistory(
       title: 'Progress Update Submitted',
       svgIcon: Assets.svgsTech,
       price: 65.0,
@@ -34,7 +34,7 @@ class NotificationController extends GetxController {
       status: 'Active Jobs',
       description:
           'A subcontractor has uploaded new progress updates, including notes and/or photos. Please log in to review the latest submission.',
-      subcontractorModel: SubcontractorModel(
+      subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
         description: 'Progress update for ongoing project.',
         name: 'James Michael',

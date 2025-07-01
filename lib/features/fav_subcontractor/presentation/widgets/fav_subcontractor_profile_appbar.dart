@@ -2,16 +2,20 @@ part of 'widgets.dart';
 
 class FavSubcontractorProfileAppbar extends StatelessWidget
     implements PreferredSizeWidget {
-  final Function(bool) onViewChanged;
-  final Map<String, dynamic>? subcontractorData;
-  final bool showPortfolio;
+  const FavSubcontractorProfileAppbar(
+      {super.key,
+      required this.onViewChanged,
+      this.subcontractorData,
+      required this.showPortfolio,
+      required this.fromSubcontractorsPage});
 
-  const FavSubcontractorProfileAppbar({
-    super.key,
-    required this.onViewChanged,
-    this.subcontractorData,
-    required this.showPortfolio,
-  });
+  final bool fromSubcontractorsPage;
+  final Function(bool) onViewChanged;
+  final bool showPortfolio;
+  final Map<String, dynamic>? subcontractorData;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(349);
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +43,18 @@ class FavSubcontractorProfileAppbar extends StatelessWidget
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 8.0),
+                Padding(
+                  padding: const EdgeInsets.only(top: 0),
                   child: SizedBox(
                     width: double.infinity,
                     child: Row(
                       children: [
-                        SizedBox(width: 25),
-                        Expanded(
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back,
+                              color: AppColor.white),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        const Expanded(
                           child: Center(
                             child: CustomText(
                               text: 'Profile',
@@ -56,11 +64,14 @@ class FavSubcontractorProfileAppbar extends StatelessWidget
                             ),
                           ),
                         ),
+                        const SizedBox(
+                            width:
+                                48), // This creates balance with the back button
                       ],
                     ),
                   ),
                 ),
-                kGap25,
+                kGap20,
                 CustomCircleAvatar(
                   radius: avatarRadius,
                   child: Image(
@@ -90,8 +101,11 @@ class FavSubcontractorProfileAppbar extends StatelessWidget
                 // ),
                 const SizedBox(height: 8),
                 CustomText(
-                  text: subcontractorData?['expertise'] ??
-                      'No expertise available',
+                  text: (fromSubcontractorsPage
+                      ? (subcontractorData?['expertise'] ??
+                          'No expertise available')
+                      : (subcontractorData?['description'] ??
+                          'No description available')),
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color: AppColor.white,
@@ -111,25 +125,22 @@ class FavSubcontractorProfileAppbar extends StatelessWidget
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(342);
 }
 
 class _IconRow extends StatefulWidget {
-  final Function(bool) onViewChanged;
-
   const _IconRow({
     required this.onViewChanged,
   });
+
+  final Function(bool) onViewChanged;
 
   @override
   _IconRowState createState() => _IconRowState();
 }
 
 class _IconRowState extends State<_IconRow> {
-  bool _isChatIconTapped = true;
-  bool _isPortfolioIconTapped = false;
+  bool _isChatIconTapped = false;
+  bool _isPortfolioIconTapped = true;
 
   @override
   Widget build(BuildContext context) {

@@ -32,8 +32,8 @@ class _FavSubcontractorProfileState extends State<FavSubcontractorProfile> {
     final bool fromJobHistory = Get.arguments?['fromJobHistory'] ?? false;
     if (fromJobHistory) {
       // Navigate to JobHistoryPage with Active Jobs tab selected
-      Get.offAllNamed(AppRoutes.jobHistory,
-          arguments: {'selectedTab': 'Active Jobs'});
+      NavigationController.to.navigateToMainPage();
+      NavigationController.to.changePage(1);
       Get.snackbar('Success', 'Offer accepted', backgroundColor: Colors.green);
     } else {
       if (subcontractorData != null) {
@@ -63,6 +63,8 @@ class _FavSubcontractorProfileState extends State<FavSubcontractorProfile> {
         onViewChanged: _togglePortfolioView,
         subcontractorData: subcontractorData,
         showPortfolio: _showPortfolio,
+        fromSubcontractorsPage:
+            Get.arguments?['fromSubcontractorsPage'] ?? false,
       ),
       body: Column(
         children: [

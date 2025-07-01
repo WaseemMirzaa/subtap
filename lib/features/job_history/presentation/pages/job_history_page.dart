@@ -11,7 +11,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
   final TextEditingController _searchController = TextEditingController();
   String _selectedTab = 'Requested Jobs';
   final List<JobHistory> _allJobs = [
-    const JobHistory(
+    JobHistory(
       title: 'General Trades',
       svgIcon: Assets.svgsTrade,
       price: 50.0,
@@ -21,7 +21,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
       status: 'Requested Jobs',
       description:
           "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: SubcontractorModel(
+      subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
         description:
             'Leaking kitchen sink, Pipe may be cracked. Water  dripping into cabinet below. Happened after  turning on  garbage disposal.',
@@ -31,7 +31,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
         rating: 4.0,
       ),
     ),
-    const JobHistory(
+    JobHistory(
       title: 'Electrical & Tech',
       svgIcon: Assets.svgsTech,
       price: 65.0,
@@ -41,7 +41,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
       status: 'Active Jobs',
       description:
           "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: SubcontractorModel(
+      subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
         description:
             'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
@@ -51,7 +51,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
         rating: 4.0,
       ),
     ),
-    const JobHistory(
+    JobHistory(
       title: 'General Trades',
       svgIcon: Assets.svgsTech,
       price: 65.0,
@@ -61,7 +61,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
       status: 'Requested Jobs',
       description:
           "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: SubcontractorModel(
+      subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
         description:
             'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
@@ -71,7 +71,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
         rating: 4.0,
       ),
     ),
-    const JobHistory(
+    JobHistory(
       title: 'Electrical & Tech',
       svgIcon: Assets.svgsTech,
       price: 65.0,
@@ -81,7 +81,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
       status: 'Active Jobs',
       description:
           "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: SubcontractorModel(
+      subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
         description:
             'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
@@ -97,6 +97,11 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
   @override
   void initState() {
     super.initState();
+    // Register JobHistoryController and initialize with _allJobs
+    final jobHistoryController = Get.put(JobHistoryController());
+    for (var job in _allJobs) {
+      jobHistoryController.updateJob(job);
+    }
     _filteredJobs =
         _allJobs.where((job) => job.status == _selectedTab).toList();
   }

@@ -351,7 +351,7 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: CustomButton(
-                  text: 'Accept Job',
+                  text: 'Apply Job',
                   onTap: () {
                     Get.toNamed(
                       AppRoutes.subcontractorJob,

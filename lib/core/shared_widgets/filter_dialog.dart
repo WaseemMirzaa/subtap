@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:subtap/core/shared_widgets/custom_button.dart';
 import 'package:subtap/core/shared_widgets/custom_text.dart';
 import 'package:subtap/core/shared_widgets/custom_textfield.dart';
@@ -454,10 +455,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                       text: 'Show Results',
                       onTap: () {
                         // Handle filter application
-                        print('Selected Category: $_selectedCategory');
-                        print('Location: ${_zipCodeController.text}');
-                        print('Radius: $_radius km');
-                        print('Ratings: $_selectedRatings');
+                        Get.back();
                       },
                       color: AppColor.mutedGold,
                       textColor: Colors.white,

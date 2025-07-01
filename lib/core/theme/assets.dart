@@ -146,6 +146,10 @@ class Assets {
   /// assets/svgs/call.svg
   static const String svgsCall = "assets/svgs/call.svg";
 
+  /// Assets for svgsCancelled
+  /// assets/svgs/cancelled.svg
+  static const String svgsCancelled = "assets/svgs/cancelled.svg";
+
   /// Assets for svgsCarpentar
   /// assets/svgs/carpentar.svg
   static const String svgsCarpentar = "assets/svgs/carpentar.svg";

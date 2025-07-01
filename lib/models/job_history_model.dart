@@ -11,18 +11,25 @@ class JobHistory {
   final String description;
   final SubcontractorModel subcontractorModel;
   final bool showQuoteButtons;
+  List<Map<String, dynamic>> extras;
+  String extrasStatus;
 
-  const JobHistory(
-      {required this.title,
-      required this.svgIcon,
-      required this.price,
-      required this.targetBudget,
-      required this.dueDate,
-      required this.address,
-      required this.status,
-      required this.description,
-      required this.subcontractorModel,
-      this.showQuoteButtons = false});
+  JobHistory({
+    required this.title,
+    required this.svgIcon,
+    required this.price,
+    required this.targetBudget,
+    required this.dueDate,
+    required this.address,
+    required this.status,
+    required this.description,
+    required this.subcontractorModel,
+    this.showQuoteButtons = false,
+    this.extras = const [],
+    this.extrasStatus = 'pending',
+  });
+
+  bool get hasExtras => extras.isNotEmpty;
 
   JobHistory copyWith({
     String? title,
@@ -35,6 +42,8 @@ class JobHistory {
     String? description,
     SubcontractorModel? subcontractorModel,
     bool? showQuoteButtons,
+    List<Map<String, dynamic>>? extras,
+    String? extrasStatus,
   }) {
     return JobHistory(
       title: title ?? this.title,
@@ -47,6 +56,8 @@ class JobHistory {
       description: description ?? this.description,
       subcontractorModel: subcontractorModel ?? this.subcontractorModel,
       showQuoteButtons: showQuoteButtons ?? this.showQuoteButtons,
+      extras: extras ?? this.extras,
+      extrasStatus: extrasStatus ?? this.extrasStatus,
     );
   }
 }

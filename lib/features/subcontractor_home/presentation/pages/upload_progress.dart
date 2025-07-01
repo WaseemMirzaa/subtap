@@ -164,7 +164,7 @@ class _UploadProgressPageState extends State<UploadProgressPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const JobVerificationPage(
+                              builder: (context) => JobVerificationPage(
                                 job: JobHistory(
                                   title: 'Electrical & Tech',
                                   svgIcon: Assets.svgsTech,
@@ -175,7 +175,7 @@ class _UploadProgressPageState extends State<UploadProgressPage> {
                                   status: 'Active Jobs',
                                   description:
                                       "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-                                  subcontractorModel: SubcontractorModel(
+                                  subcontractorModel: const SubcontractorModel(
                                     expertise: 'Electrician',
                                     description:
                                         'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after turning on garbage disposal.',

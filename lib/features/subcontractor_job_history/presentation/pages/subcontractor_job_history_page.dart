@@ -14,7 +14,7 @@ class _SubcontractorJobHistoryPageState
   // String _selectedTab = 'Open Jobs';
   var controller = Get.put(SubcontrctorJobHistoryController());
   final List<JobHistory> _allJobs = [
-    const JobHistory(
+    JobHistory(
       title: 'General Trades',
       svgIcon: Assets.svgsTrade,
       price: 50.0,
@@ -24,7 +24,7 @@ class _SubcontractorJobHistoryPageState
       status: 'Open Jobs',
       description:
           "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: SubcontractorModel(
+      subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
         description:
             'Leaking kitchen sink, Pipe may be cracked. Water  dripping into cabinet below. Happened after  turning on  garbage disposal.',
@@ -34,7 +34,7 @@ class _SubcontractorJobHistoryPageState
         rating: 4.0,
       ),
     ),
-    const JobHistory(
+    JobHistory(
       title: 'Electrical & Tech',
       svgIcon: Assets.svgsTech,
       price: 65.0,
@@ -44,7 +44,7 @@ class _SubcontractorJobHistoryPageState
       status: 'Open Jobs',
       description:
           "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: SubcontractorModel(
+      subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
         description:
             'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
@@ -54,7 +54,7 @@ class _SubcontractorJobHistoryPageState
         rating: 4.0,
       ),
     ),
-    const JobHistory(
+    JobHistory(
       title: 'General Trades',
       svgIcon: Assets.svgsTech,
       price: 65.0,
@@ -64,7 +64,7 @@ class _SubcontractorJobHistoryPageState
       status: 'Active Jobs',
       description:
           "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: SubcontractorModel(
+      subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
         description:
             'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
@@ -74,7 +74,7 @@ class _SubcontractorJobHistoryPageState
         rating: 4.0,
       ),
     ),
-    const JobHistory(
+    JobHistory(
       title: 'Electrical & Tech',
       svgIcon: Assets.svgsTech,
       price: 65.0,
@@ -84,7 +84,7 @@ class _SubcontractorJobHistoryPageState
       status: 'Active Jobs',
       description:
           "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: SubcontractorModel(
+      subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
         description:
             'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',

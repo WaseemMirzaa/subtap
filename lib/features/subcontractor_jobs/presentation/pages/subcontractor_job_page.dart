@@ -92,6 +92,26 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
     }
   }
 
+  void _validateDates() {
+    if (_startDateController.text.isNotEmpty &&
+        _endDateController.text.isNotEmpty) {
+      final startDate = DateTime.parse(_startDateController.text);
+      final endDate = DateTime.parse(_endDateController.text);
+
+      if (endDate.isBefore(startDate)) {
+        // If end date is before start date, reset it to start date
+        _endDateController.text = _startDateController.text;
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('End date cannot be before start date'),
+            ),
+          );
+        }
+      }
+    }
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -377,6 +397,15 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                           hintText: 'Start Date',
                           controller: _startDateController,
                           readOnly: _makeCounterOffer,
+                          onChanged: (value) {
+                            if (value != null &&
+                                _endDateController.text.isEmpty) {
+                              // If end date is empty, set it to start date
+                              _endDateController.text = value;
+                            } else if (value != null) {
+                              _validateDates();
+                            }
+                          },
                         ),
                       ),
                       SizedBox(
@@ -385,6 +414,14 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                           hintText: 'End Date',
                           controller: _endDateController,
                           readOnly: _makeCounterOffer,
+                          onChanged: (value) {
+                            if (value != null) {
+                              _validateDates();
+                            }
+                          },
+                          firstDate: _startDateController.text.isNotEmpty
+                              ? DateTime.parse(_startDateController.text)
+                              : DateTime.now(),
                         ),
                       ),
                     ],
@@ -465,7 +502,9 @@ class _SubcontractorJobPageState extends State<SubcontractorJobPage> {
                   Expanded(
                     child: CustomButton(
                       text: _makeCounterOffer
-                          ? 'Accept Job As-Is'
+                          ? (widget.isFromAcceptJob
+                              ? 'Submit Job As-Is'
+                              : 'Accept Job As-Is')
                           : (widget.isFromAcceptJob
                               ? 'Submit a Proposal'
                               : 'Submit a Counter Offer'),

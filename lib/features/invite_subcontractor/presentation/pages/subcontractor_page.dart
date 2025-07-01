@@ -76,8 +76,8 @@ class SubcontractorsPage extends StatelessWidget {
                       AppRoutes.favSubcontractorProfile,
                       arguments: {
                         'subcontractor': subcontractor,
-                        'fromSubcontractorsPage':
-                            true, // Flag to hide hire button
+                        'fromSubcontractorsPage': true,
+                        // 'showDescription': true, // Flag to hide hire button
                       },
                     );
                   },

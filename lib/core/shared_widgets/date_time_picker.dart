@@ -2,60 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:subtap/core/shared_widgets/custom_textfield.dart';
 import 'package:subtap/core/theme/app_color.dart';
 
-class DateTimePicker extends StatefulWidget {
+class DateTimePicker extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final bool readOnly;
+  final Function(String?)? onChanged;
+  final DateTime? firstDate;
 
   const DateTimePicker({
     super.key,
     required this.hintText,
     required this.controller,
     this.readOnly = false,
+    this.onChanged,
+    this.firstDate,
   });
-
-  @override
-  State<DateTimePicker> createState() => _DateTimePickerState();
-}
-
-class _DateTimePickerState extends State<DateTimePicker> {
-  Future<void> _selectDate(BuildContext context) async {
-    if (widget.readOnly) return; // Don't show picker if read-only
-
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null) {
-      setState(() {
-        widget.controller.text = "${picked.toLocal()}".split(' ')[0];
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _selectDate(context),
+      onTap: readOnly
+          ? null
+          : () async {
+              final pickedDate = await showDatePicker(
+                context: context,
+                initialDate: controller.text.isNotEmpty
+                    ? DateTime.parse(controller.text)
+                    : DateTime.now(),
+                firstDate: firstDate ?? DateTime.now(),
+                lastDate: DateTime(2100),
+              );
+              if (pickedDate != null) {
+                final formattedDate =
+                    pickedDate.toIso8601String().split('T')[0];
+                controller.text = formattedDate;
+                if (onChanged != null) {
+                  onChanged!(formattedDate);
+                }
+              }
+            },
       child: AbsorbPointer(
         child: CustomTextField(
           fillColor: AppColor.white,
-          controller: widget.controller,
+          controller: controller,
           borderColor: AppColor.white,
           contentPadding: const EdgeInsets.symmetric(
             vertical: 9,
-            horizontal: 15,
+            horizontal: 14,
           ),
           borderRadius: 10,
           height: 45,
-          hintText: widget.hintText,
+          hintText: hintText,
           fontStyle: FontStyle.normal,
           hintTextColor: AppColor.darkGrayShade,
-          keyboardType: TextInputType.none,
-          readOnly:
-              true, // Always read-only since we handle input via date picker
+          keyboardType: TextInputType.datetime,
+          readOnly: true,
         ),
       ),
     );

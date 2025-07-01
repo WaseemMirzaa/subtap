@@ -18,12 +18,17 @@ class _HomePageState extends State<HomePage> {
       initialDate: isStartDate
           ? homeController.startDate.value
           : homeController.endDate.value,
-      firstDate: DateTime(2000),
+      firstDate: isStartDate ? DateTime(2000) : homeController.startDate.value,
       lastDate: DateTime(2101),
     );
+
     if (picked != null) {
       if (isStartDate) {
         homeController.updateStartDate(picked);
+        // If new start date is after current end date, update end date too
+        if (picked.isAfter(homeController.endDate.value)) {
+          homeController.updateEndDate(picked);
+        }
       } else {
         homeController.updateEndDate(picked);
       }
