@@ -17,6 +17,9 @@ class SubcontractorJobHistoryDetailPage extends StatefulWidget {
 
 class _SubcontractorJobHistoryDetailPageState
     extends State<SubcontractorJobHistoryDetailPage> {
+  // Add this state variable
+  bool isDescriptionExpanded = false;
+
   // Static list of extras
   List<Map<String, dynamic>> staticExtras = [
     {
@@ -145,7 +148,7 @@ class _SubcontractorJobHistoryDetailPageState
                             ),
                             child: Center(
                               child: SvgPicture.asset(
-                                widget.job.svgIcon,
+                                widget.job.svgIcon ?? '',
                                 width: 28,
                                 height: 24,
                               ),
@@ -157,7 +160,7 @@ class _SubcontractorJobHistoryDetailPageState
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.job.title,
+                                  widget.job.title ?? 'No Title',
                                   style: const TextStyle(
                                     color: AppColor.black,
                                     fontSize: 22,
@@ -339,13 +342,45 @@ class _SubcontractorJobHistoryDetailPageState
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        widget.job.description ?? 'No description available',
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: AppColor.midGray,
-                          fontFamily: 'HelveticaNeueMedium',
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.job.description ??
+                                'No description available',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: AppColor.midGray,
+                              fontFamily: 'HelveticaNeueMedium',
+                            ),
+                            maxLines: isDescriptionExpanded ? null : 2,
+                            overflow: isDescriptionExpanded
+                                ? TextOverflow.visible
+                                : TextOverflow.ellipsis,
+                          ),
+                          if ((widget.job.description?.length ?? 0) > 100) ...[
+                            const SizedBox(height: 4),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isDescriptionExpanded =
+                                      !isDescriptionExpanded;
+                                });
+                              },
+                              child: Text(
+                                isDescriptionExpanded
+                                    ? 'View less'
+                                    : 'View more',
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: AppColor.primaryColor,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'HelveticaNeueMedium',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                       const SizedBox(height: 20),
                       Row(

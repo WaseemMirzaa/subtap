@@ -5,6 +5,8 @@ class NewJobsCard extends StatelessWidget {
   final VoidCallback? onTap;
   final VoidCallback? onAcceptJob;
   final VoidCallback? onNotInterested;
+  final VoidCallback? onBookmark;
+  final bool isBookmarked;
 
   const NewJobsCard({
     super.key,
@@ -12,10 +14,14 @@ class NewJobsCard extends StatelessWidget {
     this.onTap,
     this.onAcceptJob,
     this.onNotInterested,
+    this.onBookmark,
+    this.isBookmarked = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    print(
+        'DEBUG: Building NewJobsCard for job:  {job.title}, svgIcon= {job.svgIcon}, targetBudget= {job.targetBudget}, dueDate= {job.dueDate}, address= {job.address}, propertyManager= {job.propertyManager}, subcontractorModel= {job.subcontractorModel}');
     final bool isActiveJob = job.status == 'Active Jobs';
 
     return GestureDetector(
@@ -48,7 +54,9 @@ class NewJobsCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: Center(
-                    child: SvgPicture.asset(job.svgIcon, width: 28, height: 24),
+                    child: (job.svgIcon != null && job.svgIcon!.isNotEmpty)
+                        ? SvgPicture.asset(job.svgIcon!, width: 28, height: 24)
+                        : const SizedBox(width: 28, height: 24),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -57,7 +65,7 @@ class NewJobsCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        job.title,
+                        job.title ?? 'No Title',
                         style: const TextStyle(
                           color: AppColor.black,
                           fontSize: 18,
@@ -78,7 +86,7 @@ class NewJobsCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           const Expanded(
                             child: Text(
-                              'Carpentry & Framing',
+                              'Carpentry & Farming',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: AppColor.midGray,
@@ -95,29 +103,177 @@ class NewJobsCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Container(
-                  constraints: const BoxConstraints(maxWidth: 100),
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    color: AppColor.lightGray,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SvgPicture.asset(
-                        isActiveJob ? Assets.svgsActive : Assets.svgsTime,
-                        width: 14,
-                        height: 14,
-                        fit: BoxFit.contain,
+                Row(
+                  children: [
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 100),
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: AppColor.lightGray,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      const SizedBox(width: 4),
-                    ],
-                  ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset(
+                            isActiveJob ? Assets.svgsActive : Assets.svgsTime,
+                            width: 14,
+                            height: 14,
+                            fit: BoxFit.contain,
+                          ),
+                          const SizedBox(width: 4),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    // Bookmark button
+                    InkWell(
+                      onTap: onBookmark,
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: AppColor.lightGray,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: SvgPicture.asset(
+                          Assets.svgsBookmark,
+                          width: 16,
+                          height: 16,
+                          color: isBookmarked
+                              ? AppColor.mutedGold
+                              : AppColor.midGray,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
             const SizedBox(height: 12),
+            // Property Manager Section
+            if (job.propertyManager != null) ...[
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColor.offWhite,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: IntrinsicHeight(
+                  // Ensure both sides are vertically aligned
+                  child: Row(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.center, // Vertically center items
+                    children: [
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundImage: job.propertyManager?.imageUrl != null
+                            ? AssetImage(job.propertyManager!.imageUrl)
+                            : null,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment:
+                              MainAxisAlignment.center, // Center content
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    'Posted by  {job.propertyManager?.name ?? "Unknown"}',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.black,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                if (job.propertyManager?.isVerified ==
+                                    true) ...[
+                                  const SizedBox(width: 4),
+                                  SvgPicture.asset(
+                                    Assets.svgsVerify,
+                                    width: 20,
+                                    height: 20,
+                                  ),
+                                ],
+                              ],
+                            ),
+                            const SizedBox(height: 2),
+                            Row(
+                              children: [
+                                SvgPicture.asset(Assets.svgsStar,
+                                    width: 12, height: 12),
+                                const SizedBox(width: 4),
+                                Flexible(
+                                  child: Text(
+                                    '${job.propertyManager!.rating} ★ (${job.propertyManager!.totalJobs} jobs)',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: AppColor.midGray,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Align(
+                        alignment: Alignment
+                            .center, // Ensure button is centered vertically
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatDetailPage(
+                                  userName: job.propertyManager!.name,
+                                  avatarImage: job.propertyManager!.imageUrl,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: AppColor.primaryColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.svgsChati,
+                                  width: 14,
+                                  height: 14,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(width: 4),
+                                const Text(
+                                  'Message',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
             // Target Budget Row
             Row(
               children: [
@@ -137,7 +293,7 @@ class NewJobsCard extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: job.targetBudget,
+                        text: job.targetBudget ?? 'N/A',
                         style: const TextStyle(
                           fontSize: 14,
                           color: AppColor.midGray,
@@ -169,7 +325,7 @@ class NewJobsCard extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: job.dueDate,
+                        text: job.dueDate ?? 'N/A',
                         style: const TextStyle(
                           fontSize: 14,
                           color: AppColor.midGray,
@@ -188,28 +344,31 @@ class NewJobsCard extends StatelessWidget {
               children: [
                 SvgPicture.asset(Assets.svgsLocation, width: 16, height: 16),
                 const SizedBox(width: 4),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      const TextSpan(
-                        text: 'Address: ',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColor.black,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'HelveticaNeueMedium',
+                Expanded(
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: 'Address: ',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColor.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'HelveticaNeueMedium',
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text: job.address,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColor.midGray,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'HelveticaNeueMedium',
+                        TextSpan(
+                          text: job.address ?? 'N/A',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColor.midGray,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'HelveticaNeueMedium',
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -217,42 +376,35 @@ class NewJobsCard extends StatelessWidget {
             // Only show buttons if not an active job
             if (!isActiveJob) ...[
               const SizedBox(height: 16),
-              // Buttons Row
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: IntrinsicWidth(
-                      child: CustomButton(
-                        text: 'APPLY JOB',
-                        onTap: onAcceptJob,
-                        color: AppColor.primaryColor,
-                        textColor: Colors.white,
-                        height: 32,
-                        radius: 12,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'HelveticaNeueMedium',
-                      ),
+                  Expanded(
+                    child: CustomButton(
+                      text: 'APPLY Now',
+                      onTap: onAcceptJob,
+                      color: AppColor.primaryColor,
+                      textColor: Colors.white,
+                      height: 32,
+                      radius: 12,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'HelveticaNeueMedium',
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: IntrinsicWidth(
-                      child: CustomButton(
-                        text: 'NOT INTERESTED',
-                        onTap: onNotInterested,
-                        color: AppColor.lightGray,
-                        textColor: AppColor.black,
-                        enableBorder: true,
-                        borderColor: AppColor.black,
-                        height: 32,
-                        radius: 12,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'HelveticaNeueMedium',
-                      ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: CustomButton(
+                      text: 'Dismiss',
+                      onTap: onNotInterested,
+                      color: AppColor.white,
+                      textColor: AppColor.black,
+                      height: 32,
+                      radius: 12,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'HelveticaNeueMedium',
+                      enableBorder: true,
+                      borderColor: AppColor.lightGray,
                     ),
                   ),
                 ],

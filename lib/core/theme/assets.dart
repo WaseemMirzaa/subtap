@@ -142,6 +142,10 @@ class Assets {
   /// assets/svgs/arrow_forward.svg
   static const String svgsArrowForward = "assets/svgs/arrow_forward.svg";
 
+  /// Assets for svgsBookmark
+  /// assets/svgs/bookmark.svg
+  static const String svgsBookmark = "assets/svgs/bookmark.svg";
+
   /// Assets for svgsCall
   /// assets/svgs/call.svg
   static const String svgsCall = "assets/svgs/call.svg";
@@ -322,6 +326,10 @@ class Assets {
   /// assets/svgs/profile.svg
   static const String svgsProfile = "assets/svgs/profile.svg";
 
+  /// Assets for svgsPropertyManager
+  /// assets/svgs/property_manager.svg
+  static const String svgsPropertyManager = "assets/svgs/property_manager.svg";
+
   /// Assets for svgsRoofing
   /// assets/svgs/roofing.svg
   static const String svgsRoofing = "assets/svgs/roofing.svg";
@@ -369,6 +377,10 @@ class Assets {
   /// Assets for svgsUploadProgress
   /// assets/svgs/upload_progress.svg
   static const String svgsUploadProgress = "assets/svgs/upload_progress.svg";
+
+  /// Assets for svgsVerify
+  /// assets/svgs/verify.svg
+  static const String svgsVerify = "assets/svgs/verify.svg";
 
   /// Assets for svgsWindow
   /// assets/svgs/window.svg

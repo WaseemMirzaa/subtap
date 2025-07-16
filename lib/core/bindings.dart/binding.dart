@@ -3,6 +3,7 @@ import 'package:subtap/controller/change_password_controller.dart';
 import 'package:subtap/controller/create_account_controller.dart';
 import 'package:subtap/controller/fav_subcontractor_profile_controller.dart';
 import 'package:subtap/controller/favorites_subcontractor_controller.dart';
+import 'package:subtap/controller/filter_controller.dart';
 import 'package:subtap/controller/home_page_controller.dart';
 import 'package:subtap/controller/job_history_controller.dart';
 import 'package:subtap/controller/job_post_controller.dart';

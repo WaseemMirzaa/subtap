@@ -44,7 +44,10 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                             ),
                             child: Center(
                               child: SvgPicture.asset(
-                                widget.job.svgIcon,
+                                (widget.job.svgIcon != null &&
+                                        widget.job.svgIcon!.isNotEmpty)
+                                    ? widget.job.svgIcon!
+                                    : Assets.svgsGeneral, // fallback asset
                                 width: 28,
                                 height: 24,
                               ),
@@ -56,7 +59,7 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.job.title,
+                                  widget.job.title ?? 'No Title',
                                   style: const TextStyle(
                                     color: AppColor.black,
                                     fontSize: 22,
@@ -142,7 +145,7 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: widget.job.targetBudget,
+                                  text: widget.job.targetBudget ?? 'N/A',
                                   style: const TextStyle(
                                     fontSize: 13,
                                     color: AppColor.midGray,
@@ -177,7 +180,7 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: widget.job.dueDate,
+                                  text: widget.job.dueDate ?? 'N/A',
                                   style: const TextStyle(
                                     fontSize: 13,
                                     color: AppColor.midGray,
@@ -212,7 +215,7 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: widget.job.address,
+                                  text: widget.job.address ?? 'N/A',
                                   style: const TextStyle(
                                     fontSize: 13,
                                     color: AppColor.midGray,
@@ -351,7 +354,7 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: CustomButton(
-                  text: 'Apply Job',
+                  text: 'Apply Now',
                   onTap: () {
                     Get.toNamed(
                       AppRoutes.subcontractorJob,
@@ -371,7 +374,7 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: CustomButton(
-                  text: 'Not Interested',
+                  text: 'Dismiss',
                   onTap: () {
                     // Handle not interested
                   },

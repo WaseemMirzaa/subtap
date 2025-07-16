@@ -6,6 +6,7 @@ import 'package:subtap/features/fav_subcontractor/presentation/pages/pages.dart'
 import 'package:subtap/features/home/presentation/pages/pages.dart';
 import 'package:subtap/features/job_history/presentation/pages/pages.dart';
 import 'package:subtap/features/main_page_with_navbar.dart';
+import 'package:subtap/features/new_jobs/presentation/pages/pages.dart';
 import 'package:subtap/features/profile/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_home/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_job_history/presentation/pages/pages.dart';
@@ -31,6 +32,7 @@ class NavigationController extends GetxController {
   final List<Widget> subcontractorPages = [
     const SubcontractorHomePage(),
     const SubcontractorJobHistoryPage(),
+    NewJobsPage(),
     ChatPage(),
     const SubcontractorProfilePage()
   ];

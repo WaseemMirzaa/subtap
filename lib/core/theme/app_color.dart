@@ -18,6 +18,8 @@ class AppColor {
 
   static const Color midGray = Color(0xFF6D6D6D);
 
+  static const Color ghostGrey = Color(0xFFF5F5F5);
+
   /// Vibrant yellow color (#F1E235).
   static const Color vibrantYellow = Color(0xFFF1E235);
 

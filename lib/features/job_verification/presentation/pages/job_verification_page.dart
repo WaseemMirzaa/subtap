@@ -63,7 +63,7 @@ class _JobVerificationPageState extends State<JobVerificationPage> {
                             ),
                             child: Center(
                               child: SvgPicture.asset(
-                                widget.job.svgIcon,
+                                widget.job.svgIcon ?? '',
                                 width: 28,
                                 height: 24,
                               ),
@@ -75,7 +75,7 @@ class _JobVerificationPageState extends State<JobVerificationPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.job.title,
+                                  widget.job.title ?? '',
                                   style: const TextStyle(
                                     color: AppColor.black,
                                     fontSize: 22,

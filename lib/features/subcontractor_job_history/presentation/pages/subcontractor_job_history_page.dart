@@ -33,6 +33,13 @@ class _SubcontractorJobHistoryPageState
         price: '50',
         rating: 4.0,
       ),
+      propertyManager: const PropertyManagerModel(
+        name: 'Jane ',
+        imageUrl: Assets.imagesHomePerson,
+        rating: 4.6,
+        totalJobs: 12,
+        isVerified: true,
+      ),
     ),
     JobHistory(
       title: 'Electrical & Tech',
@@ -52,6 +59,13 @@ class _SubcontractorJobHistoryPageState
         imageUrl: 'path_to_image',
         price: '50',
         rating: 4.0,
+      ),
+      propertyManager: const PropertyManagerModel(
+        name: 'John Doe',
+        imageUrl: Assets.imagesSubcontractorBrown,
+        rating: 4.6,
+        totalJobs: 12,
+        isVerified: true,
       ),
     ),
     JobHistory(
@@ -73,6 +87,13 @@ class _SubcontractorJobHistoryPageState
         price: '50',
         rating: 4.0,
       ),
+      propertyManager: const PropertyManagerModel(
+        name: 'John Doe',
+        imageUrl: Assets.imagesSubcontractorBrown,
+        rating: 4.6,
+        totalJobs: 12,
+        isVerified: true,
+      ),
     ),
     JobHistory(
       title: 'Electrical & Tech',
@@ -92,6 +113,13 @@ class _SubcontractorJobHistoryPageState
         imageUrl: 'path_to_image',
         price: '50',
         rating: 4.0,
+      ),
+      propertyManager: const PropertyManagerModel(
+        name: 'Jane ',
+        imageUrl: Assets.imagesHomePerson,
+        rating: 4.6,
+        totalJobs: 12,
+        isVerified: true,
       ),
     ),
   ];
@@ -192,8 +220,8 @@ class _SubcontractorJobHistoryPageState
                                   mainAxisSpacing: 15,
                                   childAspectRatio:
                                       controller.selectedTab == 'Open Jobs'
-                                          ? 1.55
-                                          : 1.9,
+                                          ? 1.15
+                                          : 1.39,
                                 ),
                                 itemBuilder: (context, index) {
                                   return SubcontractorJobHistoryCard(
@@ -211,6 +239,16 @@ class _SubcontractorJobHistoryPageState
                                         ),
                                       );
                                     },
+                                    onBookmark:
+                                        controller.selectedTab == 'Open Jobs'
+                                            ? () {
+                                                // Handle bookmark toggle
+                                                print(
+                                                    'Job bookmarked: ${_filteredJobs[index].title}');
+                                              }
+                                            : null,
+                                    isBookmarked:
+                                        false, // You can track this state
                                   );
                                 },
                               ),

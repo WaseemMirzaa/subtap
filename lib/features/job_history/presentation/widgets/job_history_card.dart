@@ -31,7 +31,8 @@ class JobHistoryCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14), // Oval shape
                   ),
                   child: Center(
-                    child: SvgPicture.asset(job.svgIcon, width: 28, height: 24),
+                    child: SvgPicture.asset(job.svgIcon ?? '',
+                        width: 28, height: 24),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -40,7 +41,7 @@ class JobHistoryCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        job.title,
+                        job.title ?? '',
                         style: const TextStyle(
                           color: AppColor.black,
                           fontSize: 18,

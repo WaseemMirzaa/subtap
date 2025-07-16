@@ -150,7 +150,7 @@ class _JobHistoryDetailPageState extends State<JobHistoryDetailPage> {
                             ),
                             child: Center(
                               child: SvgPicture.asset(
-                                widget.job.svgIcon,
+                                widget.job.svgIcon ?? '',
                                 width: 28,
                                 height: 24,
                               ),
@@ -162,7 +162,7 @@ class _JobHistoryDetailPageState extends State<JobHistoryDetailPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.job.title,
+                                  widget.job.title ?? '',
                                   style: const TextStyle(
                                     color: AppColor.black,
                                     fontSize: 22,
@@ -647,7 +647,16 @@ class _JobHistoryDetailPageState extends State<JobHistoryDetailPage> {
                       const SizedBox(height: 12),
                       // Subcontractor Card
                       SubcontractorJobCard(
-                        subcontractor: widget.job.subcontractorModel,
+                        subcontractor: widget.job.subcontractorModel ??
+                            const SubcontractorModel(
+                              name: 'Unknown',
+                              imageUrl: '',
+                              expertise: '',
+                              description:
+                                  'No subcontractor information available',
+                              price: '0.0',
+                              rating: 0.0,
+                            ),
                         showActionButtons: widget.isRequestedJob,
                         onTap: widget.isRequestedJob
                             ? () {
@@ -656,17 +665,25 @@ class _JobHistoryDetailPageState extends State<JobHistoryDetailPage> {
                                   arguments: {
                                     'subcontractor': {
                                       'name':
-                                          widget.job.subcontractorModel.name,
-                                      'imageUrl': widget
-                                          .job.subcontractorModel.imageUrl,
-                                      'expertise': widget
-                                          .job.subcontractorModel.expertise,
+                                          widget.job.subcontractorModel?.name ??
+                                              'Unknown',
+                                      'imageUrl': widget.job.subcontractorModel
+                                              ?.imageUrl ??
+                                          '',
+                                      'expertise': widget.job.subcontractorModel
+                                              ?.expertise ??
+                                          '',
                                       'description': widget
-                                          .job.subcontractorModel.description,
-                                      'price':
-                                          widget.job.subcontractorModel.price,
-                                      'rating':
-                                          widget.job.subcontractorModel.rating,
+                                              .job
+                                              .subcontractorModel
+                                              ?.description ??
+                                          '',
+                                      'price': widget
+                                              .job.subcontractorModel?.price ??
+                                          0.0,
+                                      'rating': widget
+                                              .job.subcontractorModel?.rating ??
+                                          0.0,
                                     },
                                     'fromJobHistory': true,
                                     'fromSubcontractorsPage': true,

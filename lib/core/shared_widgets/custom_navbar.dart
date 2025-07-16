@@ -19,7 +19,7 @@ class CustomNavBar extends StatelessWidget {
           ? [
               Assets.svgsHome,
               Assets.svgsDetails,
-              // Exclude Assets.svgsFav for subcontractors
+              Assets.svgsIconAwesomeSearch,
               Assets.svgsMsg,
               Assets.svgsProfile,
             ]

@@ -24,12 +24,14 @@ class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const JobStatusCard(
-                  firstTitle: 'In Progress',
-                  firstValue: '03',
-                  secondTitle: 'Awaiting Code',
-                  secondValue: '01',
-                  thirdTitle: 'Completed',
-                  thirdValue: '27',
+                  fourthTitle: 'Completed',
+                  fourthValue: '27',
+                  firstTitle: 'Invited',
+                  firstValue: '01',
+                  secondTitle: 'In Progress',
+                  secondValue: '03',
+                  thirdTitle: 'Awaiting Code',
+                  thirdValue: '01',
                 ),
                 kGap20,
                 const CustomText(

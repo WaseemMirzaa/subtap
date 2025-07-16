@@ -6,6 +6,7 @@ import 'package:subtap/core/shared_widgets/custom_button.dart';
 import 'package:subtap/core/shared_widgets/custom_text.dart';
 import 'package:subtap/core/theme/app_color.dart';
 import 'package:subtap/core/theme/assets.dart';
+import 'package:subtap/features/chat/presentation/pages/pages.dart';
 import 'package:subtap/models/models.dart';
 
 part 'new_jobs_appbar.dart';

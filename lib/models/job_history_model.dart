@@ -1,32 +1,36 @@
 part of 'models.dart';
 
 class JobHistory {
-  final String title;
-  final String svgIcon;
-  final double price;
-  final String targetBudget;
-  final String dueDate;
-  final String address;
-  final String status;
-  final String description;
-  final SubcontractorModel subcontractorModel;
+  final String? title;
+  final String? svgIcon;
+  final double? price;
+  final String? targetBudget;
+  final String? dueDate;
+  final String? address;
+  final String? status;
+  final String? description;
+  final SubcontractorModel? subcontractorModel;
   final bool showQuoteButtons;
   List<Map<String, dynamic>> extras;
-  String extrasStatus;
+  String? extrasStatus;
+  final String? manager;
+  final PropertyManagerModel? propertyManager;
 
   JobHistory({
-    required this.title,
-    required this.svgIcon,
-    required this.price,
-    required this.targetBudget,
-    required this.dueDate,
-    required this.address,
-    required this.status,
-    required this.description,
-    required this.subcontractorModel,
+    this.title,
+    this.svgIcon,
+    this.price,
+    this.targetBudget,
+    this.dueDate,
+    this.address,
+    this.status,
+    this.description,
+    this.subcontractorModel,
     this.showQuoteButtons = false,
     this.extras = const [],
     this.extrasStatus = 'pending',
+    this.manager,
+    this.propertyManager,
   });
 
   bool get hasExtras => extras.isNotEmpty;
@@ -44,6 +48,8 @@ class JobHistory {
     bool? showQuoteButtons,
     List<Map<String, dynamic>>? extras,
     String? extrasStatus,
+    String? manager,
+    PropertyManagerModel? propertyManager,
   }) {
     return JobHistory(
       title: title ?? this.title,
@@ -58,6 +64,8 @@ class JobHistory {
       showQuoteButtons: showQuoteButtons ?? this.showQuoteButtons,
       extras: extras ?? this.extras,
       extrasStatus: extrasStatus ?? this.extrasStatus,
+      manager: manager ?? this.manager,
+      propertyManager: propertyManager ?? this.propertyManager,
     );
   }
 }

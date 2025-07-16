@@ -53,6 +53,7 @@ class SearchBarTile extends StatelessWidget {
             child: TextField(
               controller: effectiveController,
               focusNode: focusNode,
+              style: const TextStyle(color: AppColor.midGray),
               decoration: InputDecoration(
                 hintText: hintText ?? 'Search...',
                 hintStyle: const TextStyle(

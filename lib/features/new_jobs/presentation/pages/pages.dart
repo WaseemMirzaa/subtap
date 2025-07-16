@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:subtap/controller/filter_controller.dart';
+import 'package:subtap/controller/new_jobs_controller.dart';
 import 'package:subtap/core/config/config.dart';
 import 'package:subtap/core/shared_widgets/custom_button.dart';
+import 'package:subtap/core/shared_widgets/custom_text.dart';
 import 'package:subtap/core/shared_widgets/filter_dialog.dart';
 import 'package:subtap/core/shared_widgets/search_bar_tile.dart';
 import 'package:subtap/core/shared_widgets/subtap_scaffold.dart';

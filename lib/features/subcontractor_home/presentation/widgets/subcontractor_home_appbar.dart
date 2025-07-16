@@ -76,23 +76,33 @@ class SubcontractorHomeAppbar extends StatelessWidget
                         ),
                       ),
                       const SizedBox(width: 12),
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomText(
+                            const CustomText(
                               text: 'Hi, Alex Jerome!',
                               fontSize: 24,
                               fontWeight: FontWeight.w400,
                               color: AppColor.white,
                             ),
                             kGap10,
-                            CustomText(
-                              text: 'Customer',
-                              decorationColor: AppColor.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.white,
+                            Row(
+                              children: [
+                                const CustomText(
+                                  text: 'SubContractor',
+                                  decorationColor: AppColor.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.white,
+                                ),
+                                kGap10,
+                                SvgPicture.asset(
+                                  Assets.svgsVerify,
+                                  width: 20,
+                                  height: 20,
+                                ),
+                              ],
                             ),
                           ],
                         ),

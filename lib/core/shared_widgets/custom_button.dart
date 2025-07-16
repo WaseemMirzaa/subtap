@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:subtap/core/shared_widgets/custom_text.dart';
 import 'package:subtap/core/theme/app_color.dart';
 
@@ -45,69 +46,68 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: isLoading ? null : onTap,
-      child: Center(
-        child: Container(
-          width: width,
-          height: height,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            color: gradient == null
-                ? (isLoading ? color?.withOpacity(0.7) : color)
-                : null,
-            gradient: gradient,
-            borderRadius: BorderRadius.circular(radius),
-            border: enableBorder
-                ? Border.all(color: borderColor ?? Colors.transparent)
-                : null,
-          ),
-          child: Center(
-            child: isLoading
-                ? SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(loadingColor!),
-                      strokeWidth: 2,
-                    ),
-                  )
-                : enableIcon
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (icon != null) ...[
-                            icon!,
-                            const SizedBox(width: 8)
-                          ],
-                          Flexible(
-                            child: CustomText(
-                              text: text,
-                              color: textColor,
-                              fontSize: fontSize,
-                              fontWeight: fontWeight,
-                              overflow: TextOverflow.ellipsis,
-                              fontFamily: fontFamily,
-                              maxLines: 1, // Pass to CustomText
-                            ),
-                          ),
-                        ],
-                      )
-                    : Center(
+      onTap: isLoading
+          ? null
+          : () {
+              HapticFeedback.lightImpact();
+              onTap?.call();
+            },
+      child: Container(
+        width: width,
+        height: height,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          color: gradient == null
+              ? (isLoading ? color?.withOpacity(0.7) : color)
+              : null,
+          gradient: gradient,
+          borderRadius: BorderRadius.circular(radius),
+          border: enableBorder
+              ? Border.all(color: borderColor ?? Colors.transparent)
+              : null,
+        ),
+        child: isLoading
+            ? Center(
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(loadingColor!),
+                    strokeWidth: 2,
+                  ),
+                ),
+              )
+            : enableIcon
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (icon != null) ...[icon!, const SizedBox(width: 8)],
+                      Flexible(
                         child: CustomText(
                           text: text,
                           color: textColor,
                           fontSize: fontSize,
                           fontWeight: fontWeight,
                           overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
                           fontFamily: fontFamily,
-                          // Pass to CustomText
+                          maxLines: 1,
                         ),
                       ),
-          ),
-        ),
+                    ],
+                  )
+                : Center(
+                    child: CustomText(
+                      text: text,
+                      color: textColor,
+                      fontSize: fontSize,
+                      fontWeight: fontWeight,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      fontFamily: fontFamily,
+                    ),
+                  ),
       ),
     );
   }

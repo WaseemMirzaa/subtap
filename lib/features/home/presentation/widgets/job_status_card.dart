@@ -7,6 +7,8 @@ class JobStatusCard extends StatelessWidget {
   final String secondValue;
   final String thirdTitle;
   final String thirdValue;
+  final String? fourthTitle;
+  final String? fourthValue;
 
   const JobStatusCard({
     super.key,
@@ -16,10 +18,25 @@ class JobStatusCard extends StatelessWidget {
     required this.secondValue,
     required this.thirdTitle,
     required this.thirdValue,
+    this.fourthTitle,
+    this.fourthValue,
   });
 
   @override
   Widget build(BuildContext context) {
+    final children = <Widget>[
+      _buildStatusColumn(firstTitle, firstValue),
+      _buildDivider(),
+      _buildStatusColumn(secondTitle, secondValue),
+      _buildDivider(),
+      _buildStatusColumn(thirdTitle, thirdValue),
+    ];
+
+    if (fourthTitle != null && fourthValue != null) {
+      children.add(_buildDivider());
+      children.add(_buildStatusColumn(fourthTitle!, fourthValue!));
+    }
+
     return Container(
       padding: const EdgeInsets.fromLTRB(27, 16, 16, 16),
       decoration: BoxDecoration(
@@ -28,13 +45,7 @@ class JobStatusCard extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildStatusColumn(firstTitle, firstValue),
-          _buildDivider(),
-          _buildStatusColumn(secondTitle, secondValue),
-          _buildDivider(),
-          _buildStatusColumn(thirdTitle, thirdValue),
-        ],
+        children: children,
       ),
     );
   }
@@ -46,16 +57,17 @@ class JobStatusCard extends StatelessWidget {
         Text(
           title,
           style: const TextStyle(
-            color: AppColor.midGray,
+            color: AppColor.black,
             fontSize: 12,
             fontFamily: 'HelveticaNeueMedium',
+            fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           value,
           style: const TextStyle(
-            color: Colors.black,
+            color: AppColor.midGray,
             fontSize: 16,
             fontWeight: FontWeight.w500,
             fontFamily: 'HelveticaNeueMedium',
