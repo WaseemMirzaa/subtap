@@ -14,6 +14,10 @@ class StatusTimeline extends StatelessWidget {
       children: List.generate(statuses.length, (index) {
         final status = statuses[index];
         final isLast = index == statuses.length - 1;
+        final isCompleted = status['isCompleted'] == true;
+        final isCurrent = !isCompleted &&
+            (index == 0 || statuses[index - 1]['isCompleted'] == true);
+
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -21,65 +25,89 @@ class StatusTimeline extends StatelessWidget {
             Column(
               children: [
                 Container(
-                  width: 33,
-                  height: 33,
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(8),
-                    color: status['isCompleted'] == true
-                        ? AppColor.white
-                        : AppColor.midGray,
+                    shape: BoxShape.circle,
+                    color: isCompleted
+                        ? Colors.green
+                        : isCurrent
+                            ? Colors.orange
+                            : AppColor.lightGray,
+                    border: Border.all(
+                      color: isCompleted
+                          ? Colors.green
+                          : isCurrent
+                              ? Colors.orange
+                              : AppColor.midGray,
+                      width: 2,
+                    ),
                   ),
-                  child: status['isCompleted'] == true
-                      ? Center(
-                          child: SvgPicture.asset(
-                            Assets
-                                .svgsCheck, // Replace with your SVG asset path
-                            width: 13,
-                            height: 9,
-                            fit: BoxFit.contain,
-
-                            color: Colors.black,
-                          ),
-                        )
-                      : null,
+                  child: Center(
+                    child: isCompleted
+                        ? const Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 20,
+                          )
+                        : isCurrent
+                            ? const Icon(
+                                Icons.access_time,
+                                color: Colors.white,
+                                size: 18,
+                              )
+                            : const Icon(
+                                Icons.lock_outline,
+                                color: AppColor.midGray,
+                                size: 18,
+                              ),
+                  ),
                 ),
                 if (!isLast)
                   Container(
-                    width: 2,
-                    height: 40,
-                    color: AppColor.white,
+                    width: 3,
+                    height: 50,
+                    color: isCompleted ? Colors.green : AppColor.lightGray,
                   ),
               ],
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 16),
             // Status and date
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    status['status']!,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: status['isCompleted'] == true
-                          ? AppColor.black
-                          : AppColor.midGray,
-                      fontFamily: 'HelveticaNeueMedium',
-                    ),
-                  ),
-                  if (status['date']!.isNotEmpty)
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      status['date']!,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColor.midGray,
+                      status['status']!,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight:
+                            isCurrent ? FontWeight.bold : FontWeight.w500,
+                        color: isCompleted
+                            ? AppColor.black
+                            : isCurrent
+                                ? AppColor.black
+                                : AppColor.midGray,
                         fontFamily: 'HelveticaNeueMedium',
                       ),
                     ),
-                  const SizedBox(height: 16),
-                ],
+                    if (status['date']!.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text(
+                          status['date']!,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColor.midGray,
+                            fontFamily: 'HelveticaNeueMedium',
+                          ),
+                        ),
+                      ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
           ],

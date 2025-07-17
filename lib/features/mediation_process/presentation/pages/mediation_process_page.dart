@@ -8,22 +8,15 @@ class MediationProcessPage extends StatefulWidget {
 }
 
 class _MediationProcessPageState extends State<MediationProcessPage> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-
   @override
-  void dispose() {
-    _titleController.dispose();
-    _locationController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    // Initialize controller
+    Get.put(MediationProcessPageController());
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return SubtapScaffold(
@@ -33,168 +26,59 @@ class _MediationProcessPageState extends State<MediationProcessPage> {
           // Scrollable content
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 23, horizontal: 23),
+              padding: const EdgeInsets.symmetric(vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Title Field
-                  CustomTextField(
-                    fillColor: AppColor.white,
-                    controller: _titleController,
-                    borderColor: AppColor.white,
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 14,
+                  // Progress indicator (optional)
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: AppColor.mutedGold.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    borderRadius: 10,
-                    hintText: 'Disputes',
-                    fontStyle: FontStyle.normal,
-                    hintTextColor: AppColor.darkGrayShade,
-                    showRightDot: true,
-                    rightDotColor: Colors.black,
-                    rightDotSize: 14,
-                    rightDotBorderWidth: 2,
-                    keyboardType: TextInputType.text,
-                  ),
-                  const Gap(10),
-                  CustomText(
-                    text: 'Order Id',
-                    fontSize: screenWidth > 600 ? 18 : 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                  ),
-                  const Gap(10),
-                  CustomTextField(
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 14,
+                    child: const Text(
+                      'Step 1/1',
+                      style: TextStyle(
+                        color: AppColor.mutedGold,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                    fillColor: AppColor.white,
-                    controller: _locationController,
-                    borderColor: AppColor.white,
-                    fontStyle: FontStyle.normal,
-                    hintText: 'Enter',
-                    hintTextColor: AppColor.darkGrayShade,
-                    keyboardType: TextInputType.streetAddress,
                   ),
-                  const Gap(10),
-                  CustomText(
-                    text: 'Reason',
-                    fontSize: screenWidth > 600 ? 18 : 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                  ),
-                  const Gap(10),
-                  CustomTextField(
-                    fontStyle: FontStyle.normal,
-                    fillColor: AppColor.white,
-                    controller: _descriptionController,
-                    borderColor: AppColor.white,
-                    hintText: 'Enter',
-                    hintTextColor: AppColor.darkGrayShade,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 5,
-                    height: screenHeight * 0.13,
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: screenHeight * 0.01,
-                      horizontal: screenWidth * 0.04,
+
+                  const SizedBox(height: 20),
+
+                  // Warning banner
+                  const WarningBannerWidget(),
+
+                  const SizedBox(height: 20),
+
+                  // Form sections
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        DisputeCategoryWidget(),
+                        SizedBox(height: 16),
+                        JobReferenceWidget(),
+                        SizedBox(height: 16),
+                        ReasonWidget(),
+                        SizedBox(height: 16),
+                        FileUploadWidget(),
+                        SizedBox(height: 100), // Space for bottom button
+                      ],
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a description';
-                      }
-                      return null;
-                    },
-                  ),
-                  const Gap(10),
-                  CustomText(
-                    text: 'Upload Photos',
-                    fontSize: screenWidth > 600 ? 18 : 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                  ),
-                  const Gap(10),
-                  // Image upload section
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final itemWidth = (constraints.maxWidth - 40) / 3;
-                      return Row(
-                        children: List.generate(
-                          2,
-                          (index) => Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Container(
-                              width: itemWidth * 1.60,
-                              height: itemWidth * 1,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(12),
-                                color: AppColor.white,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    Assets.svgsIconAwesomeImage,
-                                    width: itemWidth * 0.36,
-                                    height: itemWidth * 0.28,
-                                  ),
-                                  const Gap(8),
-                                  const CustomText(
-                                    text: 'Tap to Upload',
-                                    fontSize: 14,
-                                    color: AppColor.darkGrayShade,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
                   ),
                 ],
               ),
             ),
           ),
-          if (!isKeyboardOpen)
-            // Fixed bottom container with submit button
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              decoration: const BoxDecoration(
-                color: AppColor.backgroundColor,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-              child: SafeArea(
-                top: false,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: CustomButton(
-                        text: 'Submit Now',
-                        onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SupportDetailPage(
-                                userName:
-                                    "Support Agent", // Replace with actual username
-                                avatarImage: Assets
-                                    .imagesChatDavid, // Replace with actual image path
-                              ),
-                            ),
-                          );
-                        },
-                        color: AppColor.mutedGold,
-                        textColor: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        radius: 17,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+
+          // Fixed bottom submit button
+          if (!isKeyboardOpen) const SubmitButtonWidget(),
         ],
       ),
     );

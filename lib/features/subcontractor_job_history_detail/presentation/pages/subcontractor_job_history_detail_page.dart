@@ -689,52 +689,8 @@ class _SubcontractorJobHistoryDetailPageState
   }
 
   Widget _buildBottomActionBar() {
-    print(
-        'Job Status: ${widget.job.status}, isOpenJob: ${widget.isOpenJob}'); // Debug print
     if (widget.isOpenJob) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: const BoxDecoration(
-          color: AppColor.backgroundColor,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: CustomButton(
-                  text: 'Accept Job',
-                  onTap: () {
-                    Get.toNamed(AppRoutes.subcontractorJob);
-                  },
-                  color: AppColor.mutedGold,
-                  textColor: Colors.white,
-                  fontWeight: FontWeight.w400,
-                  radius: 17,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: CustomButton(
-                  text: 'Not Interested',
-                  onTap: () {
-                    // Handle not interested
-                  },
-                  color: AppColor.white,
-                  textColor: Colors.black,
-                  fontWeight: FontWeight.w400,
-                  radius: 17,
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    } else if (widget.job.status == 'Active Jobs') {
+      // Invited Jobs - Show Accept/Decline
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         decoration: const BoxDecoration(
@@ -744,9 +700,12 @@ class _SubcontractorJobHistoryDetailPageState
         child: Column(
           children: [
             CustomButton(
-              text: 'Upload Progress',
+              text: 'Accept Job',
               onTap: () {
-                Get.toNamed(AppRoutes.uploadProgress);
+                Get.toNamed(AppRoutes.subcontractorJob, arguments: {
+                  'job': widget.job,
+                  'isFromAcceptJob': true,
+                });
               },
               color: AppColor.mutedGold,
               textColor: Colors.white,
@@ -755,63 +714,256 @@ class _SubcontractorJobHistoryDetailPageState
             ),
             const SizedBox(height: 12),
             CustomButton(
-              text: 'Add Extras',
+              text: 'Decline Job',
               onTap: () {
-                // Reset isSubmitting before opening the bottom sheet
-                extrasController.isSubmitting.value = false;
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: AppColor.backgroundColor,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(20)),
-                  ),
-                  builder: (BuildContext context) {
-                    return const CustomExtraBottomSheet();
-                  },
-                ).then((result) {
-                  // When the bottom sheet is closed, check if extras were added
-                  if (result != null &&
-                      result is Map<String, dynamic> &&
-                      result['success'] == true) {
-                    setState(() {
-                      // Add the new extras to our static list
-                      if (result['extrasData'] != null) {
-                        staticExtras.addAll(List<Map<String, dynamic>>.from(
-                            result['extrasData']));
-                      }
-                    });
-                  }
-                  // Reset isSubmitting after the bottom sheet closes
-                  extrasController.isSubmitting.value = false;
-                });
+                Get.back();
               },
-              color: AppColor.mutedGold,
-              textColor: Colors.white,
-              fontWeight: FontWeight.w500,
+              color: AppColor.white,
+              textColor: AppColor.black,
+              fontWeight: FontWeight.w400,
               radius: 14,
-            ),
-            const SizedBox(height: 12),
-            TextButton(
-              onPressed: () {
-                Get.toNamed(AppRoutes.mediationProcess);
-              },
-              child: const Text(
-                'Mediation Process',
-                style: TextStyle(
-                  color: AppColor.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'HelveticaNeueMedium',
-                ),
-              ),
             ),
           ],
         ),
       );
+    } else if (widget.job.status == 'Active Jobs') {
+      // Active Jobs - Show buttons based on timeline status
+      String currentStatus = _getCurrentJobStatus();
+
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        decoration: const BoxDecoration(
+          color: AppColor.backgroundColor,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          children: _buildStatusBasedButtons(currentStatus),
+        ),
+      );
+    } else if (widget.job.status == 'Completed' ||
+        widget.job.status == 'Declined' ||
+        widget.job.status == 'Cancelled') {
+      // Job History - Show Request Review (only for Completed)
+      return widget.job.status == 'Completed'
+          ? Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              decoration: const BoxDecoration(
+                color: AppColor.backgroundColor,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: Column(
+                children: [
+                  CustomButton(
+                    text: '	✅  Request Review',
+                    onTap: () {
+                      Get.snackbar(
+                        'Review',
+                        'Review request submitted',
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                      );
+                    },
+                    color: AppColor.mutedGold,
+                    textColor: Colors.white,
+                    fontWeight: FontWeight.w400,
+                    radius: 14,
+                  ),
+                ],
+              ),
+            )
+          : const SizedBox.shrink();
     } else {
-      return const SizedBox.shrink(); // Return empty widget for other statuses
+      return const SizedBox.shrink();
     }
+  }
+
+  String _getCurrentJobStatus() {
+    // Check timeline statuses to determine current status
+    // This is a simplified logic - adjust based on your actual status tracking
+    return 'Assigned'; // Default for demo - replace with actual logic
+  }
+
+  List<Widget> _buildStatusBasedButtons(String currentStatus) {
+    List<Widget> buttons = [];
+
+    switch (currentStatus) {
+      case 'Assigned':
+        buttons.addAll([
+          CustomButton(
+            text: '📷 Upload Progress',
+            onTap: () {
+              Get.toNamed(AppRoutes.uploadProgress);
+            },
+            color: AppColor.mutedGold,
+            textColor: Colors.white,
+            fontWeight: FontWeight.w400,
+            radius: 14,
+          ),
+          const SizedBox(height: 12),
+          CustomButton(
+            text: '⚖️ Add Mediation',
+            onTap: () {
+              Get.toNamed(AppRoutes.mediationProcess, arguments: {
+                'jobTitle': widget.job.title,
+                // 'jobId': widget.job.id ?? widget.job.title,
+              });
+            },
+            color: AppColor.white,
+            textColor: AppColor.black,
+            fontWeight: FontWeight.w400,
+            radius: 14,
+          ),
+          const SizedBox(height: 12),
+          CustomButton(
+            text: '➕ Add Extras',
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (BuildContext context) {
+                  return CustomExtraBottomSheet(
+                    jobTitle: widget.job.title,
+                    // jobId: widget.job.id ?? '#${widget.job.title.hashCode}',
+                    budget: widget.job.price,
+                  );
+                },
+              ).then((result) {
+                if (result != null &&
+                    result is Map<String, dynamic> &&
+                    result['success'] == true) {
+                  setState(() {
+                    if (result['extrasData'] != null) {
+                      staticExtras.addAll(List<Map<String, dynamic>>.from(
+                          result['extrasData']));
+                    }
+                  });
+                }
+              });
+            },
+            color: AppColor.white,
+            textColor: AppColor.black,
+            fontWeight: FontWeight.w400,
+            radius: 14,
+          ),
+        ]);
+        break;
+
+      // case 'In Progress':
+      //   buttons.addAll([
+      //     CustomButton(
+      //       text: '📷 Upload Progress',
+      //       onTap: () {
+      //         Get.toNamed(AppRoutes.uploadProgress);
+      //       },
+      //       color: AppColor.mutedGold,
+      //       textColor: Colors.white,
+      //       fontWeight: FontWeight.w400,
+      //       radius: 14,
+      //     ),
+      //     const SizedBox(height: 12),
+      //     CustomButton(
+      //       text: '➕ Add Extras',
+      //       onTap: () {
+      //         extrasController.isSubmitting.value = false;
+      //         showModalBottomSheet(
+      //           context: context,
+      //           isScrollControlled: true,
+      //           backgroundColor: AppColor.backgroundColor,
+      //           shape: const RoundedRectangleBorder(
+      //             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      //           ),
+      //           builder: (BuildContext context) {
+      //             return const CustomExtraBottomSheet();
+      //           },
+      //         ).then((result) {
+      //           if (result != null &&
+      //               result is Map<String, dynamic> &&
+      //               result['success'] == true) {
+      //             setState(() {
+      //               if (result['extrasData'] != null) {
+      //                 staticExtras.addAll(List<Map<String, dynamic>>.from(
+      //                     result['extrasData']));
+      //               }
+      //             });
+      //           }
+      //           extrasController.isSubmitting.value = false;
+      //         });
+      //       },
+      //       color: AppColor.white,
+      //       textColor: AppColor.black,
+      //       fontWeight: FontWeight.w400,
+      //       radius: 14,
+      //     ),
+      //     const SizedBox(height: 12),
+      //     CustomButton(
+      //       text: '⚖️ Add Mediation',
+      //       onTap: () {
+      //         Get.toNamed(AppRoutes.mediationProcess);
+      //       },
+      //       color: AppColor.white,
+      //       textColor: AppColor.black,
+      //       fontWeight: FontWeight.w400,
+      //       radius: 14,
+      //     ),
+      //   ]);
+      // break;
+
+      case 'Completed':
+        buttons.addAll([
+          CustomButton(
+            text: '⭐ Request Review',
+            onTap: () {
+              // Navigate to review request page
+              Get.snackbar(
+                'Review',
+                'Review request submitted',
+                backgroundColor: Colors.green,
+                colorText: Colors.white,
+              );
+            },
+            color: AppColor.mutedGold,
+            textColor: Colors.white,
+            fontWeight: FontWeight.w400,
+            radius: 14,
+          ),
+        ]);
+        break;
+
+      default:
+        // Fallback to original buttons
+        buttons.addAll([
+          CustomButton(
+            text: '📷 Upload Progress',
+            onTap: () {
+              Get.toNamed(AppRoutes.uploadProgress);
+            },
+            color: AppColor.mutedGold,
+            textColor: Colors.white,
+            fontWeight: FontWeight.w400,
+            radius: 14,
+          ),
+          const SizedBox(height: 16),
+          TextButton(
+            onPressed: () {
+              Get.toNamed(AppRoutes.mediationProcess, arguments: {
+                'jobTitle': widget.job.title,
+                // 'jobId': widget.job.id ?? widget.job.title,
+              });
+            },
+            child: const Text(
+              '⚖️ Mediation Process',
+              style: TextStyle(
+                color: AppColor.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'HelveticaNeueMedium',
+              ),
+            ),
+          ),
+        ]);
+    }
+
+    return buttons;
   }
 }

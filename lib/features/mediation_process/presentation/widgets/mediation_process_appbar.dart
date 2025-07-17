@@ -6,10 +6,12 @@ class MediationProcessAppbar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<MediationProcessPageController>();
+
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      toolbarHeight: 105, // Decreased height
+      toolbarHeight: 140,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: AppColor.white),
         onPressed: () => Navigator.of(context).pop(),
@@ -23,22 +25,41 @@ class MediationProcessAppbar extends StatelessWidget
             bottomRight: Radius.circular(20),
           ),
         ),
-        child: const SafeArea(
+        child: SafeArea(
           bottom: false,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: Column(
               children: [
-                SizedBox(height: 16),
-                // This is the row with centered JobPost and right-aligned notification
-                Expanded(
-                  child: Center(
-                    child: CustomText(
-                      text: 'Mediation Process',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.white,
-                    ),
+                const SizedBox(height: 16),
+                const Center(
+                  child: CustomText(
+                    text: 'Add Mediation',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: AppColor.white,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Obx(() => controller.jobTitle.value.isNotEmpty
+                    ? CustomText(
+                        text: 'Job: ${controller.jobTitle.value}',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.white.withOpacity(0.8),
+                      )
+                    : const SizedBox.shrink()),
+                const SizedBox(height: 12),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomText(
+                    text:
+                        'Use this form to request mediation. Our team will review in 24–48 hours.',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.white,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
                   ),
                 ),
               ],
@@ -50,5 +71,5 @@ class MediationProcessAppbar extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(105); // Updated height
+  Size get preferredSize => const Size.fromHeight(140);
 }

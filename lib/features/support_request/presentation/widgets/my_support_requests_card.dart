@@ -3,15 +3,21 @@ part of 'widgets.dart';
 class MySupportRequestsCard extends StatelessWidget {
   final String status;
   final VoidCallback? onTap;
+  final String? disputeNumber;
+  final String? type;
 
   const MySupportRequestsCard({
     super.key,
     required this.status,
     this.onTap,
+    this.disputeNumber,
+    this.type,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isDispute = type == 'dispute';
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -27,11 +33,9 @@ class MySupportRequestsCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    color: AppColor.lightGray,
+                    color: isDispute ? Colors.orange[100] : AppColor.lightGray,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Row(
@@ -60,22 +64,26 @@ class MySupportRequestsCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  text: 'I need assistance with my cancelled order',
+                  text: isDispute
+                      ? 'Mediation Request Submitted'
+                      : 'I need assistance with my cancelled order',
                   fontSize: 14,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'HelveticaNeueMedium',
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      text: '- Order #FO52072C9E905',
+                      text: isDispute
+                          ? '- Dispute #${disputeNumber ?? 'N/A'}'
+                          : '- Order #FO52072C9E905',
                       fontSize: 14,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -83,9 +91,11 @@ class MySupportRequestsCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                kGap10,
+                const SizedBox(height: 10),
                 CustomText(
-                  text: 'Id# 12917150',
+                  text: isDispute
+                      ? 'Dispute #${disputeNumber ?? 'N/A'}'
+                      : 'Id# 12917150',
                   fontSize: 14,
                   color: Colors.grey,
                   fontWeight: FontWeight.w400,

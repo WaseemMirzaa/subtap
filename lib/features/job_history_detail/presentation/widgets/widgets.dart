@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:subtap/controller/extras_controller.dart';
-import 'package:subtap/controller/job_request_page_controller.dart';
-import 'package:subtap/core/shared_widgets/custom_button.dart';
 import 'package:subtap/core/shared_widgets/custom_text.dart';
 import 'package:subtap/core/shared_widgets/custom_textfield.dart';
+import 'package:subtap/core/shared_widgets/custom_button.dart';
 import 'package:subtap/core/theme/app_color.dart';
-import 'package:subtap/core/theme/assets.dart';
 
 part 'custom_extra_bottom_sheet.dart';
 part 'extras_bottom_sheet.dart';
+part 'extras_bottom_sheet_header.dart';
+part 'extras_job_info_card.dart';
+part 'extras_helper_text.dart';
+part 'extras_line_items_list.dart';
+part 'extras_line_items_header.dart';
+part 'extras_line_item_row.dart';
+part 'extras_add_item_button.dart';
+part 'extras_total_preview.dart';
+part 'extras_bottom_buttons.dart';
+part 'extras_submit_buttons.dart';
+part 'extras_review_step.dart';
 part 'job_history_detail_appbar.dart';

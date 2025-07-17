@@ -6,14 +6,17 @@ class UploadProgressAppbar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<UploadProgressController>();
+
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      toolbarHeight: 105, // Decreased height
+      toolbarHeight: 160, // Increased height for banner
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: AppColor.white),
         onPressed: () => Navigator.of(context).pop(),
       ),
+
       flexibleSpace: Container(
         margin: EdgeInsets.zero,
         decoration: const BoxDecoration(
@@ -30,7 +33,7 @@ class UploadProgressAppbar extends StatelessWidget
             child: Column(
               children: [
                 SizedBox(height: 16),
-                // This is the row with centered JobPost and right-aligned notification
+                // Title
                 Expanded(
                   child: Center(
                     child: CustomText(
@@ -41,6 +44,7 @@ class UploadProgressAppbar extends StatelessWidget
                     ),
                   ),
                 ),
+                // Banner section
               ],
             ),
           ),
@@ -50,5 +54,5 @@ class UploadProgressAppbar extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(105); // Updated height
+  Size get preferredSize => const Size.fromHeight(160);
 }

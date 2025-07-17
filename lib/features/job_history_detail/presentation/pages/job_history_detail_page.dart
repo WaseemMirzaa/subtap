@@ -766,8 +766,14 @@ class _JobHistoryDetailPageState extends State<JobHistoryDetailPage> {
                     CustomButton(
                       text: 'Add Extras',
                       onTap: () {
-                        // Reset isSubmitting before opening the bottom sheet
-                        extrasController.isSubmitting.value = false;
+                        // Initialize controller before opening bottom sheet
+                        final extrasController = Get.put(ExtrasController());
+                        extrasController.initializeJobData(
+                          jobTitle: widget.job.title ?? '',
+                          jobId: '#${widget.job.title?.hashCode ?? 0}',
+                          budget: widget.job.price ?? 0.0,
+                        );
+
                         showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
@@ -780,12 +786,10 @@ class _JobHistoryDetailPageState extends State<JobHistoryDetailPage> {
                             return const CustomExtraBottomSheet();
                           },
                         ).then((result) {
-                          // When the bottom sheet is closed, check if extras were added
                           if (result != null &&
                               result is Map<String, dynamic> &&
                               result['success'] == true) {
                             setState(() {
-                              // Add the new extras to our static list
                               if (result['extrasData'] != null) {
                                 staticExtras.addAll(
                                     List<Map<String, dynamic>>.from(
@@ -793,8 +797,8 @@ class _JobHistoryDetailPageState extends State<JobHistoryDetailPage> {
                               }
                             });
                           }
-                          // Reset isSubmitting after the bottom sheet closes
-                          extrasController.isSubmitting.value = false;
+                          // Clean up controller after bottom sheet closes
+                          Get.delete<ExtrasController>();
                         });
                       },
                       color: AppColor.mutedGold,

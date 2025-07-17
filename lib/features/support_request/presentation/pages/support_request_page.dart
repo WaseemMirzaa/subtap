@@ -9,12 +9,26 @@ class SupportRequestsPage extends StatelessWidget {
       'name': 'imagesChatDavid',
       'avatarImage': Assets.imagesChatDavid,
       'status': 'In Progress',
+      'type': 'support',
     },
     {
       'name': 'John Doe',
       'avatarImage': Assets.imagesChatDavid,
       'status': 'Solved',
+      'type': 'support',
     },
+    // Check if there's a new dispute from arguments
+    if (Get.arguments != null && Get.arguments['disputeNumber'] != null) ...[
+      {
+        'name': 'Dispute ${Get.arguments['disputeNumber']}',
+        'avatarImage': Assets.imagesChatDavid,
+        'status': 'In Progress',
+        'type': 'dispute',
+        'disputeNumber': Get.arguments['disputeNumber'],
+        'jobId': Get.arguments['jobId'],
+        'reason': Get.arguments['reason'],
+      }
+    ],
   ];
 
   @override
@@ -44,6 +58,8 @@ class SupportRequestsPage extends StatelessWidget {
                         bottom: 16), // Spacer between cards
                     child: MySupportRequestsCard(
                       status: chat['status'],
+                      type: chat['type'],
+                      disputeNumber: chat['disputeNumber'],
                       onTap: () {
                         Navigator.push(
                           context,

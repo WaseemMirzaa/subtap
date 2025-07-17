@@ -25,6 +25,7 @@ import 'package:subtap/features/property_manager_profile/presentation/pages/prop
 import 'package:subtap/features/splash/presentation/pages/splash_screen.dart';
 import 'package:subtap/features/subcontractor_feedback/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_home/presentation/pages/pages.dart';
+import 'package:subtap/features/subcontractor_home/presentation/pages/upload_progress.dart';
 import 'package:subtap/features/subcontractor_job_history/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_jobs/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_portfolio/presentation/pages/portfolio_page.dart';

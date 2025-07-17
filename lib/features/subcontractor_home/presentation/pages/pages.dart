@@ -17,4 +17,3 @@ import 'package:subtap/features/subcontractor_home/presentation/widgets/widgets.
 import 'package:subtap/models/models.dart';
 
 part 'subcontractor_home_page.dart';
-part 'upload_progress.dart';
