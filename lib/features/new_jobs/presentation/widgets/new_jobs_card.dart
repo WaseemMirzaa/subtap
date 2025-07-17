@@ -6,6 +6,7 @@ class NewJobsCard extends StatelessWidget {
   final VoidCallback? onAcceptJob;
   final VoidCallback? onNotInterested;
   final VoidCallback? onBookmark;
+  final VoidCallback? onReport;
   final bool isBookmarked;
 
   const NewJobsCard({
@@ -15,6 +16,7 @@ class NewJobsCard extends StatelessWidget {
     this.onAcceptJob,
     this.onNotInterested,
     this.onBookmark,
+    this.onReport,
     this.isBookmarked = false,
   });
 
@@ -145,6 +147,23 @@ class NewJobsCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(width: 8),
+                    // Report button
+                    InkWell(
+                      onTap: onReport,
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: AppColor.lightGray,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Icon(
+                          Icons.flag_outlined,
+                          size: 16,
+                          color: AppColor.midGray,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -164,11 +183,21 @@ class NewJobsCard extends StatelessWidget {
                     crossAxisAlignment:
                         CrossAxisAlignment.center, // Vertically center items
                     children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundImage: job.propertyManager?.imageUrl != null
-                            ? AssetImage(job.propertyManager!.imageUrl)
-                            : null,
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(
+                            AppRoutes.propertyManagerProfile,
+                            arguments: {
+                              'propertyManager': job.propertyManager,
+                            },
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundImage: job.propertyManager?.imageUrl != null
+                              ? AssetImage(job.propertyManager!.imageUrl)
+                              : null,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -181,7 +210,7 @@ class NewJobsCard extends StatelessWidget {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    'Posted by  {job.propertyManager?.name ?? "Unknown"}',
+                                    'Posted by  ${job.propertyManager?.name ?? "Unknown"}',
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
@@ -377,34 +406,56 @@ class NewJobsCard extends StatelessWidget {
             if (!isActiveJob) ...[
               const SizedBox(height: 16),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: CustomButton(
-                      text: 'APPLY Now',
-                      onTap: onAcceptJob,
-                      color: AppColor.primaryColor,
-                      textColor: Colors.white,
-                      height: 32,
-                      radius: 12,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'HelveticaNeueMedium',
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: IntrinsicWidth(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomButton(
+                            text: 'Apply Now',
+                            onTap: onAcceptJob,
+                            color: AppColor.primaryColor,
+                            textColor: Colors.white,
+                            height: 32,
+                            radius: 12,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'HelveticaNeueMedium',
+                          ),
+                          const SizedBox(
+                              height:
+                                  4), // Small spacing between button and hint
+                          const Text(
+                            'No Proposal has been submitted yet',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey, // Adjust color as needed
+                              fontFamily: 'HelveticaNeueMedium',
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: CustomButton(
-                      text: 'Dismiss',
-                      onTap: onNotInterested,
-                      color: AppColor.white,
-                      textColor: AppColor.black,
-                      height: 32,
-                      radius: 12,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'HelveticaNeueMedium',
-                      enableBorder: true,
-                      borderColor: AppColor.lightGray,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: IntrinsicWidth(
+                      child: CustomButton(
+                        text: 'Dismiss',
+                        onTap: onNotInterested,
+                        color: AppColor.lightGray,
+                        textColor: AppColor.black,
+                        enableBorder: true,
+                        borderColor: AppColor.black,
+                        height: 32,
+                        radius: 12,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'HelveticaNeueMedium',
+                      ),
                     ),
                   ),
                 ],

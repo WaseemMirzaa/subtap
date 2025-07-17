@@ -21,7 +21,7 @@ class _SubcontractorProfilePageState extends State<SubcontractorProfilePage> {
       'route': AppRoutes.supportRequests,
     },
     {
-      'title': 'Notifications',
+      'title': 'Notifications Preferences',
       'icon': Assets.svgsMyaccountNotification,
       'route': AppRoutes.subcontractornotificationPage,
     },
@@ -30,9 +30,40 @@ class _SubcontractorProfilePageState extends State<SubcontractorProfilePage> {
       'icon': Assets.svgsMyaccountChangepass,
       'route': AppRoutes.changePassword,
     },
+    {
+      'title': 'Profile Visibility',
+      'icon': Assets.svgsVisibility, // You'll need this icon
+      'isToggle': true,
+    },
+    {
+      'title': 'Switch Roles',
+      'icon': Assets.svgsSwitch, // You'll need this icon
+      'route': AppRoutes.selectRole,
+    },
+    {
+      'title': 'Terms & Conditions',
+      'icon': Assets.svgsTerms,
+      // 'route': AppRoutes.termsAndConditions,
+    },
+    {
+      'title': 'Payout Settings',
+      'icon': Assets.svgsPayout,
+      // 'route': AppRoutes.payoutSettings,
+    },
+    {
+      'title': 'Verification Status',
+      'icon': Assets.svgsVerification,
+      // 'route': AppRoutes.verificationStatus,
+    },
+    {
+      'title': 'Delete Account',
+      'icon': Assets.svgsAccountDelete,
+      // 'route': AppRoutes.deleteAccount,
+    },
   ];
 
   bool _showPortfolio = false;
+  bool _profileVisible = false;
 
   void _handleOptionTap(BuildContext context, Map<String, dynamic> option) {
     final String? route = option['route'];
@@ -86,11 +117,67 @@ class _SubcontractorProfilePageState extends State<SubcontractorProfilePage> {
             itemCount: profileOptions.length,
             itemBuilder: (context, index) {
               final option = profileOptions[index];
-              return ProfileCard(
-                title: option['title'],
-                svgAsset: option['icon'],
-                onTap: () => _handleOptionTap(context, option),
-              );
+              final isToggle = option['isToggle'] ?? false;
+              if (isToggle && option['title'] == 'Profile Visibility') {
+                // Simple toggle for Profile Visibility
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12.0,
+                      horizontal: 16.0,
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: AppColor.customOffWhite,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              option['icon'],
+                              width: 18,
+                              height: 19,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: CustomText(
+                            text: option['title'],
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.black,
+                          ),
+                        ),
+                        Switch(
+                          value: _profileVisible,
+                          onChanged: (value) {
+                            setState(() {
+                              _profileVisible = value;
+                            });
+                          },
+                          activeColor: AppColor.mutedGold,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              } else {
+                // Regular ProfileCard for other options
+                return SubcontractorProfileCard(
+                  title: option['title'],
+                  svgAsset: option['icon'],
+                  onTap: () => _handleOptionTap(context, option),
+                );
+              }
             },
           ),
         ],

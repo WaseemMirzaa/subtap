@@ -18,12 +18,16 @@ import 'package:subtap/features/mediation_process/presentation/pages/pages.dart'
 import 'package:subtap/features/new_jobs/presentation/pages/pages.dart';
 import 'package:subtap/features/notification/presentation/pages/pages.dart';
 import 'package:subtap/features/onboarding/presentation/pages/onboarding_screen.dart';
+import 'package:subtap/features/onboarding_screen/presentation/pages/onboarding_page.dart';
+
 import 'package:subtap/features/profile/presentation/pages/pages.dart';
+import 'package:subtap/features/property_manager_profile/presentation/pages/property_manager_profile_page.dart';
 import 'package:subtap/features/splash/presentation/pages/splash_screen.dart';
 import 'package:subtap/features/subcontractor_feedback/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_home/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_job_history/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_jobs/presentation/pages/pages.dart';
+import 'package:subtap/features/subcontractor_portfolio/presentation/pages/portfolio_page.dart';
 import 'package:subtap/features/subcontractor_profile/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontructor_notification/presentation/pages/pages.dart';
 import 'package:subtap/features/support_request/presentation/pages/pages.dart';

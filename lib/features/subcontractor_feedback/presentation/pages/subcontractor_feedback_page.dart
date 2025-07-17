@@ -92,11 +92,7 @@ class _SubcontractorFeedbackPageState extends State<SubcontractorFeedbackPage> {
                 onTap: () {
                   NavigationController.to.navigateToMainPage();
                   NavigationController.to.changePage(1);
-                  setState(() {
-                    subcontrctorJobHistoryController.selectedTab =
-                        'Active Jobs';
-                  });
-                  print(subcontrctorJobHistoryController.selectedTab);
+                  subcontrctorJobHistoryController.changeTab('Active Jobs');
                 },
                 color: AppColor.mutedGold,
                 textColor: Colors.white,

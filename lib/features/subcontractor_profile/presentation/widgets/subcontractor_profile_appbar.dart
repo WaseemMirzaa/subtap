@@ -159,11 +159,7 @@ class _IconRowState extends State<_IconRow> {
         const SizedBox(width: 70),
         InkWell(
           onTap: () {
-            setState(() {
-              _isChatIconTapped = false;
-              _isPortfolioIconTapped = true;
-            });
-            widget.onViewChanged(true);
+            Get.toNamed(AppRoutes.portfolioPage);
           },
           child: SvgPicture.asset(
             Assets.svgsPortfolio,

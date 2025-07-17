@@ -2,14 +2,19 @@ part of 'widgets.dart';
 
 class SubcontractorJobHistoryDetailAppbar extends StatelessWidget
     implements PreferredSizeWidget {
-  const SubcontractorJobHistoryDetailAppbar({super.key});
+  final String jobTitle;
+
+  const SubcontractorJobHistoryDetailAppbar({
+    super.key,
+    required this.jobTitle,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      toolbarHeight: 105, // Decreased height
+      toolbarHeight: 105,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: AppColor.white),
         onPressed: () => Navigator.of(context).pop(),
@@ -23,21 +28,32 @@ class SubcontractorJobHistoryDetailAppbar extends StatelessWidget
             bottomRight: Radius.circular(20),
           ),
         ),
-        child: const SafeArea(
+        child: SafeArea(
           bottom: false,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: Column(
               children: [
-                SizedBox(height: 16),
-                // This is the row with centered JobPost and right-aligned notification
+                const SizedBox(height: 16),
                 Expanded(
                   child: Center(
-                    child: CustomText(
-                      text: 'Details',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomText(
+                          text: jobTitle,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: AppColor.white,
+                        ),
+                        const SizedBox(height: 4),
+                        CustomText(
+                          text: 'Job History',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.white.withOpacity(0.8),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -50,5 +66,5 @@ class SubcontractorJobHistoryDetailAppbar extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(105); // Updated height
+  Size get preferredSize => const Size.fromHeight(105);
 }

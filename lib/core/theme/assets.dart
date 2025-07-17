@@ -126,6 +126,10 @@ class Assets {
   /// assets/images/woodie.png
   static const String imagesWoodie = "assets/images/woodie.png";
 
+  /// Assets for svgsAccountDelete
+  /// assets/svgs/account-delete.svg
+  static const String svgsAccountDelete = "assets/svgs/account-delete.svg";
+
   /// Assets for svgsActive
   /// assets/svgs/active.svg
   static const String svgsActive = "assets/svgs/active.svg";
@@ -314,6 +318,10 @@ class Assets {
   /// assets/svgs/painting.svg
   static const String svgsPainting = "assets/svgs/painting.svg";
 
+  /// Assets for svgsPayout
+  /// assets/svgs/payout.svg
+  static const String svgsPayout = "assets/svgs/payout.svg";
+
   /// Assets for svgsPlumbing
   /// assets/svgs/plumbing.svg
   static const String svgsPlumbing = "assets/svgs/plumbing.svg";
@@ -350,6 +358,10 @@ class Assets {
   /// assets/svgs/submit_proposal.svg
   static const String svgsSubmitProposal = "assets/svgs/submit_proposal.svg";
 
+  /// Assets for svgsSwitch
+  /// assets/svgs/switch.svg
+  static const String svgsSwitch = "assets/svgs/switch.svg";
+
   /// Assets for svgsTargetBudget
   /// assets/svgs/target_budget.svg
   static const String svgsTargetBudget = "assets/svgs/target_budget.svg";
@@ -357,6 +369,10 @@ class Assets {
   /// Assets for svgsTech
   /// assets/svgs/tech.svg
   static const String svgsTech = "assets/svgs/tech.svg";
+
+  /// Assets for svgsTerms
+  /// assets/svgs/terms.svg
+  static const String svgsTerms = "assets/svgs/terms.svg";
 
   /// Assets for svgsTime
   /// assets/svgs/time.svg
@@ -378,9 +394,17 @@ class Assets {
   /// assets/svgs/upload_progress.svg
   static const String svgsUploadProgress = "assets/svgs/upload_progress.svg";
 
+  /// Assets for svgsVerification
+  /// assets/svgs/verification.svg
+  static const String svgsVerification = "assets/svgs/verification.svg";
+
   /// Assets for svgsVerify
   /// assets/svgs/verify.svg
   static const String svgsVerify = "assets/svgs/verify.svg";
+
+  /// Assets for svgsVisibility
+  /// assets/svgs/visibility.svg
+  static const String svgsVisibility = "assets/svgs/visibility.svg";
 
   /// Assets for svgsWindow
   /// assets/svgs/window.svg

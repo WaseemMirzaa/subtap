@@ -116,13 +116,48 @@ class _SubcontractorJobHistoryDetailPageState
     );
   }
 
+  void _showFullScreenImage(String imagePath) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog.fullscreen(
+        backgroundColor: Colors.black,
+        child: Stack(
+          children: [
+            Center(
+              child: InteractiveViewer(
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 40,
+              right: 20,
+              child: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     const kGap10 = SizedBox(height: 10);
     const kGap20 = SizedBox(height: 20);
 
     return SubtapScaffold(
-      appBar: const SubcontractorJobHistoryAppbar(),
+      appBar: SubcontractorJobHistoryDetailAppbar(
+        jobTitle: widget.job.title ?? 'Job Details',
+      ),
       body: Stack(
         children: [
           Column(
@@ -164,11 +199,11 @@ class _SubcontractorJobHistoryDetailPageState
                                   style: const TextStyle(
                                     color: AppColor.black,
                                     fontSize: 22,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.bold,
                                     fontFamily: 'HelveticaNeueMedium',
                                   ),
                                 ),
-                                const SizedBox(height: 8),
+                                const SizedBox(height: 1),
                                 Row(
                                   children: [
                                     SvgPicture.asset(
@@ -184,8 +219,8 @@ class _SubcontractorJobHistoryDetailPageState
                                             TextSpan(
                                               text: 'Carpentry & Framing ',
                                               style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500,
                                                 fontFamily:
                                                     'HelveticaNeueMedium',
                                                 color: AppColor.midGray,
@@ -225,193 +260,245 @@ class _SubcontractorJobHistoryDetailPageState
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
-                      // Preferred Time
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svgsTargetBudget,
-                            width: 16,
-                            height: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                const TextSpan(
-                                  text: 'Target Budget: ',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: widget.job.targetBudget,
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.midGray,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      const SizedBox(height: 14),
+                      // Divider
+                      const Divider(
+                        color: AppColor.mediumGray,
+                        thickness: 1,
+                        height: 1,
                       ),
-                      kGap10,
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svgsDueDate,
-                            width: 16,
-                            height: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          RichText(
-                            text: TextSpan(
+                      // Budget, Due Date, Address Card
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppColor.lightGray,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          children: [
+                            // Target Budget
+                            Row(
                               children: [
-                                const TextSpan(
-                                  text: 'Due Date: ',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
+                                SvgPicture.asset(
+                                  Assets.svgsTargetBudget,
+                                  width: 20,
+                                  height: 20,
                                 ),
-                                TextSpan(
-                                  text: widget.job.dueDate,
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.midGray,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
+                                const SizedBox(width: 8),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      const TextSpan(
+                                        text: 'Target Budget: ',
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: AppColor.black,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'HelveticaNeueMedium',
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: widget.job.targetBudget,
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          color: AppColor.midGray,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'HelveticaNeueMedium',
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      kGap10,
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svgsLocation,
-                            width: 16,
-                            height: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          RichText(
-                            text: TextSpan(
+                            const SizedBox(height: 16),
+                            // Due Date
+                            Row(
                               children: [
-                                const TextSpan(
-                                  text: 'Address: ',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
+                                SvgPicture.asset(
+                                  Assets.svgsDueDate,
+                                  width: 20,
+                                  height: 20,
                                 ),
-                                TextSpan(
-                                  text: widget.job.address,
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.midGray,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
+                                const SizedBox(width: 8),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      const TextSpan(
+                                        text: 'Due Date: ',
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: AppColor.black,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'HelveticaNeueMedium',
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: widget.job.dueDate,
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          color: AppColor.midGray,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'HelveticaNeueMedium',
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 16),
+                            // Address
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.svgsLocation,
+                                  width: 20,
+                                  height: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        const TextSpan(
+                                          text: 'Address: ',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: AppColor.black,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'HelveticaNeueMedium',
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: widget.job.address,
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: AppColor.midGray,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'HelveticaNeueMedium',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       kGap20,
                       const Text(
                         'Description',
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                           color: AppColor.black,
                           fontFamily: 'HelveticaNeueMedium',
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.job.description ??
-                                'No description available',
-                            style: const TextStyle(
-                              fontSize: 13,
-                              color: AppColor.midGray,
-                              fontFamily: 'HelveticaNeueMedium',
+
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: AppColor.lightGray,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.job.description ??
+                                  'No description available',
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: AppColor.midGray,
+                                fontFamily: 'HelveticaNeueMedium',
+                              ),
+                              maxLines: isDescriptionExpanded ? null : 2,
+                              overflow: isDescriptionExpanded
+                                  ? TextOverflow.visible
+                                  : TextOverflow.ellipsis,
                             ),
-                            maxLines: isDescriptionExpanded ? null : 2,
-                            overflow: isDescriptionExpanded
-                                ? TextOverflow.visible
-                                : TextOverflow.ellipsis,
-                          ),
-                          if ((widget.job.description?.length ?? 0) > 100) ...[
-                            const SizedBox(height: 4),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isDescriptionExpanded =
-                                      !isDescriptionExpanded;
-                                });
-                              },
-                              child: Text(
-                                isDescriptionExpanded
-                                    ? 'View less'
-                                    : 'View more',
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  color: AppColor.primaryColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'HelveticaNeueMedium',
+                            if ((widget.job.description?.length ?? 0) >
+                                100) ...[
+                              const SizedBox(height: 4),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isDescriptionExpanded =
+                                        !isDescriptionExpanded;
+                                  });
+                                },
+                                child: Text(
+                                  isDescriptionExpanded
+                                      ? 'View less'
+                                      : 'View more',
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    color: AppColor.primaryColor,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'HelveticaNeueMedium',
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
+                      const Text(
+                        '3 Photos',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.black,
+                          fontFamily: 'HelveticaNeueMedium',
+                        ),
+                      ),
                       Row(
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              Assets.imagesWood,
-                              width: 70,
-                              height: 60,
-                              fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () =>
+                                _showFullScreenImage(Assets.imagesWood),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset(
+                                Assets.imagesWood,
+                                width: 70,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           kGap10,
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              Assets.imagesWoodie,
-                              width: 70,
-                              height: 60,
-                              fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () =>
+                                _showFullScreenImage(Assets.imagesWoodie),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset(
+                                Assets.imagesWoodie,
+                                width: 70,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           kGap10,
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              Assets.imagesSideWood,
-                              width: 70,
-                              height: 60,
-                              fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () =>
+                                _showFullScreenImage(Assets.imagesSideWood),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset(
+                                Assets.imagesSideWood,
+                                width: 70,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ],
@@ -419,245 +506,132 @@ class _SubcontractorJobHistoryDetailPageState
                       kGap20,
                       // Extras Card
                       if (widget.job.status == 'Active Jobs')
-                        Obx(() => GestureDetector(
-                              onTap: _showExtrasBottomSheet,
-                              child: Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: AppColor.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                      color: AppColor.lightGray, width: 1),
-                                ),
-                                child: extrasController.isSubmitting.value
-                                    ? const Center(
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  Colors.orange),
-                                        ),
-                                      )
-                                    : Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
+                        Obx(() => Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: AppColor.white,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.1),
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: extrasController.isSubmitting.value
+                                  ? const Center(
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                Colors.orange),
+                                      ),
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(6),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.orange
-                                                      .withOpacity(0.1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: SvgPicture.asset(
-                                                  extrasStatus.value ==
-                                                          'approved'
-                                                      ? Assets.svgsCheck
-                                                      : extrasStatus.value ==
-                                                              'rejected'
-                                                          ? Assets.svgsCancelled
-                                                          : Assets.svgsTime,
-                                                  width: 16,
-                                                  height: 16,
-                                                  color: extrasStatus.value ==
-                                                          'approved'
-                                                      ? Colors.green
-                                                      : extrasStatus.value ==
-                                                              'rejected'
-                                                          ? Colors.red
-                                                          : Colors.orange,
+                                              Text(
+                                                'Extras (${staticExtras.length} items): \$${_calculateTotal().toStringAsFixed(2)}',
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: AppColor.black,
+                                                  fontFamily:
+                                                      'HelveticaNeueMedium',
                                                 ),
                                               ),
-                                              const SizedBox(width: 8),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const Text(
-                                                    'Extras Requested',
+                                              const SizedBox(height: 8),
+                                              GestureDetector(
+                                                onTap: () =>
+                                                    _showStatusSelectionDialog(
+                                                        context),
+                                                child: Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 12,
+                                                    vertical: 6,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: extrasStatus.value ==
+                                                            'approved'
+                                                        ? Colors.green
+                                                            .withOpacity(0.1)
+                                                        : extrasStatus.value ==
+                                                                'rejected'
+                                                            ? Colors.red
+                                                                .withOpacity(
+                                                                    0.1)
+                                                            : Colors.orange
+                                                                .withOpacity(
+                                                                    0.1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                    border: Border.all(
+                                                      color: extrasStatus
+                                                                  .value ==
+                                                              'approved'
+                                                          ? Colors.green
+                                                          : extrasStatus
+                                                                      .value ==
+                                                                  'rejected'
+                                                              ? Colors.red
+                                                              : Colors.orange,
+                                                      width: 1,
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    extrasStatus.value ==
+                                                            'approved'
+                                                        ? 'Approved'
+                                                        : extrasStatus.value ==
+                                                                'rejected'
+                                                            ? 'Denied'
+                                                            : 'Waiting',
                                                     style: TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: AppColor.black,
+                                                      color: extrasStatus
+                                                                  .value ==
+                                                              'approved'
+                                                          ? Colors.green
+                                                          : extrasStatus
+                                                                      .value ==
+                                                                  'rejected'
+                                                              ? Colors.red
+                                                              : Colors.orange,
                                                       fontFamily:
                                                           'HelveticaNeueMedium',
                                                     ),
                                                   ),
-                                                  Text(
-                                                    '${staticExtras.length} item(s) - \$${_calculateTotal().toStringAsFixed(2)}',
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: AppColor.midGray,
-                                                      fontFamily:
-                                                          'HelveticaNeueMedium',
-                                                    ),
-                                                  ),
-                                                ],
+                                                ),
                                               ),
                                             ],
                                           ),
-                                          Flexible(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Flexible(
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      _showStatusSelectionDialog(
-                                                          context);
-                                                    },
-                                                    child: Container(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 4,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        color: extrasStatus
-                                                                    .value ==
-                                                                'approved'
-                                                            ? Colors.green
-                                                                .withOpacity(
-                                                                    0.1)
-                                                            : extrasStatus
-                                                                        .value ==
-                                                                    'rejected'
-                                                                ? Colors.red
-                                                                    .withOpacity(
-                                                                        0.1)
-                                                                : Colors.orange
-                                                                    .withOpacity(
-                                                                        0.1),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                        border: Border.all(
-                                                          color: extrasStatus
-                                                                      .value ==
-                                                                  'approved'
-                                                              ? Colors.green
-                                                                  .withOpacity(
-                                                                      0.3)
-                                                              : extrasStatus
-                                                                          .value ==
-                                                                      'rejected'
-                                                                  ? Colors.red
-                                                                      .withOpacity(
-                                                                          0.3)
-                                                                  : Colors
-                                                                      .orange
-                                                                      .withOpacity(
-                                                                          0.3),
-                                                          width: 1,
-                                                        ),
-                                                      ),
-                                                      child: Text(
-                                                        extrasStatus.value
-                                                            .capitalizeFirst
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: extrasStatus
-                                                                      .value ==
-                                                                  'approved'
-                                                              ? Colors.green
-                                                              : extrasStatus
-                                                                          .value ==
-                                                                      'rejected'
-                                                                  ? Colors.red
-                                                                  : Colors
-                                                                      .orange,
-                                                          fontFamily:
-                                                              'HelveticaNeueMedium',
-                                                        ),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 4),
-                                                if (extrasStatus.value ==
-                                                    'rejected')
-                                                  Flexible(
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        extrasStatus.value =
-                                                            'pending';
-                                                        Get.snackbar(
-                                                          'Success',
-                                                          'Extras resubmitted for approval',
-                                                          backgroundColor:
-                                                              Colors.green,
-                                                          snackPosition:
-                                                              SnackPosition
-                                                                  .BOTTOM,
-                                                          colorText:
-                                                              AppColor.white,
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(16),
-                                                          duration:
-                                                              const Duration(
-                                                                  seconds: 3),
-                                                        );
-                                                      },
-                                                      child: Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                          horizontal: 8,
-                                                          vertical: 4,
-                                                        ),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.blue
-                                                              .withOpacity(0.1),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(12),
-                                                          border: Border.all(
-                                                            color: Colors.blue
-                                                                .withOpacity(
-                                                                    0.3),
-                                                            width: 1,
-                                                          ),
-                                                        ),
-                                                        child: const Text(
-                                                          'Resubmit',
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: Colors.blue,
-                                                            fontFamily:
-                                                                'HelveticaNeueMedium',
-                                                          ),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                const SizedBox(width: 4),
-                                                const Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 12,
-                                                  color: AppColor.midGray,
-                                                ),
-                                              ],
+                                        ),
+                                        TextButton(
+                                          onPressed: _showExtrasBottomSheet,
+                                          child: const Text(
+                                            'View All',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColor.primaryColor,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'HelveticaNeueMedium',
                                             ),
                                           ),
-                                        ],
-                                      ),
-                              ),
+                                        ),
+                                      ],
+                                    ),
                             )),
                       kGap20,
                       if (widget.job.status == 'Active Jobs') ...[

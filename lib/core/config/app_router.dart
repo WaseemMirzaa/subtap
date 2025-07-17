@@ -174,5 +174,17 @@ class AppRouter {
           page: () => const SummaryDetailPage(),
           binding: SummaryDetailPageBinding(),
         ),
+        GetPage(
+          name: AppRoutes.propertyManagerProfile,
+          page: () => const PropertyManagerProfilePage(),
+        ),
+        GetPage(
+          name: AppRoutes.portfolioPage,
+          page: () => const PortfolioPage(),
+        ),
+        GetPage(
+          name: AppRoutes.onBoardingScreen,
+          page: () => const OnboardingPage(),
+        ),
       ];
 }

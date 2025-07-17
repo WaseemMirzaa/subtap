@@ -92,4 +92,10 @@ class AppRoutes {
 
   /// The summaryDetailPage    route.
   static const String summaryDetailPage = '/summary-detailpage';
+
+  static const String propertyManagerProfile = '/property-manager-profile';
+
+  static const String portfolioPage = '/portfolio-page';
+
+  static const String onBoardingScreen = '/onBoardingScreen';
 }

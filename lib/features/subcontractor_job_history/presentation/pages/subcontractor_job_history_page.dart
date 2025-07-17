@@ -11,8 +11,8 @@ class SubcontractorJobHistoryPage extends StatefulWidget {
 class _SubcontractorJobHistoryPageState
     extends State<SubcontractorJobHistoryPage> {
   final TextEditingController _searchController = TextEditingController();
-  // String _selectedTab = 'Open Jobs';
   var controller = Get.put(SubcontrctorJobHistoryController());
+
   final List<JobHistory> _allJobs = [
     JobHistory(
       title: 'General Trades',
@@ -23,73 +23,18 @@ class _SubcontractorJobHistoryPageState
       address: '123 Main St, Springfield',
       status: 'Open Jobs',
       description:
-          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
+          "I hope you're well.I'm looking to get some carpentry & farming work done.",
       subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
-        description:
-            'Leaking kitchen sink, Pipe may be cracked. Water  dripping into cabinet below. Happened after  turning on  garbage disposal.',
+        description: 'Leaking kitchen sink, Pipe may be cracked.',
         name: 'James Michael',
         imageUrl: Assets.imagesSubcontrctorImage,
         price: '50',
         rating: 4.0,
       ),
       propertyManager: const PropertyManagerModel(
-        name: 'Jane ',
+        name: 'Jane',
         imageUrl: Assets.imagesHomePerson,
-        rating: 4.6,
-        totalJobs: 12,
-        isVerified: true,
-      ),
-    ),
-    JobHistory(
-      title: 'Electrical & Tech',
-      svgIcon: Assets.svgsTech,
-      price: 65.0,
-      targetBudget: '\$50.00',
-      dueDate: 'Friday, May 23, 2025',
-      address: '456 Oak Ave, Springfield',
-      status: 'Open Jobs',
-      description:
-          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: const SubcontractorModel(
-        expertise: 'Electrician',
-        description:
-            'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
-        name: 'James Michael',
-        imageUrl: 'path_to_image',
-        price: '50',
-        rating: 4.0,
-      ),
-      propertyManager: const PropertyManagerModel(
-        name: 'John Doe',
-        imageUrl: Assets.imagesSubcontractorBrown,
-        rating: 4.6,
-        totalJobs: 12,
-        isVerified: true,
-      ),
-    ),
-    JobHistory(
-      title: 'General Trades',
-      svgIcon: Assets.svgsTech,
-      price: 65.0,
-      targetBudget: '\$50.00',
-      dueDate: 'Friday, May 23, 2025',
-      address: '456 Oak Ave, Springfield',
-      status: 'Active Jobs',
-      description:
-          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
-      subcontractorModel: const SubcontractorModel(
-        expertise: 'Electrician',
-        description:
-            'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
-        name: 'James Michael',
-        imageUrl: 'path_to_image',
-        price: '50',
-        rating: 4.0,
-      ),
-      propertyManager: const PropertyManagerModel(
-        name: 'John Doe',
-        imageUrl: Assets.imagesSubcontractorBrown,
         rating: 4.6,
         totalJobs: 12,
         isVerified: true,
@@ -104,35 +49,96 @@ class _SubcontractorJobHistoryPageState
       address: '456 Oak Ave, Springfield',
       status: 'Active Jobs',
       description:
-          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
+          "I hope you're well.I'm looking to get some electrical work done.",
       subcontractorModel: const SubcontractorModel(
         expertise: 'Electrician',
-        description:
-            'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
+        description: 'Leaking kitchen sink, Pipe may be cracked.',
         name: 'James Michael',
         imageUrl: 'path_to_image',
         price: '50',
         rating: 4.0,
       ),
       propertyManager: const PropertyManagerModel(
-        name: 'Jane ',
+        name: 'Jane',
         imageUrl: Assets.imagesHomePerson,
         rating: 4.6,
         totalJobs: 12,
+        isVerified: true,
+      ),
+    ),
+    JobHistory(
+      title: 'Plumbing Work',
+      svgIcon: Assets.svgsTrade,
+      price: 80.0,
+      targetBudget: '\$80.00',
+      dueDate: 'Monday, May 20, 2025',
+      address: '789 Pine St, Springfield',
+      status: 'Completed',
+      description: "Plumbing repair work completed successfully.",
+      propertyManager: const PropertyManagerModel(
+        name: 'Sarah Johnson',
+        imageUrl: Assets.imagesHomePerson,
+        rating: 4.8,
+        totalJobs: 25,
+        isVerified: true,
+      ),
+      feedback: 'Excellent work! Very professional and completed on time.',
+      feedbackRating: 5.0,
+    ),
+    JobHistory(
+      title: 'Electrical Installation',
+      svgIcon: Assets.svgsTech,
+      price: 120.0,
+      targetBudget: '\$120.00',
+      dueDate: 'Tuesday, May 21, 2025',
+      address: '321 Oak St, Springfield',
+      status: 'Declined',
+      description: "Electrical installation project.",
+      propertyManager: const PropertyManagerModel(
+        name: 'Mike Davis',
+        imageUrl: Assets.imagesHomePerson,
+        rating: 4.2,
+        totalJobs: 18,
+        isVerified: false,
+      ),
+    ),
+    JobHistory(
+      title: 'Carpentry Work',
+      svgIcon: Assets.svgsTrade,
+      price: 90.0,
+      targetBudget: '\$90.00',
+      dueDate: 'Wednesday, May 22, 2025',
+      address: '654 Elm St, Springfield',
+      status: 'Cancelled',
+      description: "Carpentry work cancelled due to weather conditions.",
+      propertyManager: const PropertyManagerModel(
+        name: 'Lisa Brown',
+        imageUrl: Assets.imagesHomePerson,
+        rating: 4.5,
+        totalJobs: 30,
         isVerified: true,
       ),
     ),
   ];
-  List<JobHistory> _filteredJobs = [];
+
+  List<JobHistory> get _filteredJobs {
+    if (controller.selectedTab.value == 'Job History') {
+      return _allJobs
+          .where((job) =>
+              job.status == 'Completed' ||
+              job.status == 'Declined' ||
+              job.status == 'Cancelled')
+          .toList();
+    }
+    return _allJobs
+        .where((job) => job.status == controller.selectedTab.value)
+        .toList();
+  }
 
   @override
   void initState() {
     super.initState();
     print('callingfssss');
-    // controller.selectedTab =
-    //     (Get.arguments as Map<String, dynamic>?)?['initialTab'] ?? 'Open Jobs';
-    _filteredJobs =
-        _allJobs.where((job) => job.status == controller.selectedTab).toList();
   }
 
   @override
@@ -148,18 +154,6 @@ class _SubcontractorJobHistoryPageState
             ? 2
             : 1;
   }
-
-  // double _calculateChildAspectRatio(BuildContext context) {
-  //   final screenWidth = MediaQuery.of(context).size.width;
-
-  //   if (screenWidth > 800) {
-  //     return 2.0; // For larger screens
-  //   } else if (screenWidth > 600) {
-  //     return 1.8; // For medium screens
-  //   } else {
-  //     return 1.6; // For small screens
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +174,6 @@ class _SubcontractorJobHistoryPageState
             ),
             child: Stack(
               children: [
-                // Scrollable content
                 SingleChildScrollView(
                   padding: EdgeInsets.symmetric(
                     horizontal: screenSize.width * 0.035,
@@ -189,77 +182,81 @@ class _SubcontractorJobHistoryPageState
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Add padding to avoid overlap with toggle buttons
-                      const SizedBox(
-                          height: 80), // Adjust based on toggle buttons' height
-                      _filteredJobs.isEmpty
-                          ? Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Text(
-                                  'No ${controller.selectedTab.toLowerCase()} found',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: AppColor.darkGray,
+                      const SizedBox(height: 80),
+                      Obx(
+                        () => _filteredJobs.isEmpty
+                            ? Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Text(
+                                    'No ${controller.selectedTab.value.toLowerCase()} found',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: AppColor.darkGray,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                          : MediaQuery.removePadding(
-                              context: context,
-                              removeTop: true,
-                              child: GridView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: _filteredJobs.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount:
-                                      _calculateCrossAxisCount(context),
-                                  crossAxisSpacing: 15,
-                                  mainAxisSpacing: 15,
-                                  childAspectRatio:
-                                      controller.selectedTab == 'Open Jobs'
-                                          ? 1.15
-                                          : 1.39,
-                                ),
-                                itemBuilder: (context, index) {
-                                  return SubcontractorJobHistoryCard(
-                                    job: _filteredJobs[index],
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              SubcontractorJobHistoryDetailPage(
-                                            job: _filteredJobs[index],
-                                            isOpenJob: controller.selectedTab ==
-                                                'Open Jobs',
+                              )
+                            : MediaQuery.removePadding(
+                                context: context,
+                                removeTop: true,
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: _filteredJobs.length,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount:
+                                        _calculateCrossAxisCount(context),
+                                    crossAxisSpacing: 15,
+                                    mainAxisSpacing: 15,
+                                    childAspectRatio: controller
+                                                .selectedTab.value ==
+                                            'Open Jobs'
+                                        ? 1.1 // Open jobs have buttons, so need more height
+                                        : controller.selectedTab.value ==
+                                                'Job History'
+                                            ? 0.87 // Job history has no buttons, just status badge and feedback
+                                            : 1.39,
+                                    // Active jobs have no buttons either
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    return SubcontractorJobHistoryCard(
+                                      job: _filteredJobs[index],
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SubcontractorJobHistoryDetailPage(
+                                              job: _filteredJobs[index],
+                                              isOpenJob: controller
+                                                      .selectedTab.value ==
+                                                  'Open Jobs',
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    onBookmark:
-                                        controller.selectedTab == 'Open Jobs'
-                                            ? () {
-                                                // Handle bookmark toggle
-                                                print(
-                                                    'Job bookmarked: ${_filteredJobs[index].title}');
-                                              }
-                                            : null,
-                                    isBookmarked:
-                                        false, // You can track this state
-                                  );
-                                },
+                                        );
+                                      },
+                                      onBookmark:
+                                          controller.selectedTab.value ==
+                                                  'Open Jobs'
+                                              ? () {
+                                                  print(
+                                                      'Job bookmarked: ${_filteredJobs[index].title}');
+                                                }
+                                              : null,
+                                      isBookmarked: false,
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
+                      ),
                       const SizedBox(height: 30),
                     ],
                   ),
                 ),
-                // Toggle buttons fixed at the top
                 Positioned(
-                  top: 20, // Gap between AppBar and toggle buttons
+                  top: 20,
                   left: 8,
                   right: 8,
                   child: Padding(
@@ -269,39 +266,37 @@ class _SubcontractorJobHistoryPageState
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: CustomToggleButton(
-                              text: 'Open Jobs',
-                              isActive: controller.selectedTab == 'Open Jobs',
-                              onTap: () {
-                                setState(() {
-                                  controller.selectedTab = 'Open Jobs';
-                                  _filteredJobs = _allJobs
-                                      .where((job) => job.status == 'Open Jobs')
-                                      .toList();
-                                });
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: CustomToggleButton(
-                              text: 'Active Jobs',
-                              isActive: controller.selectedTab == 'Active Jobs',
-                              onTap: () {
-                                setState(() {
-                                  controller.selectedTab = 'Active Jobs';
-                                  _filteredJobs = _allJobs
-                                      .where(
-                                          (job) => job.status == 'Active Jobs')
-                                      .toList();
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: Obx(() => Row(
+                            children: [
+                              Expanded(
+                                child: CustomToggleButton(
+                                  text: 'Invited Jobs',
+                                  isActive: controller.selectedTab.value ==
+                                      'Open Jobs',
+                                  onTap: () =>
+                                      controller.changeTab('Open Jobs'),
+                                ),
+                              ),
+                              Expanded(
+                                child: CustomToggleButton(
+                                  text: 'In Progress',
+                                  isActive: controller.selectedTab.value ==
+                                      'Active Jobs',
+                                  onTap: () =>
+                                      controller.changeTab('Active Jobs'),
+                                ),
+                              ),
+                              Expanded(
+                                child: CustomToggleButton(
+                                  text: 'Job History',
+                                  isActive: controller.selectedTab.value ==
+                                      'Job History',
+                                  onTap: () =>
+                                      controller.changeTab('Job History'),
+                                ),
+                              ),
+                            ],
+                          )),
                     ),
                   ),
                 ),

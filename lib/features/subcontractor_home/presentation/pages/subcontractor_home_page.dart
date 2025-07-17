@@ -58,14 +58,8 @@ class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
                         actionText: 'Upload Progress',
                         onTap: () {
                           NavigationController.to.changePage(1);
-                          print('calling');
-                          print(subcontrctorJobHistoryController.selectedTab);
-
-                          setState(() {
-                            subcontrctorJobHistoryController.selectedTab =
-                                'Active Jobs';
-                          });
-                          print(subcontrctorJobHistoryController.selectedTab);
+                          subcontrctorJobHistoryController
+                              .changeTab('Active Jobs');
                         },
                       ),
                       ActionCard(
@@ -74,10 +68,8 @@ class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
                         actionText: 'Submit Proposal',
                         onTap: () {
                           NavigationController.to.changePage(1);
-                          setState(() {
-                            subcontrctorJobHistoryController.selectedTab =
-                                'Open Jobs';
-                          });
+                          subcontrctorJobHistoryController
+                              .changeTab('Open Jobs');
                         },
                       ),
                       ActionCard(
@@ -85,10 +77,8 @@ class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
                         actionText: 'Open Jobs',
                         onTap: () {
                           NavigationController.to.changePage(1);
-                          setState(() {
-                            subcontrctorJobHistoryController.selectedTab =
-                                'Open Jobs';
-                          });
+                          subcontrctorJobHistoryController
+                              .changeTab('Open Jobs');
                         },
                       ),
                     ],

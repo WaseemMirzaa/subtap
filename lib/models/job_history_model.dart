@@ -15,6 +15,8 @@ class JobHistory {
   String? extrasStatus;
   final String? manager;
   final PropertyManagerModel? propertyManager;
+  final String? feedback;
+  final double? feedbackRating;
 
   JobHistory({
     this.title,
@@ -31,6 +33,8 @@ class JobHistory {
     this.extrasStatus = 'pending',
     this.manager,
     this.propertyManager,
+    this.feedback,
+    this.feedbackRating,
   });
 
   bool get hasExtras => extras.isNotEmpty;

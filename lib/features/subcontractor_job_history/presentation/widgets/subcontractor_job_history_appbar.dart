@@ -44,7 +44,7 @@ class _SubcontractorJobHistoryAppbarState
                       const Align(
                         alignment: Alignment.center,
                         child: CustomText(
-                          text: "Job History",
+                          text: "My Jobs",
                           color: AppColor.white,
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
