@@ -4,22 +4,27 @@ class ChatPageDetailAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   final String userName;
   final String avatarImage;
+  final String? jobTitle;
+  final double? rating;
 
   const ChatPageDetailAppBar({
     super.key,
     required this.userName,
     required this.avatarImage,
+    this.jobTitle,
+    this.rating,
   });
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ChatDetailController>();
+
     return AppBar(
       backgroundColor: Colors.transparent,
       automaticallyImplyLeading: false,
       elevation: 0,
-      toolbarHeight: 80,
+      toolbarHeight: 90,
       flexibleSpace: Container(
-        margin: EdgeInsets.zero,
         decoration: const BoxDecoration(
           color: AppColor.backgroundColor,
           borderRadius: BorderRadius.only(
@@ -35,54 +40,89 @@ class ChatPageDetailAppBar extends StatelessWidget
               children: [
                 const SizedBox(height: 16),
                 Expanded(
-                  child: Stack(
+                  child: Row(
                     children: [
                       // Back button
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                          ),
-                          onPressed: () => Navigator.pop(context),
-                        ),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                        onPressed: () => Navigator.pop(context),
                       ),
-                      // Centered title with userName
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Chat With $userName',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'HelveticaNeueMedium',
-                          ),
-                        ),
-                      ),
-                      // Right-aligned avatar with circular Container and SVG
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AppColor.mutedGold,
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          width:
-                              30, // Matches original CircleAvatar diameter (radius: 12 * 2)
-                          height: 30,
-                          child: Center(
-                            child: SvgPicture.asset(
-                              Assets.svgsCall, // e.g., 'assets/icons/call.svg'
-                              color: Colors
-                                  .white, // Tint SVG to white for visibility
-                              width:
-                                  16, // Slightly smaller to fit inside Container
-                              height: 16,
-                              fit: BoxFit.contain,
+                      // User info - flexible to prevent overflow
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              userName,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'HelveticaNeueMedium',
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
+                            const SizedBox(height: 2),
+                            Obx(() => Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: 6,
+                                      height: 6,
+                                      decoration: BoxDecoration(
+                                        color: controller.isOnline.value
+                                            ? Colors.green
+                                            : AppColor.midGray,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Flexible(
+                                      child: Text(
+                                        controller.isOnline.value
+                                            ? 'Online'
+                                            : 'Offline',
+                                        style: const TextStyle(
+                                          color: Colors.white70,
+                                          fontSize: 11,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                            if (jobTitle != null) ...[
+                              const SizedBox(height: 2),
+                              Text(
+                                jobTitle!,
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 10,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                      // Call button
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: AppColor.mutedGold,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        width: 30,
+                        height: 30,
+                        child: Center(
+                          child: SvgPicture.asset(
+                            Assets.svgsCall,
+                            color: Colors.white,
+                            width: 16,
+                            height: 16,
                           ),
                         ),
                       ),
@@ -98,5 +138,5 @@ class ChatPageDetailAppBar extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(80);
+  Size get preferredSize => const Size.fromHeight(90);
 }

@@ -41,6 +41,15 @@ class ExtrasController extends GetxController {
     this.jobTitle.value = jobTitle;
     this.jobId.value = jobId;
     this.budget.value = budget;
+
+    // Clear any existing data
+    lineItems.clear();
+    lineItemErrors.clear();
+    showReviewStep.value = false;
+    isSubmitting.value = false;
+
+    // Add initial line item
+    addNewLineItem();
   }
 
   void addNewLineItem() {
@@ -145,16 +154,32 @@ class ExtrasController extends GetxController {
   bool get isFormValid {
     if (lineItems.isEmpty) return false;
 
+    // Don't validate during getter to avoid setState during build
     for (int i = 0; i < lineItems.length; i++) {
-      validateLineItem(i);
-      if (lineItemErrors[i].isNotEmpty) return false;
+      final item = lineItems[i];
+      final description = item['description']?.text?.trim() ?? '';
+      final quantity = item['quantity']?.text?.trim() ?? '';
+      final price = item['price']?.text?.trim() ?? '';
+
+      if (description.isEmpty ||
+          quantity.isEmpty ||
+          double.tryParse(quantity) == null ||
+          double.parse(quantity) <= 0 ||
+          price.isEmpty ||
+          double.tryParse(price) == null ||
+          double.parse(price) <= 0) {
+        return false;
+      }
     }
 
     return true;
   }
 
   void showReviewDialog() {
-    showReviewStep.value = true;
+    // Use Future.microtask to avoid setState during build
+    Future.microtask(() {
+      showReviewStep.value = true;
+    });
   }
 
   void hideReviewDialog() {

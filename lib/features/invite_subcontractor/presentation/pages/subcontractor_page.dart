@@ -60,7 +60,7 @@ class SubcontractorsPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: SearchBarTile(
                 controller: _searchController,
-                onSearch: () {},
+                onSearch: (String query) {},
                 hintText: 'Search by name',
               ),
             ),

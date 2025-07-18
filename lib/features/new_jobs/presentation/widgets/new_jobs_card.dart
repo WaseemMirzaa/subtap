@@ -22,8 +22,6 @@ class NewJobsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        'DEBUG: Building NewJobsCard for job:  {job.title}, svgIcon= {job.svgIcon}, targetBudget= {job.targetBudget}, dueDate= {job.dueDate}, address= {job.address}, propertyManager= {job.propertyManager}, subcontractorModel= {job.subcontractorModel}');
     final bool isActiveJob = job.status == 'Active Jobs';
 
     return GestureDetector(
@@ -66,16 +64,23 @@ class NewJobsCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        job.title ?? 'No Title',
-                        style: const TextStyle(
-                          color: AppColor.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'HelveticaNeueMedium',
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              job.title ?? 'No Title',
+                              style: const TextStyle(
+                                color: AppColor.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'HelveticaNeueMedium',
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                          // Add status badge here
+                        ],
                       ),
                       const SizedBox(height: 3),
                       Row(
@@ -128,40 +133,14 @@ class NewJobsCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    // Bookmark button
-                    InkWell(
+                    GestureDetector(
                       onTap: onBookmark,
-                      child: Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: AppColor.lightGray,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: SvgPicture.asset(
-                          Assets.svgsBookmark,
-                          width: 16,
-                          height: 16,
-                          color: isBookmarked
-                              ? AppColor.mutedGold
-                              : AppColor.midGray,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    // Report button
-                    InkWell(
-                      onTap: onReport,
-                      child: Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          color: AppColor.lightGray,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Icon(
-                          Icons.flag_outlined,
-                          size: 16,
-                          color: AppColor.midGray,
-                        ),
+                      child: Icon(
+                        isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                        color: isBookmarked
+                            ? AppColor.mutedGold
+                            : AppColor.midGray,
+                        size: 20,
                       ),
                     ),
                   ],
@@ -402,7 +381,7 @@ class NewJobsCard extends StatelessWidget {
                 ),
               ],
             ),
-            // Only show buttons if not an active job
+            // Always show buttons for new jobs (regardless of expiry)
             if (!isActiveJob) ...[
               const SizedBox(height: 16),
               Row(
@@ -425,14 +404,12 @@ class NewJobsCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontFamily: 'HelveticaNeueMedium',
                           ),
-                          const SizedBox(
-                              height:
-                                  4), // Small spacing between button and hint
+                          const SizedBox(height: 4),
                           const Text(
                             'No Proposal has been submitted yet',
                             style: TextStyle(
                               fontSize: 10,
-                              color: Colors.grey, // Adjust color as needed
+                              color: Colors.grey,
                               fontFamily: 'HelveticaNeueMedium',
                             ),
                           ),
@@ -440,23 +417,40 @@ class NewJobsCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: IntrinsicWidth(
-                      child: CustomButton(
-                        text: 'Dismiss',
+                  Row(
+                    children: [
+                      GestureDetector(
                         onTap: onNotInterested,
-                        color: AppColor.lightGray,
-                        textColor: AppColor.black,
-                        enableBorder: true,
-                        borderColor: AppColor.black,
-                        height: 32,
-                        radius: 12,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'HelveticaNeueMedium',
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: AppColor.lightGray,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            size: 16,
+                            color: AppColor.midGray,
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(width: 8),
+                      GestureDetector(
+                        onTap: onReport,
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: AppColor.lightGray,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(
+                            Icons.flag,
+                            size: 16,
+                            color: AppColor.midGray,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

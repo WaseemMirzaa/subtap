@@ -58,6 +58,10 @@ class AppRoutes {
   /// The subcontractor job  history route.
   static const String subcontractorJobHistory = '/subcontractor-jobhistory';
 
+  /// The subcontractor job  history detail route.
+  static const String subcontractorJobHistoryDetail =
+      '/subcontractor-jobhistorydetail';
+
   /// The job verification  route.
   static const String jobVerification = '/job-verification';
 
@@ -98,4 +102,6 @@ class AppRoutes {
   static const String portfolioPage = '/portfolio-page';
 
   static const String onBoardingScreen = '/onBoardingScreen';
+
+  static const String chatDetailPage = '/chatDetailPage';
 }

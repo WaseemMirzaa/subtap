@@ -5,20 +5,48 @@ import 'package:subtap/models/models.dart';
 
 class FilterController extends GetxController {
   // Text controllers
-  final zipCodeController = TextEditingController();
-  final searchController = TextEditingController();
+  final locationController = TextEditingController();
+  final categorySearchController = TextEditingController();
 
   // Observable variables
-  final radius = 5.0.obs;
-  final selectedCategory = Rxn<String>();
-  final minRating = 5.0.obs;
+  final radius = 25.0.obs;
+  final selectedCategories = <String>[].obs;
+  final minRating = 1.0.obs;
   final minBudget = 0.0.obs;
   final maxBudget = 1000.0.obs;
-  final selectedDueDate = Rxn<String>();
+  final selectedPostedDate = Rxn<String>();
   final selectedJobType = Rxn<String>();
+  final selectedTimeRequired = Rxn<String>();
   final showInvitedOnly = false.obs;
+  final isLoading = false.obs;
+  final useCurrentLocation = false.obs;
 
-  // Categories
+  // Add a reactive location text variable
+  final locationText = ''.obs;
+
+  // New filter options
+  final List<String> postedDateOptions = [
+    'Last 24 hours',
+    'Last 3 days',
+    'Last week',
+    'Last month'
+  ];
+
+  final List<String> jobTypeOptions = [
+    'One-time',
+    'Ongoing',
+    'Emergency',
+    'Labor-only'
+  ];
+
+  final List<String> timeRequiredOptions = [
+    'Quick (1-2 hours)',
+    'Half day (3-4 hours)',
+    'Full day (5-8 hours)',
+    'Multi-day'
+  ];
+
+  // Categories with search functionality
   final List<String> allCategories = [
     'Electrician',
     'Plumber',
@@ -43,24 +71,17 @@ class FilterController extends GetxController {
   void onInit() {
     super.onInit();
     filteredCategories.assignAll(allCategories);
-    searchController.addListener(_filterCategories);
-  }
-
-  @override
-  void onClose() {
-    zipCodeController.dispose();
-    searchController.dispose();
-    super.onClose();
+    categorySearchController.addListener(_filterCategories);
   }
 
   void _filterCategories() {
-    if (searchController.text.isEmpty) {
+    if (categorySearchController.text.isEmpty) {
       filteredCategories.assignAll(allCategories);
     } else {
       filteredCategories.assignAll(allCategories
           .where((category) => category
               .toLowerCase()
-              .contains(searchController.text.toLowerCase()))
+              .contains(categorySearchController.text.toLowerCase()))
           .toList());
     }
   }
@@ -69,120 +90,119 @@ class FilterController extends GetxController {
     radius.value = value;
   }
 
-  void updateBudgetRange(double min, double max) {
-    minBudget.value = min;
-    maxBudget.value = max;
+  void updateMinRating(double value) {
+    minRating.value = value;
   }
 
-  void updateDueDate(String? value) {
-    selectedDueDate.value = value;
+  void toggleCategory(String category) {
+    if (selectedCategories.contains(category)) {
+      selectedCategories.remove(category);
+    } else {
+      selectedCategories.add(category);
+    }
+  }
+
+  void removeCategory(String category) {
+    selectedCategories.remove(category);
+  }
+
+  void updatePostedDate(String? value) {
+    selectedPostedDate.value = value;
   }
 
   void updateJobType(String? value) {
     selectedJobType.value = value;
   }
 
+  void updateTimeRequired(String? value) {
+    selectedTimeRequired.value = value;
+  }
+
+  void toggleInvitedOnly(bool value) {
+    showInvitedOnly.value = value;
+  }
+
+  void toggleCurrentLocation(bool value) {
+    useCurrentLocation.value = value;
+    if (value) {
+      // TODO: Implement location service
+      locationController.text = "Current Location";
+    }
+  }
+
+  void updateBudgetRange(double min, double max) {
+    minBudget.value = min;
+    maxBudget.value = max;
+  }
+
+  final selectedDueDate = Rxn<String>();
+
+  void updateDueDate(String? date) {
+    selectedDueDate.value = date;
+  }
+
   void updateInvitedOnly(bool value) {
     showInvitedOnly.value = value;
   }
 
-  void updateCategory(String? value) {
-    selectedCategory.value = value;
+  // Get active filter count
+  int get activeFilterCount {
+    int count = 0;
+    if (locationText.value.isNotEmpty) count++;
+    if (radius.value != 25.0) count++;
+    if (selectedCategories.isNotEmpty) count++;
+    if (minRating.value != 1.0) count++;
+    if (minBudget.value != 0.0 || maxBudget.value != 1000.0) count++;
+    if (selectedPostedDate.value != null) count++;
+    if (selectedJobType.value != null) count++;
+    if (selectedTimeRequired.value != null) count++;
+    if (selectedDueDate.value != null) count++;
+    if (showInvitedOnly.value) count++;
+    return count;
   }
 
-  void updateRating(double value) {
-    minRating.value = value;
+  // Get matching jobs count (mock implementation)
+  int get matchingJobsCount {
+    // Make this reactive by accessing observable variables
+    // This ensures GetX can track changes
+    final _ = selectedCategories.length +
+        (selectedPostedDate.value != null ? 1 : 0) +
+        (selectedJobType.value != null ? 1 : 0) +
+        (selectedTimeRequired.value != null ? 1 : 0) +
+        (selectedDueDate.value != null ? 1 : 0) +
+        (showInvitedOnly.value ? 1 : 0);
+
+    // TODO: Implement actual job filtering logic
+    return 14; // Mock count
   }
 
   void resetFilters() {
-    zipCodeController.clear();
-    radius.value = 5.0;
+    locationController.clear();
+    categorySearchController.clear();
+    radius.value = 25.0;
+    selectedCategories.clear();
+    minRating.value = 1.0;
     minBudget.value = 0.0;
     maxBudget.value = 1000.0;
-    selectedDueDate.value = null;
+    selectedPostedDate.value = null;
     selectedJobType.value = null;
+    selectedTimeRequired.value = null;
+    selectedDueDate.value = null;
     showInvitedOnly.value = false;
-    minRating.value = 5.0;
-    selectedCategory.value = null;
-    searchController.clear();
-
-    // Reset filtered jobs to show all jobs
-    final newJobsController = Get.find<NewJobsController>();
-    newJobsController.filteredJobs.assignAll(newJobsController.allJobs);
+    useCurrentLocation.value = false;
   }
 
-  void applyFilters() {
+  void applyFilters() async {
+    isLoading.value = true;
+
+    // Simulate API call
+    await Future.delayed(const Duration(seconds: 1));
+
+    // TODO: Implement actual filtering logic
     final newJobsController = Get.find<NewJobsController>();
+    // Apply filters to jobs...
 
-    // Apply filters to the jobs list
-    List<JobHistory> filteredJobs = newJobsController.allJobs.where((job) {
-      // Location filter (if zip code is provided)
-      // You can implement location-based filtering here
-
-      // Category filter
-      if (selectedCategory.value != null) {
-        if (job.subcontractorModel?.expertise == null ||
-            !job.subcontractorModel!.expertise
-                .toLowerCase()
-                .contains(selectedCategory.value!.toLowerCase())) {
-          return false;
-        }
-      }
-
-      // Budget filter
-      if (job.price == null ||
-          job.price! < minBudget.value ||
-          job.price! > maxBudget.value) {
-        return false;
-      }
-
-      // Rating filter
-      if (job.subcontractorModel?.rating == null ||
-          job.subcontractorModel!.rating < minRating.value) {
-        return false;
-      }
-
-      // Job type filter
-      if (selectedJobType.value != null) {
-        // You can add job type property to JobHistory model if needed
-        // For now, this is a placeholder
-      }
-
-      // Due date filter
-      if (selectedDueDate.value != null) {
-        // You can implement due date filtering based on job.dueDate
-        // For now, this is a placeholder
-      }
-
-      // Invited jobs filter
-      if (showInvitedOnly.value) {
-        // You can add invited property to JobHistory model if needed
-        // For now, this is a placeholder
-      }
-
-      return true;
-    }).toList();
-
-    // Update the filtered jobs in NewJobsController
-    newJobsController.filteredJobs.assignAll(filteredJobs);
-
-    // Close the filter dialog
+    isLoading.value = false;
     Get.back();
-  }
-
-  // Add computed property for active filter count
-  int get activeFilterCount {
-    int count = 0;
-
-    if (zipCodeController.text.isNotEmpty) count++;
-    if (radius.value != 5.0) count++;
-    if (selectedCategory.value != null) count++;
-    if (minRating.value != 5.0) count++;
-    if (minBudget.value != 0.0 || maxBudget.value != 1000.0) count++;
-    if (selectedDueDate.value != null) count++;
-    if (selectedJobType.value != null) count++;
-    if (showInvitedOnly.value == true) count++;
-
-    return count;
   }
 }

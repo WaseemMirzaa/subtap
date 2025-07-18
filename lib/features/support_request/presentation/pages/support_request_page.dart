@@ -1,84 +1,83 @@
 part of 'pages.dart';
 
-class SupportRequestsPage extends StatelessWidget {
-  SupportRequestsPage({super.key});
-
-  // Sample chat data (replace with your actual data source)
-  final List<Map<String, dynamic>> chatData = [
-    {
-      'name': 'imagesChatDavid',
-      'avatarImage': Assets.imagesChatDavid,
-      'status': 'In Progress',
-      'type': 'support',
-    },
-    {
-      'name': 'John Doe',
-      'avatarImage': Assets.imagesChatDavid,
-      'status': 'Solved',
-      'type': 'support',
-    },
-    // Check if there's a new dispute from arguments
-    if (Get.arguments != null && Get.arguments['disputeNumber'] != null) ...[
-      {
-        'name': 'Dispute ${Get.arguments['disputeNumber']}',
-        'avatarImage': Assets.imagesChatDavid,
-        'status': 'In Progress',
-        'type': 'dispute',
-        'disputeNumber': Get.arguments['disputeNumber'],
-        'jobId': Get.arguments['jobId'],
-        'reason': Get.arguments['reason'],
-      }
-    ],
-  ];
+class SupportRequestPage extends StatelessWidget {
+  const SupportRequestPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SupportRequestController());
+
     return SubtapScaffold(
       appBar: const MySupportAppbar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
-            children: [
-              // Search Bar
-              const SearchBarTile(),
-              const SizedBox(
-                  height: 30), // Replaced kGap30 with SizedBox for clarity
-              // Support Request Cards
-              ListView.builder(
-                shrinkWrap:
-                    true, // Ensures ListView takes only the space it needs
-                physics:
-                    const NeverScrollableScrollPhysics(), // Disables ListView scrolling
-                itemCount: chatData.length,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showNewRequestDialog(context),
+        backgroundColor: AppColor.mutedGold,
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          // Search Bar
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SearchBarTile(
+              onSearch: (query) => controller.updateSearchQuery(query),
+              hintText: 'Search by order ID, status, or keyword...',
+            ),
+          ),
+          const SizedBox(height: 20),
+          // Tabs
+          const SupportRequestTabs(),
+          const SizedBox(height: 20),
+          // Content
+          Expanded(
+            child: Obx(() {
+              if (controller.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (controller.filteredRequests.isEmpty) {
+                return SupportEmptyState(
+                  onCreateRequest: () => _showNewRequestDialog(context),
+                );
+              }
+
+              return ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                itemCount: controller.filteredRequests.length,
                 itemBuilder: (context, index) {
-                  final chat = chatData[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 16), // Spacer between cards
-                    child: MySupportRequestsCard(
-                      status: chat['status'],
-                      type: chat['type'],
-                      disputeNumber: chat['disputeNumber'],
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SupportDetailPage(
-                              userName: chat['name'],
-                              avatarImage: chat['avatarImage'],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                  final request = controller.filteredRequests[index];
+                  return EnhancedSupportRequestCard(
+                    request: request,
+                    onTap: () => _navigateToRequestDetail(context, request),
                   );
                 },
-              ),
-            ],
+              );
+            }),
           ),
+        ],
+      ),
+    );
+  }
+
+  void _navigateToRequestDetail(BuildContext context, SupportRequest request) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SupportDetailPage(
+          userName: request.lastUpdatedBy,
+          avatarImage: Assets.imagesChatDavid, // Default avatar
         ),
       ),
+    );
+  }
+
+  void _showNewRequestDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const NewRequestBottomSheet(),
     );
   }
 }

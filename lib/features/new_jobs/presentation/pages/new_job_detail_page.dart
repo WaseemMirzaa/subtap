@@ -15,6 +15,15 @@ class NewJobDetailPage extends StatefulWidget {
 }
 
 class _NewJobDetailPageState extends State<NewJobDetailPage> {
+  late NewJobDetailController detailController;
+
+  @override
+  void initState() {
+    super.initState();
+    detailController = Get.put(NewJobDetailController());
+    detailController.checkJobExpiry(widget.job.dueDate, widget.job.urgencyTag);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SubtapScaffold(
@@ -27,10 +36,19 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(16),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 12),
+
+                      // Property Manager Info
+                      PropertyManagerInfo(
+                        propertyManager: widget.job.propertyManager,
+                        onMessageTap: () {
+                          // Navigate to chat
+                        },
+                      ),
+                      const SizedBox(height: 16),
+
                       // Job title, price, and status row
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,10 +62,7 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                             ),
                             child: Center(
                               child: SvgPicture.asset(
-                                (widget.job.svgIcon != null &&
-                                        widget.job.svgIcon!.isNotEmpty)
-                                    ? widget.job.svgIcon!
-                                    : Assets.svgsGeneral, // fallback asset
+                                widget.job.svgIcon ?? '',
                                 width: 28,
                                 height: 24,
                               ),
@@ -58,14 +73,26 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  widget.job.title ?? 'No Title',
-                                  style: const TextStyle(
-                                    color: AppColor.black,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        widget.job.title ?? 'No Title',
+                                        style: const TextStyle(
+                                          color: AppColor.black,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'HelveticaNeueMedium',
+                                        ),
+                                      ),
+                                    ),
+                                    JobStatusBadge(
+                                      dueDate: widget.job.dueDate,
+                                      status: widget.job.status,
+                                      urgencyTag: widget.job
+                                          .urgencyTag, // Pass the urgencyTag
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(height: 8),
                                 Row(
@@ -76,21 +103,14 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                                       height: 16,
                                     ),
                                     const SizedBox(width: 4),
-                                    Flexible(
-                                      child: RichText(
-                                        text: const TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: 'Carpentry & Framing ',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                fontFamily:
-                                                    'HelveticaNeueMedium',
-                                                color: AppColor.midGray,
-                                              ),
-                                            ),
-                                          ],
+                                    const Flexible(
+                                      child: Text(
+                                        'Carpentry & Framing',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'HelveticaNeueMedium',
+                                          color: AppColor.midGray,
                                         ),
                                       ),
                                     ),
@@ -99,136 +119,16 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                               ],
                             ),
                           ),
-                          Container(
-                            constraints: const BoxConstraints(maxWidth: 100),
-                            padding: const EdgeInsets.all(6),
-                            decoration: BoxDecoration(
-                              color: AppColor.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  Assets.svgsTime,
-                                  width: 14,
-                                  height: 14,
-                                  fit: BoxFit.contain,
-                                ),
-                                const SizedBox(width: 4),
-                              ],
-                            ),
-                          ),
                         ],
                       ),
                       const SizedBox(height: 16),
-                      // Preferred Time
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svgsTargetBudget,
-                            width: 16,
-                            height: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                const TextSpan(
-                                  text: 'Target Budget: ',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: widget.job.targetBudget ?? 'N/A',
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.midGray,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      kGap10,
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svgsDueDate,
-                            width: 16,
-                            height: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                const TextSpan(
-                                  text: 'Due Date: ',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: widget.job.dueDate ?? 'N/A',
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.midGray,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      kGap10,
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            Assets.svgsLocation,
-                            width: 16,
-                            height: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                const TextSpan(
-                                  text: 'Address: ',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: widget.job.address ?? 'N/A',
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: AppColor.midGray,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'HelveticaNeueMedium',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      kGap20,
+
+                      // Job details with distance
+                      _buildJobDetails(),
+
+                      const SizedBox(height: 20),
+
+                      // Description
                       const Text(
                         'Description',
                         style: TextStyle(
@@ -240,92 +140,37 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        widget.job.description ?? 'No description available',
+                        detailController
+                            .formatDescription(widget.job.description),
                         style: const TextStyle(
                           fontSize: 13,
                           color: AppColor.midGray,
                           fontFamily: 'HelveticaNeueMedium',
+                          height: 1.4,
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              Assets.imagesWood,
-                              width: 70,
-                              height: 60,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          kGap10,
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              Assets.imagesWoodie,
-                              width: 70,
-                              height: 60,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          kGap10,
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              Assets.imagesSideWood,
-                              width: 70,
-                              height: 60,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ],
-                      ),
-                      kGap20,
-                      // if (widget.job.status == 'new Jobs') ...[
-                      //   const Text(
-                      //     'Status:',
-                      //     style: TextStyle(
-                      //       fontSize: 16,
-                      //       fontWeight: FontWeight.w500,
-                      //       color: AppColor.black,
-                      //       fontFamily: 'HelveticaNeueMedium',
-                      //     ),
-                      //   ),
-                      //   const SizedBox(height: 8),
-                      //   const StatusTimeline(
-                      //     statuses: [
-                      //       {
-                      //         'status': 'Assigned',
-                      //         'isCompleted': true,
-                      //         'date': '2:00pm - May 21, 2025'
-                      //       },
-                      //       {
-                      //         'status': 'In Progress',
-                      //         'isCompleted': true,
-                      //         'date': '2:00pm - May 22, 2025'
-                      //       },
-                      //       {
-                      //         'status': 'Completed',
-                      //         'isCompleted': true,
-                      //         'date': '2:00pm - May 22, 2025'
-                      //       },
-                      //     ],
-                      //   ),
-                      //   kGap20,
-                      // ],
+
+                      // Images
+                      _buildJobImages(),
+
+                      const SizedBox(height: 20),
+
+                      // Job Actions
+                      Obx(() => JobActionsWidget(
+                            jobTitle: widget.job.title ?? '',
+                            jobId: '#${widget.job.title?.hashCode ?? 0}',
+                            isBookmarked: detailController.isBookmarked.value,
+                            onBookmarkTap: detailController.toggleBookmark,
+                          )),
                     ],
                   ),
                 ),
               ),
-              // Add empty container to prevent bottom overflow when action bar is visible
               if (widget.isNewJob || widget.job.status == 'new Jobs')
-                const SizedBox(
-                    height:
-                        120), // Increased height to ensure action bar visibility
+                const SizedBox(height: 120),
             ],
           ),
-          // Bottom action bar
           Positioned(
             left: 0,
             right: 0,
@@ -337,96 +182,230 @@ class _NewJobDetailPageState extends State<NewJobDetailPage> {
     );
   }
 
+  Widget _buildJobDetails() {
+    return Column(
+      children: [
+        // Target Budget
+        Row(
+          children: [
+            SvgPicture.asset(Assets.svgsTargetBudget, width: 16, height: 16),
+            const SizedBox(width: 4),
+            RichText(
+              text: TextSpan(
+                children: [
+                  const TextSpan(
+                    text: 'Target Budget: ',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppColor.black,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'HelveticaNeueMedium',
+                    ),
+                  ),
+                  TextSpan(
+                    text: widget.job.targetBudget ?? 'N/A',
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: AppColor.midGray,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'HelveticaNeueMedium',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+
+        // Due Date
+        Row(
+          children: [
+            SvgPicture.asset(Assets.svgsDueDate, width: 16, height: 16),
+            const SizedBox(width: 4),
+            RichText(
+              text: TextSpan(
+                children: [
+                  const TextSpan(
+                    text: 'Due Date: ',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppColor.black,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'HelveticaNeueMedium',
+                    ),
+                  ),
+                  TextSpan(
+                    text: widget.job.dueDate ?? 'N/A',
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: AppColor.midGray,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'HelveticaNeueMedium',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+
+        // Address
+        Row(
+          children: [
+            SvgPicture.asset(Assets.svgsLocation, width: 16, height: 16),
+            const SizedBox(width: 4),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'Address: ',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: AppColor.black,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'HelveticaNeueMedium',
+                      ),
+                    ),
+                    TextSpan(
+                      text: widget.job.address ?? 'N/A',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColor.midGray,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'HelveticaNeueMedium',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+
+        // Distance
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: DistanceWidget(address: widget.job.address),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildJobImages() {
+    return Row(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.asset(
+            Assets.imagesWood,
+            width: 70,
+            height: 60,
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(width: 10),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.asset(
+            Assets.imagesWoodie,
+            width: 70,
+            height: 60,
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(width: 10),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.asset(
+            Assets.imagesSideWood,
+            width: 70,
+            height: 60,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildBottomActionBar() {
-    print(
-        'Job Status: ${widget.job.status}, isNewJob: ${widget.isNewJob}'); // Debug print
-    if (widget.isNewJob) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: const BoxDecoration(
-          color: AppColor.backgroundColor,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: CustomButton(
-                  text: 'Apply Now',
-                  onTap: () {
-                    Get.toNamed(
-                      AppRoutes.subcontractorJob,
-                      arguments: {
-                        'isFromAcceptJob': true
-                      }, // Pass the parameter
-                    );
-                  },
-                  color: AppColor.mutedGold,
-                  textColor: Colors.white,
-                  fontWeight: FontWeight.w400,
-                  radius: 17,
+    return Obx(() {
+      final isExpired = detailController.isJobExpired.value;
+
+      if (widget.isNewJob) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          decoration: const BoxDecoration(
+            color: AppColor.backgroundColor,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: isExpired
+              ? Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.red.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.red),
+                  ),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.error, color: Colors.red),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'This job is no longer accepting applicants.',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: CustomButton(
+                          text: 'Apply Now',
+                          onTap: () {
+                            Get.toNamed(
+                              AppRoutes.subcontractorJob,
+                              arguments: {'isFromAcceptJob': true},
+                            );
+                          },
+                          color: AppColor.mutedGold,
+                          textColor: Colors.white,
+                          fontWeight: FontWeight.w400,
+                          radius: 17,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: CustomButton(
+                          text: 'Dismiss',
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          color: AppColor.white,
+                          textColor: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          radius: 17,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: CustomButton(
-                  text: 'Dismiss',
-                  onTap: () {
-                    // Handle not interested
-                  },
-                  color: AppColor.white,
-                  textColor: Colors.black,
-                  fontWeight: FontWeight.w400,
-                  radius: 17,
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    } else if (widget.job.status == 'Active Jobs') {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: const BoxDecoration(
-          color: AppColor.backgroundColor,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Column(
-          children: [
-            CustomButton(
-              text: 'Upload Progress',
-              onTap: () {
-                Get.toNamed(AppRoutes.uploadProgress);
-              },
-              color: AppColor.mutedGold,
-              textColor: Colors.white,
-              fontWeight: FontWeight.w400,
-              radius: 14,
-            ),
-            const SizedBox(height: 10),
-            TextButton(
-              onPressed: () {
-                Get.toNamed(AppRoutes.mediationProcess);
-              },
-              child: const Text(
-                'Mediation Process',
-                style: TextStyle(
-                  color: AppColor.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'HelveticaNeueMedium',
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return const SizedBox.shrink(); // Return empty widget for other statuses
-    }
+        );
+      }
+      return const SizedBox.shrink();
+    });
   }
 }

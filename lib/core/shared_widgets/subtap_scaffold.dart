@@ -8,6 +8,8 @@ class SubtapScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget? drawer;
   final Widget? bottomNavigationBar;
+  final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
   final Color? backgroundColor;
 
   const SubtapScaffold({
@@ -18,6 +20,8 @@ class SubtapScaffold extends StatelessWidget {
     this.drawer,
     this.appBarSecond,
     this.bottomNavigationBar,
+    this.floatingActionButton,
+    this.floatingActionButtonLocation,
     this.backgroundColor = AppColor.lightGray,
   });
 
@@ -28,6 +32,8 @@ class SubtapScaffold extends StatelessWidget {
       appBar: isAppBar ? appBarSecond : appBar,
       drawer: drawer,
       bottomNavigationBar: bottomNavigationBar,
+      floatingActionButton: floatingActionButton,
+      floatingActionButtonLocation: floatingActionButtonLocation,
       body: body,
     );
   }

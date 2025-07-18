@@ -817,16 +817,22 @@ class _SubcontractorJobHistoryDetailPageState
           CustomButton(
             text: '➕ Add Extras',
             onTap: () {
+              // Initialize controller with job data BEFORE opening bottom sheet
+              final extrasController = Get.put(ExtrasController());
+
+              // Initialize with job data immediately
+              extrasController.initializeJobData(
+                jobTitle: widget.job.title ?? 'Unknown Job',
+                jobId: '#${widget.job.title?.hashCode ?? 0}',
+                budget: widget.job.price ?? 0.0,
+              );
+
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
                 builder: (BuildContext context) {
-                  return CustomExtraBottomSheet(
-                    jobTitle: widget.job.title,
-                    // jobId: widget.job.id ?? '#${widget.job.title.hashCode}',
-                    budget: widget.job.price,
-                  );
+                  return const CustomExtraBottomSheet();
                 },
               ).then((result) {
                 if (result != null &&
@@ -839,6 +845,8 @@ class _SubcontractorJobHistoryDetailPageState
                     }
                   });
                 }
+                // Clean up controller after bottom sheet closes
+                Get.delete<ExtrasController>();
               });
             },
             color: AppColor.white,

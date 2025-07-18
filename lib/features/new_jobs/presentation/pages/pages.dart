@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:subtap/controller/filter_controller.dart';
+import 'package:subtap/controller/new_job_detail_controller.dart';
 import 'package:subtap/controller/new_jobs_controller.dart';
 import 'package:subtap/core/config/config.dart';
 import 'package:subtap/core/shared_widgets/custom_button.dart';
@@ -12,6 +13,10 @@ import 'package:subtap/core/shared_widgets/subtap_scaffold.dart';
 import 'package:subtap/core/theme/app_color.dart';
 import 'package:subtap/core/theme/assets.dart';
 import 'package:subtap/core/theme/constane.dart';
+import 'package:subtap/features/new_jobs/presentation/widgets/distance_widget.dart';
+import 'package:subtap/features/new_jobs/presentation/widgets/job_actions_widget.dart';
+import 'package:subtap/features/new_jobs/presentation/widgets/job_status_badge.dart';
+import 'package:subtap/features/new_jobs/presentation/widgets/property_manager_info.dart';
 import 'package:subtap/features/new_jobs/presentation/widgets/widgets.dart';
 import 'package:subtap/models/models.dart';
 

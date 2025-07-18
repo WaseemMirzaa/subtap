@@ -6,7 +6,7 @@ import '../theme/assets.dart';
 
 class SearchBarTile extends StatelessWidget {
   final TextEditingController? controller;
-  final VoidCallback? onSearch;
+  final Function(String)? onSearch;
   final String? hintText;
   final FocusNode? focusNode;
   final double? width;
@@ -65,7 +65,8 @@ class SearchBarTile extends StatelessWidget {
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(vertical: 12),
               ),
-              onSubmitted: (value) => onSearch?.call(),
+              onChanged: (value) => onSearch?.call(value),
+              onSubmitted: (value) => onSearch?.call(value),
             ),
           ),
         ],

@@ -31,948 +31,556 @@ class SubcontractorNotificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('notificationJobs length: ${_controller.notificationJobs.length}');
     return SubtapScaffold(
       appBar: const NotificationAppbar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-          child: Obx(() => Column(
+      body: Obx(() => SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomText(
-                    text: 'New Notifications',
-                    fontWeight: FontWeight.w500,
-                    fontSize: context.responsiveFontSize(18),
-                  ),
-                  SizedBox(height: context.responsiveHeight(2)),
-                  // Check if there are no notifications
-                  if (_controller.notificationJobs.isEmpty)
-                    Center(
-                      child: CustomText(
-                        text: 'No notifications found',
-                        fontWeight: FontWeight.w400,
-                        fontSize: context.responsiveFontSize(16),
-                        color: AppColor.midGray,
+                  // Header with Clear All button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText(
+                        text: 'Notifications',
+                        fontWeight: FontWeight.w500,
+                        fontSize: context.responsiveFontSize(18),
                       ),
-                    )
-                  else ...[
-                    // Notification item: New Job Opportunity
-                    if (_controller.notificationJobs.isNotEmpty)
-                      Dismissible(
-                        key: Key(
-                            'new_job_0_${_controller.notificationJobs[0].title}'),
-                        direction:
-                            DismissDirection.endToStart, // Swipe from left
-                        onDismissed: (direction) {
-                          _controller.removeNotification(0);
+                      GestureDetector(
+                        onTap: () {
+                          Get.dialog(
+                            AlertDialog(
+                              title: const Text('Clear All Read Notifications'),
+                              content: const Text(
+                                  'Are you sure you want to clear all read notifications?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Get.back(),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    _controller.clearAllRead();
+                                    Get.back();
+                                  },
+                                  child: const Text('Clear All'),
+                                ),
+                              ],
+                            ),
+                          );
                         },
-                        background: Container(
-                          color: Colors.red,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(left: 20),
-                          child: const Row(
-                            children: [
-                              Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 10),
-                              CustomText(
-                                text: 'Delete',
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ],
-                          ),
-                        ),
                         child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
+                            color: AppColor.lightGray.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: CustomText(
-                                      text: 'New Job Opportunity',
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: context.responsiveFontSize(16),
-                                    ),
-                                  ),
-                                  CustomText(
-                                    text: '11:23 AM',
-                                    color: AppColor.midGray,
-                                    fontSize: context.responsiveFontSize(12),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 2),
-                              const NotificationCard(
-                                description:
-                                    'You have a new job request for Carpentry & Farming Services from Jason Rao. Review the details and submit your proposal.',
-                                avatarImage: Assets.imagesNotificationPerson,
-                              ),
-                              SizedBox(height: context.responsiveHeight(1.2)),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CustomButton(
-                                    text: 'REJECT',
-                                    width: context.responsiveWidth(24),
-                                    height: context.responsiveHeight(4),
-                                    color: AppColor.darkBlueShade,
-                                    textColor: AppColor.white,
-                                    radius: 25,
-                                    fontSize: context.responsiveFontSize(8),
-                                    onTap: () {
-                                      // Handle REJECT action (e.g., call API or update state)
-                                    },
-                                  ),
-                                  SizedBox(width: context.responsiveWidth(2)),
-                                  CustomButton(
-                                    text: 'ACCEPT',
-                                    width: context.responsiveWidth(24),
-                                    height: context.responsiveHeight(4),
-                                    color: AppColor.mutedGold,
-                                    textColor: AppColor.white,
-                                    radius: 25,
-                                    fontSize: context.responsiveFontSize(8),
-                                    onTap: () {
-                                      // Handle ACCEPT action (e.g., call API or update state)
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    SizedBox(height: context.responsiveHeight(1)),
-                    // Notification item: Job Update
-                    if (_controller.notificationJobs.length > 1)
-                      Dismissible(
-                        key: Key(
-                            'job_update_1_${_controller.notificationJobs[1].title}'),
-                        direction:
-                            DismissDirection.startToEnd, // Swipe from left
-                        onDismissed: (direction) {
-                          _controller.removeNotification(1);
-                        },
-                        background: Container(
-                          color: Colors.red,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(left: 20),
                           child: const Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 10),
+                              Icon(Icons.delete_outline,
+                                  size: 16, color: AppColor.midGray),
+                              SizedBox(width: 4),
                               CustomText(
-                                text: 'Delete',
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ],
-                          ),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: CustomText(
-                                      text: 'Job Update',
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: context.responsiveFontSize(16),
-                                    ),
-                                  ),
-                                  CustomText(
-                                    text: '11:23 AM',
-                                    color: AppColor.midGray,
-                                    fontSize: context.responsiveFontSize(12),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 2),
-                              const CustomText(
-                                text:
-                                    'The property manager has reviewed your progress update. Check for any feedback or additional instructions.',
-                                maxLines: 3,
-                                fontSize: 13,
+                                text: 'Clear All',
+                                fontSize: 12,
                                 color: AppColor.midGray,
                               ),
-                              SizedBox(height: context.responsiveHeight(1.2)),
-                              Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.asset(
-                                      Assets.imagesWood,
-                                      width: 70,
-                                      height: 60,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  kGap10,
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.asset(
-                                      Assets.imagesWoodie,
-                                      width: 70,
-                                      height: 60,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                         ),
                       ),
-                    SizedBox(height: context.responsiveHeight(2)),
-                    // Notification item: Proposal Accepted (1 Week Ago)
-                    if (_controller.notificationJobs.length > 2)
-                      Dismissible(
-                        key: Key(
-                            'proposal_accepted_2_${_controller.notificationJobs[2].title}'),
-                        direction:
-                            DismissDirection.startToEnd, // Swipe from left
-                        onDismissed: (direction) {
-                          _controller.removeNotification(2);
-                        },
-                        background: Container(
-                          color: Colors.red,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(left: 20),
-                          child: const Row(
-                            children: [
-                              Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 10),
-                              CustomText(
-                                text: 'Delete',
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ],
-                          ),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: CustomText(
-                                      text: 'Proposal Accepted',
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: context.responsiveFontSize(16),
-                                    ),
-                                  ),
-                                  CustomText(
-                                    text: '1 Week Ago',
-                                    color: AppColor.midGray,
-                                    fontSize: context.responsiveFontSize(12),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 1),
-                              const NotificationCard(
-                                description:
-                                    'Your proposal for the Carpentry & Farming job has been accepted! The job is now active in your dashboard.',
-                                avatarImage: Assets.imagesSubcontractorMichael,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    SizedBox(height: context.responsiveHeight(2)),
-                    // Notification item: Extras Requested (1 Week Ago)
-                    if (_controller.notificationJobs.length > 3)
-                      Dismissible(
-                        key: Key(
-                            'extras_requested_3_${_controller.notificationJobs[3].title}'),
-                        direction:
-                            DismissDirection.startToEnd, // Swipe from left
-                        onDismissed: (direction) {
-                          _controller.removeNotification(3);
-                        },
-                        background: Container(
-                          color: Colors.red,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(left: 20),
-                          child: const Row(
-                            children: [
-                              Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 10),
-                              CustomText(
-                                text: 'Delete',
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ],
-                          ),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: CustomText(
-                                      text: 'Extras Requested',
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: context.responsiveFontSize(16),
-                                    ),
-                                  ),
-                                  CustomText(
-                                    text: '1 Week Ago',
-                                    color: AppColor.midGray,
-                                    fontSize: context.responsiveFontSize(12),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: context.responsiveHeight(1)),
-                              Obx(() => GestureDetector(
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isScrollControlled: true,
-                                        backgroundColor:
-                                            AppColor.backgroundColor,
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(20)),
-                                        ),
-                                        builder: (BuildContext context) {
-                                          return ExtrasBottomSheet(
-                                            extrasData: staticExtras,
-                                            extrasStatus: 'pending',
-                                            onClose: () =>
-                                                Navigator.pop(context),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        color: AppColor.white,
-                                        borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(
-                                            color: AppColor.lightGray,
-                                            width: 1),
-                                      ),
-                                      child: _controller.isSubmitting.value
-                                          ? const Center(
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(Colors.orange),
-                                              ),
-                                            )
-                                          : Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              6),
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.orange
-                                                            .withOpacity(0.1),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      child: SvgPicture.asset(
-                                                        Assets.svgsTime,
-                                                        width: 16,
-                                                        height: 16,
-                                                        color: Colors.orange,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(width: 8),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        const Text(
-                                                          'Extras Added',
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color:
-                                                                AppColor.black,
-                                                            fontFamily:
-                                                                'HelveticaNeueMedium',
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          '${staticExtras.length} item(s) - \$${_calculateTotal().toStringAsFixed(2)}',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 12,
-                                                            color: AppColor
-                                                                .midGray,
-                                                            fontFamily:
-                                                                'HelveticaNeueMedium',
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                        horizontal: 12,
-                                                        vertical: 6,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.orange
-                                                            .withOpacity(0.1),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                        border: Border.all(
-                                                          color: Colors.orange
-                                                              .withOpacity(0.3),
-                                                          width: 1,
-                                                        ),
-                                                      ),
-                                                      child: const Text(
-                                                        'Pending',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Colors.orange,
-                                                          fontFamily:
-                                                              'HelveticaNeueMedium',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(width: 8),
-                                                    const Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      size: 12,
-                                                      color: AppColor.midGray,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                    ),
-                                  )),
-                              SizedBox(height: context.responsiveHeight(1.2)),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CustomButton(
-                                    text: 'REJECT',
-                                    width: context.responsiveWidth(24),
-                                    height: context.responsiveHeight(4),
-                                    color: AppColor.darkBlueShade,
-                                    textColor: AppColor.white,
-                                    radius: 25,
-                                    fontSize: context.responsiveFontSize(8),
-                                    onTap: () {
-                                      Get.snackbar(
-                                        'Info',
-                                        'Extras request rejected',
-                                        backgroundColor: Colors.red,
-                                        snackPosition: SnackPosition.BOTTOM,
-                                        colorText: AppColor.white,
-                                        margin: const EdgeInsets.all(16),
-                                        duration: const Duration(seconds: 3),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(width: context.responsiveWidth(2)),
-                                  CustomButton(
-                                    text: 'ACCEPT',
-                                    width: context.responsiveWidth(24),
-                                    height: context.responsiveHeight(4),
-                                    color: AppColor.mutedGold,
-                                    textColor: AppColor.white,
-                                    radius: 25,
-                                    fontSize: context.responsiveFontSize(8),
-                                    onTap: () {
-                                      Get.snackbar(
-                                        'Success',
-                                        'Extras request accepted',
-                                        backgroundColor: Colors.green,
-                                        snackPosition: SnackPosition.BOTTOM,
-                                        colorText: AppColor.white,
-                                        margin: const EdgeInsets.all(16),
-                                        duration: const Duration(seconds: 3),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    ],
+                  ),
 
-                    // Add these after the existing notification cards in your Column children:
+                  SizedBox(height: context.responsiveHeight(1.5)),
 
-                    SizedBox(height: context.responsiveHeight(2)),
-// Notification item: Extras Request Accepted (2 Weeks Ago)
-                    if (_controller.notificationJobs.length > 4)
-                      Dismissible(
-                        key: Key(
-                            'extras_accepted_4_${_controller.notificationJobs[4].title}'),
-                        direction: DismissDirection.startToEnd,
-                        onDismissed: (direction) {
-                          _controller.removeNotification(4);
-                        },
-                        background: Container(
-                          color: Colors.red,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(left: 20),
-                          child: const Row(
-                            children: [
-                              Icon(Icons.delete, color: Colors.white),
-                              SizedBox(width: 10),
-                              CustomText(
-                                text: 'Delete',
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ],
+                  // Filter tabs
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: _controller.tabs.map((tab) {
+                        final isSelected = _controller.selectedTab.value == tab;
+                        return GestureDetector(
+                          onTap: () => _controller.changeTab(tab),
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? AppColor.mutedGold
+                                  : AppColor.lightGray.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: CustomText(
+                              text: tab,
+                              fontSize: 14,
+                              color: isSelected
+                                  ? AppColor.white
+                                  : AppColor.darkGray,
+                            ),
                           ),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: CustomText(
-                                      text: 'Extras Request Accepted',
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: context.responsiveFontSize(16),
-                                    ),
-                                  ),
-                                  CustomText(
-                                    text: '2 Weeks Ago',
-                                    color: AppColor.midGray,
-                                    fontSize: context.responsiveFontSize(12),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: context.responsiveHeight(1)),
-                              GestureDetector(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    backgroundColor: AppColor.backgroundColor,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(20)),
-                                    ),
-                                    builder: (BuildContext context) {
-                                      return ExtrasBottomSheet(
-                                        extrasData: staticExtras,
-                                        extrasStatus: 'accepted',
-                                        onClose: () => Navigator.pop(context),
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color: AppColor.white,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                        color: AppColor.lightGray, width: 1),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.all(6),
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  Colors.green.withOpacity(0.1),
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: SvgPicture.asset(
-                                              Assets.svgsTime,
-                                              width: 16,
-                                              height: 16,
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Text(
-                                                'Extras Approved',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: AppColor.black,
-                                                  fontFamily:
-                                                      'HelveticaNeueMedium',
-                                                ),
-                                              ),
-                                              Text(
-                                                '${staticExtras.length} item(s) - \$${_calculateTotal().toStringAsFixed(2)}',
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: AppColor.midGray,
-                                                  fontFamily:
-                                                      'HelveticaNeueMedium',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 12,
-                                              vertical: 6,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  Colors.green.withOpacity(0.1),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              border: Border.all(
-                                                color: Colors.green
-                                                    .withOpacity(0.3),
-                                                width: 1,
-                                              ),
-                                            ),
-                                            child: const Text(
-                                              'Accepted',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.green,
-                                                fontFamily:
-                                                    'HelveticaNeueMedium',
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 12,
-                                            color: AppColor.midGray,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
 
-                    SizedBox(height: context.responsiveHeight(2)),
-// Notification item: Extras Request Rejected (3 Weeks Ago)
-                    if (_controller.notificationJobs.length > 5)
-                      Dismissible(
-                        key: Key(
-                            'extras_rejected_5_${_controller.notificationJobs[5].title}'),
-                        direction: DismissDirection.startToEnd,
-                        onDismissed: (direction) {
-                          _controller.removeNotification(5);
-                        },
-                        background: Container(
-                          color: Colors.red,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(left: 20),
-                          child: const Row(
-                            children: [
-                              Icon(Icons.delete, color: Colors.white),
-                              SizedBox(width: 10),
-                              CustomText(
-                                text: 'Delete',
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ],
-                          ),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: CustomText(
-                                      text: 'Extras Request Rejected',
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: context.responsiveFontSize(16),
-                                    ),
-                                  ),
-                                  CustomText(
-                                    text: '3 Weeks Ago',
-                                    color: AppColor.midGray,
-                                    fontSize: context.responsiveFontSize(12),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: context.responsiveHeight(1)),
-                              GestureDetector(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    backgroundColor: AppColor.backgroundColor,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(20)),
-                                    ),
-                                    builder: (BuildContext context) {
-                                      return ExtrasBottomSheet(
-                                        extrasData: staticExtras,
-                                        extrasStatus: 'rejected',
-                                        onClose: () => Navigator.pop(context),
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color: AppColor.white,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                        color: AppColor.lightGray, width: 1),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.all(6),
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  Colors.red.withOpacity(0.1),
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: SvgPicture.asset(
-                                              Assets.svgsTime,
-                                              width: 16,
-                                              height: 16,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Text(
-                                                'Extras Rejected',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: AppColor.black,
-                                                  fontFamily:
-                                                      'HelveticaNeueMedium',
-                                                ),
-                                              ),
-                                              Text(
-                                                '${staticExtras.length} item(s) - \$${_calculateTotal().toStringAsFixed(2)}',
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: AppColor.midGray,
-                                                  fontFamily:
-                                                      'HelveticaNeueMedium',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 12,
-                                              vertical: 6,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  Colors.red.withOpacity(0.1),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              border: Border.all(
-                                                color:
-                                                    Colors.red.withOpacity(0.3),
-                                                width: 1,
-                                              ),
-                                            ),
-                                            child: const Text(
-                                              'Rejected',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.red,
-                                                fontFamily:
-                                                    'HelveticaNeueMedium',
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          const Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 12,
-                                            color: AppColor.midGray,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: context.responsiveHeight(1.2)),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CustomButton(
-                                    text: 'EDIT',
-                                    width: context.responsiveWidth(24),
-                                    height: context.responsiveHeight(4),
-                                    color: AppColor.darkBlueShade,
-                                    textColor: AppColor.white,
-                                    radius: 25,
-                                    fontSize: context.responsiveFontSize(8),
-                                    onTap: () {
-                                      Get.snackbar(
-                                        'Info',
-                                        'Editing extras request',
-                                        backgroundColor: Colors.blue,
-                                        snackPosition: SnackPosition.BOTTOM,
-                                        colorText: AppColor.white,
-                                        margin: const EdgeInsets.all(16),
-                                        duration: const Duration(seconds: 3),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(width: context.responsiveWidth(2)),
-                                  CustomButton(
-                                    text: 'RESUBMIT',
-                                    width: context.responsiveWidth(25),
-                                    height: context.responsiveHeight(4),
-                                    color: AppColor.mutedGold,
-                                    textColor: AppColor.white,
-                                    radius: 25,
-                                    fontSize: context.responsiveFontSize(8),
-                                    onTap: () {
-                                      Get.snackbar(
-                                        'Success',
-                                        'Extras request resubmitted',
-                                        backgroundColor: Colors.green,
-                                        snackPosition: SnackPosition.BOTTOM,
-                                        colorText: AppColor.white,
-                                        margin: const EdgeInsets.all(16),
-                                        duration: const Duration(seconds: 3),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                  ],
+                  SizedBox(height: context.responsiveHeight(2)),
+
+                  // Notifications content
+                  _buildNotificationsList(context),
                 ],
-              )),
+              ),
+            ),
+          )),
+    );
+  }
+
+  Widget _buildNotificationsList(BuildContext context) {
+    if (_controller.filteredNotifications.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.notifications_off_outlined,
+              size: 48,
+              color: AppColor.midGray,
+            ),
+            const SizedBox(height: 16),
+            const CustomText(
+              text: 'No notifications found',
+              fontWeight: FontWeight.w400,
+              fontSize: 16, // Use fixed size instead of responsive
+              color: AppColor.midGray,
+            ),
+            const SizedBox(height: 8),
+            CustomText(
+              text: _controller.selectedTab.value == 'All'
+                  ? 'You don\'t have any notifications yet'
+                  : 'No ${_controller.selectedTab.value.toLowerCase()} notifications',
+              fontWeight: FontWeight.w400,
+              fontSize: 14, // Use fixed size instead of responsive
+              color: AppColor.midGray,
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        // List of notifications
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: _controller.filteredNotifications.length,
+          itemBuilder: (context, index) {
+            final notification = _controller.filteredNotifications[index];
+            final notificationColor =
+                _controller.getNotificationColor(notification.title ?? '');
+
+            return _buildNotificationCard(
+                context, notification, index, notificationColor);
+          },
+        ),
+
+        // Add at the end of the notifications list
+        if (_controller.filteredNotifications.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Center(
+              child: Column(
+                children: [
+                  const CustomText(
+                    text: 'No More Notifications',
+                    color: AppColor.midGray,
+                    fontSize: 14,
+                  ),
+                  const SizedBox(height: 8),
+                  TextButton(
+                    onPressed: () {
+                      // Load older notifications
+                      Get.snackbar('Loading', 'Loading older notifications...',
+                          snackPosition: SnackPosition.BOTTOM);
+                    },
+                    child: const Text('Load Older'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildNotificationCard(BuildContext context, JobHistory notification,
+      int index, Color notificationColor) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Dismissible(
+        key: Key('notification_${index}_${notification.title}'),
+        direction: DismissDirection.endToStart,
+        background: Container(
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.only(right: 20),
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.archive_outlined, color: Colors.white),
+              SizedBox(height: 4),
+              CustomText(text: 'Archive', color: Colors.white, fontSize: 12),
+            ],
+          ),
+        ),
+        onDismissed: (direction) {
+          HapticFeedback.heavyImpact(); // Add haptic feedback
+          _controller.archiveNotification(index);
+
+          Get.snackbar(
+            'Notification Archived',
+            'The notification has been archived',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.black54,
+            colorText: Colors.white,
+            margin: const EdgeInsets.all(16),
+            duration: const Duration(seconds: 2),
+            mainButton: TextButton(
+              onPressed: () {
+                notification.isArchived = false;
+                _controller.notificationJobs.refresh();
+                Get.closeCurrentSnackbar();
+              },
+              child: const Text('UNDO', style: TextStyle(color: Colors.white)),
+            ),
+          );
+        },
+        child: Semantics(
+          label: _getSemanticLabel(notification),
+          child: GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+              _controller.markAsRead(index);
+              Get.toNamed(
+                AppRoutes.subcontractorJobHistoryDetail,
+                arguments: {
+                  'job': notification,
+                  'isOpenJob': false,
+                },
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: notification.isRead
+                    ? null
+                    : Border.all(color: notificationColor, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header with title and time
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (!notification.isRead)
+                              Container(
+                                width: 8,
+                                height: 8,
+                                margin: const EdgeInsets.only(right: 8, top: 4),
+                                decoration: BoxDecoration(
+                                  color: notificationColor,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            Expanded(
+                              child: CustomText(
+                                text: notification.title ?? '',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      CustomText(
+                        text: _getFormattedTime(notification),
+                        color: AppColor.midGray,
+                        fontSize: 12,
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Description with AI-checked content and expandable text
+                  ExpandableText(
+                    _getAICheckedContent(notification.description ?? ''),
+                    maxLines: 3,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: AppColor.midGray,
+                      height: 1.4,
+                    ),
+                    expandText: 'View More',
+                    collapseText: 'Show Less',
+                    linkColor: AppColor.mutedGold,
+                  ),
+
+                  // Due date when available
+                  if (notification.dueDate != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.calendar_today_outlined,
+                              size: 14, color: AppColor.midGray),
+                          const SizedBox(width: 4),
+                          CustomText(
+                            text: 'Due: ${notification.dueDate}',
+                            fontSize: 12,
+                            color: AppColor.midGray,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  // Extras preview with item details
+                  if (notification.title?.contains('Extras') == true)
+                    _buildExtrasPreview(),
+
+                  // Action buttons
+                  if (notification.title?.contains('Job Opportunity') == true ||
+                      notification.title?.contains('Extras Requested') == true)
+                    GestureDetector(
+                      onTap: () {},
+                      child: _buildActionButtons(notification),
+                    ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  String _getSemanticLabel(JobHistory notification) {
+    final title = notification.title ?? '';
+    final name = notification.subcontractorModel?.name ?? 'Property Manager';
+
+    if (title.contains('Job Opportunity')) {
+      return 'Job Invite from $name. Accept or Reject.';
+    } else if (title.contains('Extras')) {
+      return 'Extras request from $name worth \$225. Accept or Reject.';
+    } else {
+      return '$title from $name. Tap to view details.';
+    }
+  }
+
+  String _getFormattedTime(JobHistory notification) {
+    final now = DateTime.now();
+    final notificationTime = DateTime.now().subtract(const Duration(hours: 2));
+
+    if (now.difference(notificationTime).inHours < 24) {
+      return 'Today at ${notificationTime.hour}:${notificationTime.minute.toString().padLeft(2, '0')} ${notificationTime.hour >= 12 ? 'PM' : 'AM'}';
+    } else if (now.difference(notificationTime).inDays == 1) {
+      return 'Yesterday';
+    } else if (now.difference(notificationTime).inDays < 7) {
+      return '${now.difference(notificationTime).inDays} days ago';
+    } else {
+      return '1 week ago';
+    }
+  }
+
+  String _getAICheckedContent(String content) {
+    // Simulate AI spelling/grammar check
+    return content
+        .replaceAll('recieved', 'received')
+        .replaceAll('submited', 'submitted')
+        .replaceAll('convienience', 'convenience');
+  }
+
+  Widget _buildExtrasPreview() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: AppColor.lightGray.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CustomText(
+              text: 'Extras Preview:',
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+            ),
+            const SizedBox(height: 4),
+            const CustomText(
+              text: '• Extra Beams (\$150)',
+              fontSize: 11,
+              color: AppColor.midGray,
+            ),
+            const CustomText(
+              text: '• Extra Wood (\$75)',
+              fontSize: 11,
+              color: AppColor.midGray,
+            ),
+            const SizedBox(height: 4),
+            CustomText(
+              text: 'Total: \$225',
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: AppColor.mutedGold,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButtons(JobHistory notification) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: CustomButton(
+              text: 'Chat with PM',
+              color: AppColor.mutedGold,
+              textColor: AppColor.black,
+              radius: 8,
+              fontSize: 12,
+              height: 40,
+              onTap: () {
+                HapticFeedback.mediumImpact();
+                // Navigate to chat detail page with property manager info
+                Get.toNamed(
+                  AppRoutes.chatDetailPage,
+                  arguments: {
+                    'userName': notification.propertyManager?.name ??
+                        'Property Manager',
+                    'avatarImage': notification.propertyManager?.imageUrl ??
+                        Assets.imagesChatMichael,
+                  },
+                );
+              },
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: CustomButton(
+              text: 'REJECT',
+              color: const Color(0xFF8B0000),
+              textColor: AppColor.white,
+              radius: 8,
+              fontSize: 12,
+              height: 40,
+              onTap: () => _handleReject(notification),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: CustomButton(
+              text: 'ACCEPT',
+              color: const Color(0xFF1B365D),
+              textColor: AppColor.white,
+              radius: 8,
+              fontSize: 12,
+              height: 40,
+              onTap: () => _handleAccept(notification),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _handleReject(JobHistory notification) {
+    HapticFeedback.heavyImpact(); // Strong haptic feedback
+
+    if (notification.title?.contains('Extras') == true) {
+      Get.dialog(
+        AlertDialog(
+          title: const Text('Reject Extras'),
+          content: const Text(
+              'Are you sure you want to reject these extras worth \$225?'),
+          actions: [
+            TextButton(
+                onPressed: () => Get.back(), child: const Text('Cancel')),
+            TextButton(
+              onPressed: () {
+                Get.back();
+                Get.snackbar(
+                    'Extras Rejected', 'You have rejected the extras request',
+                    backgroundColor: Colors.red,
+                    colorText: Colors.white,
+                    snackPosition: SnackPosition.BOTTOM);
+              },
+              child: const Text('Reject'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      Get.snackbar('Job Rejected', 'You have rejected the job opportunity',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  void _handleAccept(JobHistory notification) {
+    HapticFeedback.heavyImpact(); // Strong haptic feedback
+
+    if (notification.title?.contains('Extras') == true) {
+      Get.dialog(
+        AlertDialog(
+          title: const Text('Accept Extras'),
+          content: const Text('Confirm you want to accept extras worth \$225?'),
+          actions: [
+            TextButton(
+                onPressed: () => Get.back(), child: const Text('Cancel')),
+            TextButton(
+              onPressed: () {
+                Get.back();
+                Get.snackbar(
+                    'Extras Accepted', 'You have accepted the extras request',
+                    backgroundColor: Colors.green,
+                    colorText: Colors.white,
+                    snackPosition: SnackPosition.BOTTOM);
+              },
+              child: const Text('Confirm'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }

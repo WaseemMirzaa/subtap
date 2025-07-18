@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
 import 'package:subtap/core/bindings.dart/binding.dart';
+import 'package:subtap/core/theme/assets.dart';
 import 'package:subtap/features/auth/presentation/pages/create_account_screen.dart';
 import 'package:subtap/features/auth/presentation/pages/login_screen.dart';
 import 'package:subtap/features/auth/presentation/pages/profile_setup_screen.dart';
 import 'package:subtap/features/auth/presentation/pages/select_role_screen.dart';
 import 'package:subtap/features/auth/presentation/pages/verify_email_screen.dart';
 import 'package:subtap/features/change_password/presentation/pages/pages.dart';
+import 'package:subtap/features/chat/presentation/pages/pages.dart';
 import 'package:subtap/features/fav_subcontractor/presentation/pages/pages.dart';
 import 'package:subtap/features/fav_subcontractor/presentation/widgets/widgets.dart';
 import 'package:subtap/features/home/presentation/pages/pages.dart';
@@ -27,6 +29,7 @@ import 'package:subtap/features/subcontractor_feedback/presentation/pages/pages.
 import 'package:subtap/features/subcontractor_home/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_home/presentation/pages/upload_progress.dart';
 import 'package:subtap/features/subcontractor_job_history/presentation/pages/pages.dart';
+import 'package:subtap/features/subcontractor_job_history_detail/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_jobs/presentation/pages/pages.dart';
 import 'package:subtap/features/subcontractor_portfolio/presentation/pages/portfolio_page.dart';
 import 'package:subtap/features/subcontractor_profile/presentation/pages/pages.dart';

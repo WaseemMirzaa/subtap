@@ -10,27 +10,30 @@ class ExtrasSubmitButtons extends StatelessWidget {
     return Column(
       children: [
         // Submit button
-        Obx(() => CustomButton(
-          text: 'Review Request',
-          isLoading: controller.isSubmitting.value,
-          loadingColor: Colors.white,
-          onTap: controller.isFormValid && !controller.isSubmitting.value
-              ? controller.showReviewDialog
-              : null,
-          color: controller.isFormValid
-              ? AppColor.mutedGold
-              : Colors.grey,
-          textColor: Colors.white,
-          fontWeight: FontWeight.w500,
-          radius: 12,
-        )),
-        
+        Obx(() {
+          final isFormValid = controller.isFormValid;
+          final isSubmitting = controller.isSubmitting.value;
+
+          return CustomButton(
+            text: 'Review Request',
+            isLoading: isSubmitting,
+            loadingColor: Colors.white,
+            onTap: isFormValid && !isSubmitting
+                ? () => Future.microtask(() => controller.showReviewDialog())
+                : null,
+            color: isFormValid ? AppColor.mutedGold : Colors.grey,
+            textColor: Colors.white,
+            fontWeight: FontWeight.w500,
+            radius: 12,
+          );
+        }),
+
         const SizedBox(height: 12),
-        
+
         // Cancel button
         CustomButton(
           text: 'Cancel',
-          onTap: () => Navigator.pop(context),
+          onTap: () => Get.back(),
           color: AppColor.white.withOpacity(0.1),
           textColor: AppColor.white,
           fontWeight: FontWeight.w400,

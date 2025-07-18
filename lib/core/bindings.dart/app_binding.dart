@@ -203,7 +203,7 @@ class SubcontractorFavPageBinding extends Bindings {
 class SupportRequestPageBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<SupportRequestsController>(() => SupportRequestsController());
+    Get.lazyPut<SupportRequestController>(() => SupportRequestController());
   }
 }
 

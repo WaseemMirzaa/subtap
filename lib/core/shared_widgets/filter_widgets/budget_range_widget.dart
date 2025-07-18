@@ -46,7 +46,7 @@ class BudgetRangeWidget extends StatelessWidget {
                     min: 0,
                     max: 2000,
                     divisions: 40,
-                    activeColor: AppColor.darkBlueShade,
+                    activeColor: AppColor.mutedGold,
                     inactiveColor: AppColor.lightGray,
                     onChanged: (RangeValues values) {
                       controller.updateBudgetRange(values.start, values.end);

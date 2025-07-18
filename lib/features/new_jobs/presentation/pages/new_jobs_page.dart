@@ -4,6 +4,7 @@ class NewJobsPage extends StatelessWidget {
   NewJobsPage({super.key});
 
   final NewJobsController controller = Get.put(NewJobsController());
+  final FilterController filterController = Get.put(FilterController());
 
   void showFilterBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -28,67 +29,73 @@ class NewJobsPage extends StatelessWidget {
                 Expanded(
                   child: SearchBarTile(
                     controller: controller.searchController,
-                    onSearch: () => controller.performSearch(
-                      controller.searchController.text,
-                    ),
+                    onSearch: (query) => controller.performSearch(query),
                     hintText: 'Search by name',
                   ),
                 ),
                 const SizedBox(width: 10),
-                GetBuilder<FilterController>(
-                  init: FilterController(),
-                  builder: (filterController) {
-                    final activeFilters = filterController.activeFilterCount;
+                Obx(() {
+                  final activeFilters = filterController.activeFilterCount;
 
-                    return Stack(
-                      children: [
-                        InkWell(
-                          onTap: () => showFilterBottomSheet(context),
-                          child: Container(
-                            width: 49,
-                            height: 49,
-                            decoration: BoxDecoration(
-                              color: AppColor.backgroundColor,
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            child: Center(
-                              child: SvgPicture.asset(
-                                Assets.svgsFilter,
-                                width: 19,
-                                height: 19,
-                              ),
+                  return Stack(
+                    children: [
+                      // Filter icon with gold background when filters are active
+                      InkWell(
+                        onTap: () => showFilterBottomSheet(context),
+                        child: Container(
+                          width: 49,
+                          height: 49,
+                          decoration: BoxDecoration(
+                            color: activeFilters > 0
+                                ? AppColor.mutedGold.withOpacity(0.1)
+                                : AppColor.backgroundColor,
+                            borderRadius: BorderRadius.circular(14),
+                            border: activeFilters > 0
+                                ? Border.all(
+                                    color: AppColor.mutedGold, width: 1)
+                                : null,
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              Assets.svgsFilter,
+                              width: 19,
+                              height: 19,
+                              color: activeFilters > 0
+                                  ? AppColor.mutedGold
+                                  : AppColor.white,
                             ),
                           ),
                         ),
-                        if (activeFilters > 0)
-                          Positioned(
-                            right: 0,
-                            top: 0,
-                            child: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: const BoxDecoration(
-                                color: AppColor.mutedGold,
-                                shape: BoxShape.circle,
+                      ),
+                      // Badge for active filter count
+                      if (activeFilters > 0)
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: const BoxDecoration(
+                              color: AppColor.mutedGold,
+                              shape: BoxShape.circle,
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 16,
+                              minHeight: 16,
+                            ),
+                            child: Text(
+                              '$activeFilters',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
                               ),
-                              constraints: const BoxConstraints(
-                                minWidth: 18,
-                                minHeight: 18,
-                              ),
-                              child: Text(
-                                activeFilters.toString(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                      ],
-                    );
-                  },
-                ),
+                        ),
+                    ],
+                  );
+                }),
               ],
             ),
           ),
@@ -135,49 +142,94 @@ class NewJobsPage extends StatelessWidget {
                 }
 
                 // Show job list
-                return controller.filteredJobs.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'No jobs available',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: AppColor.midGray,
-                          ),
+                return ListView.builder(
+                  padding: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
+                  itemCount: controller.filteredJobs.length,
+                  itemBuilder: (context, index) {
+                    final job = controller.filteredJobs[index];
+
+                    if (job.title == null || job.svgIcon == null) {
+                      return const SizedBox.shrink();
+                    }
+
+                    return Dismissible(
+                      key: Key('job_${job.title}_$index'),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.only(right: 20),
+                        margin: const EdgeInsets.only(
+                            bottom: 20, left: 8, right: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                      )
-                    : ListView.separated(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        itemCount: controller.filteredJobs.length,
-                        itemBuilder: (context, index) {
-                          final job = controller.filteredJobs[index];
-
-                          // Add validation before building the card
-                          if (job.title == null || job.svgIcon == null) {
-                            return const SizedBox.shrink();
-                          }
-
-                          return NewJobsCard(
-                            job: job,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NewJobDetailPage(
-                                    job: job,
-                                    isNewJob: job.status == 'new Jobs',
-                                  ),
-                                ),
-                              );
-                            },
-                            onBookmark: () {
-                              print('Job bookmarked: ${job.title}');
-                            },
-                            isBookmarked: false,
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.delete_outline,
+                                color: Colors.white, size: 24),
+                            SizedBox(height: 4),
+                            Text(
+                              'Remove',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      onDismissed: (direction) {
+                        controller.removeJob(index);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('${job.title} removed'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {
+                                controller.undoRemoveJob(job, index);
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                      child: ImprovedJobCard(
+                        job: job,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NewJobDetailPage(
+                                job: job,
+                                isNewJob: job.status == 'new Jobs',
+                              ),
+                            ),
                           );
                         },
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 15),
-                      );
+                        onAcceptJob: () {
+                          Get.toNamed(
+                            AppRoutes.subcontractorJob,
+                            arguments: {'isFromAcceptJob': true},
+                          );
+                        },
+                        onBookmark: () {
+                          print('Job bookmarked: ${job.title}');
+                        },
+                        onNotInterested: () {
+                          print('Not interested: ${job.title}');
+                        },
+                        onReport: () {
+                          print('Report job: ${job.title}');
+                        },
+                        isBookmarked: false,
+                      ),
+                    );
+                  },
+                );
               }),
             ),
           ),

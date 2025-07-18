@@ -6,66 +6,126 @@ import 'package:subtap/models/models.dart';
 class NewJobsController extends GetxController {
   final TextEditingController searchController = TextEditingController();
   final RxBool isSearching = false.obs;
+  final RxList<JobHistory> filteredJobs = <JobHistory>[].obs;
+  final RxList<JobHistory> removedJobs =
+      <JobHistory>[].obs; // Track removed jobs
 
   final RxList<JobHistory> allJobs = <JobHistory>[
+    // Card 1 - Fixed Payment
     JobHistory(
-      title: 'General Trades',
+      title: 'Hang Drywall at Retail Store',
       svgIcon: Assets.svgsTrade,
       price: 50.0,
       manager: 'John Doe',
-      targetBudget: '\$50.00',
-      dueDate: 'Friday, May 23, 2025',
-      address: '123 Main St, Springfield',
+      targetBudget: '\$50',
+      dueDate: '2024-12-25',
+      address: 'Springfield, IL 62704',
+      fullAddress: '123 Main St, Springfield, IL 62704',
       status: 'new Jobs',
-      description: "Looking to get some carpentry & farming work done.",
+      trade: 'Carpentry & Framing',
+      paymentType: 'Fixed',
+      estimatedHours: '4 hrs est.',
+      urgencyTag: 'New',
+      description:
+          "Looking to get drywall hanging work done at retail location.",
       propertyManager: const PropertyManagerModel(
         name: 'John Doe',
         imageUrl: Assets.imagesSubcontractorBrown,
-        rating: 4.6,
-        totalJobs: 12,
+        rating: 4.7,
+        totalJobs: 18,
         isVerified: true,
       ),
-      subcontractorModel: const SubcontractorModel(
-        expertise: 'Electrician',
-        description: 'Leaking kitchen sink...',
-        name: 'James Michael',
-        imageUrl: Assets.imagesSubcontrctorImage,
-        price: '50',
-        rating: 4.0,
-      ),
     ),
+    // Card 2 - Hourly Payment
     JobHistory(
-      title: 'General Trades',
+      title: 'Paint Office Interior – 2 Rooms',
       svgIcon: Assets.svgsTech,
-      price: 65.0,
-      manager: 'Jane ',
-      targetBudget: '\$50.00',
-      dueDate: 'Friday, May 23, 2025',
-      address: '456 Oak Ave, Springfield',
+      price: 25.0,
+      manager: 'Jane Smith',
+      targetBudget: '\$25/hr',
+      dueDate: '2024-12-30',
+      address: 'Chicago, IL 60601',
+      fullAddress: '456 Oak Ave, Chicago, IL 60601',
       status: 'new Jobs',
+      trade: 'Painting & Finishing',
+      paymentType: 'Hourly',
+      estimatedHours: '8 hrs est.',
+      urgencyTag: 'Urgent',
       description:
-          "I hope you're well.I'm looking to get some carpentry & \n Farming work done and wanted to see if you're avaiable.\n Please let me know.",
+          "Need professional painting for office interior, 2 rooms total.",
       propertyManager: const PropertyManagerModel(
-        name: 'Jane ',
+        name: 'Jane Smith',
         imageUrl: Assets.imagesHomePerson,
         rating: 4.6,
         totalJobs: 12,
         isVerified: true,
       ),
-      subcontractorModel: const SubcontractorModel(
-        expertise: 'Electrician',
-        description:
-            'Leaking kitchen sink, Pipe may be cracked. Water \n dripping into cabinet below. Happened after  turning on  garbage disposal.',
-        name: 'James Michael',
-        imageUrl: 'path_to_image',
-        price: '50',
-        rating: 4.0,
+    ),
+    // Card 3 - Negotiable Payment
+    JobHistory(
+      title: 'Kitchen Cabinet Installation',
+      svgIcon: Assets.svgsGeneral,
+      price: 0.0,
+      manager: 'Mike Johnson',
+      targetBudget: 'Negotiable',
+      dueDate: '2024-12-28',
+      address: 'Austin, TX 73301',
+      fullAddress: '789 Pine St, Austin, TX 73301',
+      status: 'new Jobs',
+      trade: 'Carpentry & Installation',
+      paymentType: 'Negotiable',
+      estimatedHours: '12 hrs est.',
+      urgencyTag: 'Expiring Soon',
+      description: "Install custom kitchen cabinets in residential property.",
+      propertyManager: const PropertyManagerModel(
+        name: 'Mike Johnson',
+        imageUrl: Assets.imagesSubcontractorBrown,
+        rating: 4.8,
+        totalJobs: 25,
+        isVerified: true,
       ),
     ),
-    // ... more jobs
+    // Card 4 - Per Square Foot Payment (EXPIRED)
+    JobHistory(
+      title: 'Tile Bathroom Floor',
+      svgIcon: Assets.svgsPlumbing,
+      price: 8.0,
+      manager: 'Sarah Wilson',
+      targetBudget: '\$8/sq ft',
+      dueDate: '2024-01-15', // Past date - properly expired
+      address: 'Miami, FL 33101',
+      fullAddress: '321 Ocean Dr, Miami, FL 33101',
+      status: 'new Jobs',
+      trade: 'Flooring & Tiling',
+      paymentType: 'Per Sq Ft',
+      estimatedHours: '6 hrs est.',
+      urgencyTag: 'Expired',
+      description:
+          "Tile installation for bathroom floor, approximately 50 sq ft.",
+      propertyManager: const PropertyManagerModel(
+        name: 'Sarah Wilson',
+        imageUrl: Assets.imagesHomePerson,
+        rating: 4.9,
+        totalJobs: 31,
+        isVerified: true,
+      ),
+    ),
   ].obs;
 
-  final RxList<JobHistory> filteredJobs = <JobHistory>[].obs;
+  void removeJob(int index) {
+    if (index >= 0 && index < filteredJobs.length) {
+      final removedJob = filteredJobs[index];
+      removedJobs.add(removedJob);
+      filteredJobs.removeAt(index);
+      allJobs.remove(removedJob);
+    }
+  }
+
+  void undoRemoveJob(JobHistory job, int originalIndex) {
+    removedJobs.remove(job);
+    allJobs.insert(originalIndex, job);
+    filteredJobs.insert(originalIndex, job);
+  }
 
   @override
   void onInit() {

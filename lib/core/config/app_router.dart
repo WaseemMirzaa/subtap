@@ -130,6 +130,18 @@ class AppRouter {
           binding: SubcontractorJobHistoryPageBinding(),
         ),
         GetPage(
+          name: AppRoutes.subcontractorJobHistoryDetail,
+          page: () {
+            final args = Get.arguments as Map<String, dynamic>?;
+            final job = args?['job'];
+            final isOpenJob = args?['isOpenJob'] as bool? ?? false;
+            return SubcontractorJobHistoryDetailPage(
+              job: job,
+              isOpenJob: isOpenJob,
+            );
+          },
+        ),
+        GetPage(
           name: AppRoutes.subcontractorFeedbackPage,
           page: () => const SubcontractorFeedbackPage(),
           binding: SubcontractorFeedbackPageBinding(),
@@ -145,13 +157,26 @@ class AppRouter {
           binding: SubcontractorMyAccountPageBinding(),
         ),
         GetPage(
+          name: AppRoutes.chatDetailPage,
+          page: () {
+            final args = Get.arguments as Map<String, dynamic>?;
+            final userName = args?['userName'] as String? ?? 'User';
+            final avatarImage =
+                args?['avatarImage'] as String? ?? Assets.imagesChatMichael;
+            return ChatDetailPage(
+              userName: userName,
+              avatarImage: avatarImage,
+            );
+          },
+        ),
+        GetPage(
           name: AppRoutes.subcontractorPage,
           page: () => const FavSubcontractorPage(),
           binding: SubcontractorFavPageBinding(),
         ),
         GetPage(
           name: AppRoutes.supportRequests,
-          page: () => SupportRequestsPage(),
+          page: () => SupportRequestPage(),
           binding: SupportRequestPageBinding(),
         ),
         GetPage(

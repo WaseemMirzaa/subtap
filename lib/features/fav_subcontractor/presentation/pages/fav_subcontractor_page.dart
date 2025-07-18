@@ -128,7 +128,7 @@ class _FavSubcontractorPageState extends State<FavSubcontractorPage> {
                       Expanded(
                         child: SearchBarTile(
                           controller: _searchController,
-                          onSearch: () {},
+                          onSearch: (String value) {},
                           hintText: 'Search by name',
                         ),
                       ),

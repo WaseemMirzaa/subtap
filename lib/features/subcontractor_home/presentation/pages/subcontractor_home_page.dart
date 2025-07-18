@@ -30,7 +30,7 @@ class _SubcontractorHomePageState extends State<SubcontractorHomePage> {
                   firstValue: '01',
                   secondTitle: 'In Progress',
                   secondValue: '03',
-                  thirdTitle: 'Awaiting Code',
+                  thirdTitle: 'AvgCompletion Time',
                   thirdValue: '01',
                 ),
                 kGap20,
